@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="Windows-1252"?>
+<project name="XInstall.Core" default="core.build">
+
+  <include buildfile="../Util/util.build" />
+  <target name="core.build" description="build XInstall.Core.dll" depends="util.build">
+    <!--csc compiling task-->
+    <csc target="library" output="./bin/XInstall.Core.dll">
+      <!--library we need to references-->
+      <references>
+        <include name="./bin/XInstall.Util.dll" />
+        <include name="System.Data.dll" />
+      </references>
+      <!--source files that needed to be compiled-->
+      <sources basedir=".">
+        <include name="*.cs" />
+        <exclude name="DBMgr.cs" />
+        <exclude name="Win32API.cs" />
+        <exclude name="WmiBase.cs" />
+        <exclude name="AdsiBase.cs" />
+      </sources>
+    </csc>
+
+    <copy todir="../Actions/bin">
+      <fileset basedir="./bin">
+        <include name="*.dll" />
+      </fileset>
+    </copy>
+  </target>
+
+  <target name="core.self.build" description="build XInstall.Core" depends="core.touchdll, core.build" />
+  <target name="core.touchdll">
+    <touch>
+      <fileset>
+        <include name="./bin/*.dll" />
+      </fileset>
+    </touch>
+  </target>
+</project>

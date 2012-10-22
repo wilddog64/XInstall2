@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<setup>
+     <package name="NetIQ Setup"
+              runnable="true"
+              packagedir="."
+              description="search ad">
+
+
+<!--
+       <robocopy action="copysub"
+                 basepath="c:\tools\bin"
+                 sourcedirectory="c:\projects\perl\CallManager"
+                 destinationdirectory="\\seaitweb01\c$\temp\CallManager"
+                 createdestdir="true"
+                 runnable="true" />
+-->
+<!--
+          <foreach type="file" in="niq_machines.txt" item="server">
+               <psexec machine="${server}" basepath="c:\tools\bin" cmd2exec="cmd /c exit">
+                     
+               </psexec>
+          </foreach>
+-->
+     <psexec machine="mliangserv" 
+             basepath="c:\tools\bin" 
+             cmd2exec="d:\appmanager\update\am602_update.exe"
+             copyprog="true"
+             forcecopy="true"
+             rmtworkdir="c:\temp" />
+     </package>
+</setup>

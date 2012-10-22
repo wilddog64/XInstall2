@@ -1,0 +1,511 @@
+<?xml version="1.0"?>
+<project name="XInstall2" default="build" description="XInstall2 v1.1 build">
+
+     <!-- XInstall2 master.build - v1.1
+      
+          master build file for the XInstall2: 
+
+             The build dependencies -
+
+                Util -> Core -> Actions -> XInstall2
+
+             External tools - BuildNantScript.exe
+
+                BuildNantScript reads each component's csproj file and create
+                sub build file for it.
+
+                It is wrapped into nant tag <target name="GenNantScript" /> and
+                the following properties are required to be set before calling 
+                it.
+
+                   1. ${csproj}        - the full path of component's csproj file
+                   2. ${buildfile}     - the build file name to be generated 
+                   3. ${componentpath} - the path for a given component
+                   4. ${outputlib}     - the output library's name
+                   5. ${commandline}   - combine all 4 properties above and feed
+                                         into BuildNantScript
+
+                   Note: 
+
+                   1. the last two variables should be the literal value of your 
+                      property that points to the component and the property that contains
+                      the library name
+
+                   2. if the property name has Exe append to it, then output generated
+                      by csc tag will be an executable
+
+                   3. For each component to build, the above properties need to be created 
+                      and assigned.
+
+               Last modified date|Last modfied by|remark
+               __________________|_______________|____________________________________
+               2/27/2004          a-chlian        . initial creation of master.build for
+                                                    XInstall2.
+               3/03/2004          a-chlian        . move checksum task to Utils.include from
+                                                    default target.
+                                                  . modify clean target to clean only XInstall
+                                                    related dll instead of all of them.
+                                                  . generate MD5 for each component in their
+                                                    own bin folder instead generate all together
+                                                    in the final build folder.
+               4/4/2004          chengkai         . add delete task in each target to delete MD5
+                                                    checksum file before regnerated
+               1/8/2005          mliang           . Add two more component into XInstall2 build file,
+                                                    - ControlPool is a class that talks to BigIP
+                                                      XML Web Servce.
+                                                    - iControlProxy is a security wrapper to the 
+                                                      ControlPool. 
+                                                  . setup target is added to wrap the variables 
+                                                    initialization portion within it.
+               1/9/2005          mliang           . checksum task is removed from utils.include file.
+               3/18/2005         mliang           . Remove two build libraries - PDSClient and WebTest
+               08/05/2005        mliang           . Add CustomTestActions target.  This is used to compile
+                                                    new dll for plug-in to XInstall2
+
+     -->
+
+     <!-- include utility function tags -->
+     <include buildfile="utils.include" />
+
+     <property name="project.name" value="XInstall2" />
+
+     <!-- setup event handler for build success/fail -->
+     <property name="nant.onsuccess" value="project.success" />
+     <property name="nant.onfailure" value="project.fail" />
+
+     <!-- base path for each components -->
+     <target name="setup" description="environment setup">
+          <property name="Util.Path"               value="${currentpath}/../Util" />
+          <property name="Core.Path"               value="${currentpath}/../Core" />
+          <property name="Actions.Path"            value="${currentpath}/../Actions" />
+          <property name="XInstall2.Path"          value="${currentpath}/../XInstall2" />
+          <property name="XInstall2.output"        value="${build.release.dir}" />
+          <property name="ControlPool.Path"        value="${currentpath}/../../ControlPool" />
+          <property name="ControlProxy.Path"       value="${currentpath}/../../iControlProxy" />
+          <property name="CustomTestActions.Path"  value="${currentpath}/../CustomTestActions" />
+          
+          <!-- <available type="Directory" resource="${Util.Path}/bin" property="dir.exist" /> -->
+          <if test="${not directory::exists( '${Util.Path}/bin' )}">
+            <mkdir dir="${Util.Path}/bin" />
+          </if>
+
+          <!-- <available type="Directory" resource="${Core.Path}/bin" property="dir.exist" /> -->
+          <if test="${not directory::exists( '${Core.path}/bin' )}">
+            <mkdir dir="${Core.Path}/bin" />
+          </if>
+
+          <!-- <available type="Directory" resource="${Actions.Path}/bin" property="dir.exist" /> -->
+          <if test="${not directory::exists( '${Actions.Path}/bin' )}">
+            <mkdir dir="${Actions.Path}/bin" />
+          </if>
+
+          <!-- <available type="Directory" resource="${currentpath}/../ControlPool/bin" property="dir.exist" /> -->
+          <if test="${not directory::exists( '${currentpath}../ControlPool/bin' )}">
+            <mkdir dir="${XInstall2.Path}/ControlPool/bin" />
+          </if>
+
+          <!-- <available type="Directory" resource="${currentpath}/../iControlProxy/bin" property="dir.exist" /> -->
+          <if test="${not directory::exists( '${currentpath}../iControlProxy/bin' )}">
+            <mkdir dir="${XInstall2.Path}/iControlProxy/bin" />
+          </if>
+
+          <!-- <available type="Directory" resource="${CustomTestActions.Path}/bin" property="dir.exist" /> -->
+          <if test="${not directory::exists( '${CustomTestActions.Path/bin' )}">
+            <mkdir dir="${CustomTestActions.Path}/bin" />
+          </if>
+
+          <!-- csproj files -->
+          <property name="csproj.Util"              value="${Util.Path}/Util.csproj" />
+          <property name="csproj.Core"              value="${Core.Path}/Core.csproj" />
+          <property name="csproj.Actions"           value="${Actions.Path}/Actions.csproj" />
+          <property name="csproj.XInstall2"         value="${XInstall2.Path}/XInstall2.csproj" />
+          <property name="csproj.ControlPool"       value="${ControlPool.Path}/ControlPool.csproj" />
+          <property name="csproj.ControlProxy"      value="${ControlProxy.Path}/iControlProxy.csproj" />
+          <property name="csproj.CustomTestActions" value="${CustomTestActions.Path}/CustomTestActions.csproj" />
+
+          <!-- sub build scripts generate at the run time -->
+          <property name="build.Util"               value="${Util.Path}/Util.build" />
+          <property name="build.Core"               value="${Core.Path}/Core.build" />
+          <property name="build.Actions"            value="${Actions.Path}/Actions.build" />
+          <property name="build.XInstall2"          value="${XInstall2.Path}/XInstall2.build" />
+          <property name="build.ControlPool"        value="${ControlPool.Path}/ControlPool.build" />
+          <property name="build.ControlProxy"       value="${ControlProxy.Path}/ControlProxy.build" />
+          <property name="build.CustomTestActions"  value="${CustomTestActions.Path}/CustomTestActions.build" />
+
+          <!-- AssemblyInfo file for each component -->
+          <property name="AssemblyInfo.Util"              value="${Util.Path}/AssemblyInfo.cs" />
+          <property name="AssemblyInfo.Core"              value="${Core.Path}/AssemblyInfo.cs" />
+          <property name="AssemblyInfo.Actions"           value="${Actions.Path}/AssemblyInfo.cs" />
+          <property name="AssemblyInfo.XInstall2"         value="${XInstall2.Path}/AssemblyInfo.cs" />
+          <property name="AssemblyInfo.ControlPool"       value="${ControlPool.Path}/AssemblyInfo.cs" />
+          <property name="AssemblyInfo.ControlProxy"      value="${ControlProxy.Path}/AssemblyInfo.cs" />
+          <property name="AssemblyInfo.CustomTestActions" value="${CustomTestActions.Path}/AssemblyInfo.cs" />
+
+          <!-- namespace setup -->
+          <property name="root.Namespace"        value="XInstall" />
+          <property name="custom.Namespace"      value="${root.Namespace}.custom.actions" />
+          <property name="UtilLib"               value="${root.Namespace}.Util.dll" />
+          <property name="CoreLib"               value="${root.Namespace}.Core.dll" />
+          <property name="ControlPoolLib"        value="${root.Namespace}.ControlPool.dll" />
+          <property name="iControlProxyLib"      value="${root.Namespace}.ControlProxy.dll" />
+          <property name="ActionsLib"            value="${root.Namespace}.Core.Actions.dll" />
+          <property name="CustomTestActionsLib"  value="${root.Namespace}.CustomTestActions.dll" />
+          <property name="XInstall2Exe"          value="XInstall2.exe" />
+
+     </target>
+
+     <!-- build XInstall.Util.dll -->
+     <target name="Util" 
+             depends="setup"
+             description="build XInstall.Util.dll">
+
+          <!-- setup for calling GenNantScript -->
+          <property name="csproj"        value="${csproj.Util}" /> 
+          <property name="buildfile"     value="${build.Util}" />
+          <property name="componentpath" value="Util.Path" />
+          <property name="outputlib"     value="UtilLib" />
+          <property name="commandline"   value="${csproj} ${buildfile} ${componentpath} ${outputlib}" />
+          <property name="project_description" value="build XInstall.Util.dll" />
+          <call target="GenNantScript" />
+          <nant buildfile="${build.Util}" inheritall="true" />
+
+          <!-- delete all the MD5 files before generated it -->
+          <delete failonerror="false">
+               <fileset basedir="${Util.Path}/bin">
+                    <includes name="*.MD5*" />
+               </fileset>
+          </delete>
+
+          <!-- generate MD5 checksum for compiled dll -->
+          <property name="directory" value="${Util.Path}/bin" />
+          <!-- <call target="CreateMD5CheckSum" /> -->
+
+          <!-- copy compiled components to build.output.dir -->
+          <copy todir="${build.output.dir}">
+               <fileset basedir="${Util.Path}/bin">
+                    <includes name="*.dll" />
+                    <includes name="*.pdb" />
+                    <includes name="*.MD5" />
+               </fileset>
+          </copy>
+
+     </target>
+
+     <target name="ControlPool"
+             depends="setup"
+             description="build BigIP Web service interface">
+             <property name="csproj"              value="${csproj.ControlPool}" />
+             <property name="buildfile"           value="${build.ControlPool}" />
+             <property name="componentpath"       value="ControlPool.Path" />
+             <property name="outputlib"           value="ControlPoolLib" />
+             <property name="project_description" value="build ControlPool" />
+
+             <property name="commandline"   
+                       value="${csproj} ${buildfile} ${componentpath} ${outputlib}" />
+             <call target="GenNantScript" />
+             <nant buildfile="${ControlPool.Path}/ControlPool.build" />
+
+             <property name="ControlPoolOutput" 
+                       value="${currentpath}/../ControlPool/bin" />
+
+             <mkdir dir="${ControlPoolOutput}" failonerror="false" />
+             
+             <property name="ControlPoolBin" 
+                       value="${ControlProxy.Path}/bin" />
+
+             <copy todir="${ControlPoolOutput}">
+                  <fileset basedir="${ControlPoolBin}">
+                       <includes name="*.dll" />
+                       <includes name="*.pdb" />
+                  </fileset>
+             </copy>
+     </target>
+              
+
+     <target name="ControlProxy"
+             depends="ControlPool"
+             description="build BigIP Proxy Object">
+
+             <property name="csproj"              value="${csproj.ControlProxy}" />
+             <property name="buildfile"           value="${build.ControlProxy}" />
+             <property name="componentpath"       value="ControlProxy.Path" />
+             <property name="outputlib"           value="iControlProxyLib" />
+             <property name="project_description" value="build iControlProxy" />
+
+             <property name="commandline"   value="${csproj} ${buildfile} ${componentpath} ${outputlib}" />
+             <call target="GenNantScript" />
+             <nant buildfile="${build.ControlProxy}" />
+
+
+             <property name="iControlProxyOutput" 
+                       value="${currentpath}/../iControlProxy/bin" />
+
+             <property name="iControlProxyBin" 
+                       value="${ControlProxy.Path}/bin" />
+
+             <mkdir dir="${iControlProxyOutput}" failonerror="false" />
+
+             <echo message="${iControlProxyBin}" />
+             <copy todir="${iControlProxyOutput}">
+                  <fileset basedir="${iControlProxyBin}">
+                       <includes name="*.dll" />
+                       <includes name="*.pdb" />
+                       <includes name="*.MD5" />
+                  </fileset>
+             </copy>
+
+
+             <copy todir="${build.output.dir}" overwrite="true" >
+                  <fileset basedir="${iControlProxyBin}">
+                      <includes name="*.dll" />
+                  </fileset>
+             </copy>
+     </target>
+
+
+     <target name="CustomTestActions" 
+             depends="Core"
+             description="build XInstall.CustomTestActions.dll">
+
+
+          <!-- setup for calling GenNantScript -->
+          <property name="csproj"              
+                    value="${csproj.CustomTestActions}" /> 
+          <property name="buildfile"           
+                    value="${build.CustomTestActions}" />
+          <property name="componentpath"       
+                    value="CustomTestActions.Path" />
+          <property name="outputlib"           
+                    value="CustomTestActionsLib" />
+          <property name="commandline"         
+                    value="${csproj} ${buildfile} ${componentpath} ${outputlib}" />
+          <property name="project_description" 
+                    value="build XInstall.CustomTestActions.dll" />
+          <call target="GenNantScript" />
+          <nant buildfile="${build.CustomTestActions}" inheritall="true" />
+
+          <!-- delete all the MD5 files before generated it -->
+          <delete failonerror="false">
+               <fileset basedir="${Core.Path}/bin">
+                    <includes name="*.MD5*" />
+               </fileset>
+          </delete>
+
+          <!-- generate MD5 checksum for compiled dll -->
+          <property name="directory" value="${CustomTestActions.Path}/bin" />
+          <!-- <call target="CreateMD5CheckSum" /> -->
+
+          <echo message="---------------------" />
+          <echo message="${CustomTestActions.Path}/bin" />
+          <echo message="${build.output.dir}" />
+          <echo message="---------------------" />
+          <copy todir="${build.output.dir}">
+               <fileset basedir="${CustomTestActions.Path}/bin">
+                    <includes name="*.dll" />
+                    <includes name="*.pdb" />
+                    <includes name="*.MD5" />
+               </fileset>
+          </copy>
+
+     </target>
+
+     <!-- build XInstall.Core.dll -->
+     <target name="Core" 
+             depends="Util, ControlProxy"
+             description="build XInstall.Core.dll">
+
+
+          <!-- setup for calling GenNantScript -->
+          <property name="csproj"              
+                    value="${csproj.Core}" /> 
+          <property name="buildfile"           
+                    value="${build.Core}" />
+          <property name="componentpath"       
+                    value="Core.Path" />
+          <property name="outputlib"           
+                    value="CoreLib" />
+          <property name="commandline"         
+                    value="${csproj} ${buildfile} ${componentpath} ${outputlib}" />
+          <property name="project_description" 
+                    value="build XInstall.Core.dll" />
+          <call target="GenNantScript" />
+          <nant buildfile="${build.Core}" inheritall="true" />
+
+          <!-- delete all the MD5 files before generated it -->
+          <delete failonerror="false">
+               <fileset basedir="${Core.Path}/bin">
+                    <includes name="*.MD5*" />
+               </fileset>
+          </delete>
+
+          <!-- generate MD5 checksum for compiled dll -->
+          <property name="directory" value="${Core.Path}/bin" />
+          <!-- <call target="CreateMD5CheckSum" /> -->
+
+          <copy todir="${build.output.dir}">
+               <fileset basedir="${Util.Path}/bin">
+                    <includes name="*.dll" />
+                    <includes name="*.pdb" />
+                    <includes name="*.MD5" />
+               </fileset>
+          </copy>
+
+     </target>
+
+     <!-- build XInstall.Actions.dll -->
+     <target name="Actions" 
+             depends="Core"
+             description="build XInstall.Actions.dll">
+
+
+          <!-- setup for calling GenNantScript -->
+          <property name="csproj"        value="${csproj.Actions}" /> 
+          <property name="buildfile"     value="${build.Actions}" />
+          <property name="componentpath" value="Actions.Path" />
+          <property name="outputlib"     value="ActionsLib" />
+          <property name="commandline"   value="${csproj} ${buildfile} ${componentpath} ${outputlib}" />
+          <property name="project_description" value="build XInstall.Actions.dll" />
+          <call target="GenNantScript" />
+          <nant buildfile="${build.Actions}" inheritall="true" />
+
+          <!-- delete all the MD5 files before generated it -->
+          <delete failonerror="false">
+               <fileset basedir="${Actions.Path}/bin">
+                    <includes name="*.MD5*" />
+               </fileset>
+          </delete>
+
+          <!-- generate MD5 checksum for compiled dll -->
+          <property name="directory" value="${Actions.Path}/bin" />
+          <!-- <call target="CreateMD5CheckSum" /> -->
+
+          <copy todir="${build.output.dir}">
+               <fileset basedir="${Actions.Path}/bin">
+                    <includes name="*.dll" />
+                    <includes name="*.pdb" />
+                    <includes name="*.MD5" />
+               </fileset>
+          </copy>
+     </target>
+
+   
+     <!-- now build the XInstall2.exe -->
+     <target name="XInstall2"
+             depends="Actions,CustomTestActions"
+             description="The final executable is here">
+
+
+          <!-- setup for calling GenNantScript -->
+          <property name="OutputDir"           value="${XInstall2.Path}/bin/XInstall2.exe" />
+          <property name="csproj"              value="${csproj.XInstall2}" />
+          <property name="buildfile"           value="${build.XInstall2}" />
+          <property name="componentpath"       value="XInstall2.Path" />
+          <property name="outputlib"           value="XInstall2Exe" />
+          <property name="commandline"         value="${csproj} ${buildfile} ${componentpath} ${outputlib}" />
+          <property name="project_description" value="build XInstall2.exe" />
+          <call target="GenNantScript" />
+          <nant buildfile="${build.XInstall2}" inheritall="true" />
+
+          <!-- delete all the MD5 files before generated it -->
+          <delete failonerror="false">
+               <fileset basedir="${XInstall2.Path}/bin">
+                    <includes name="*.MD5*" />
+               </fileset>
+          </delete>
+
+          <!-- generate MD5 checksum for compiled dll -->
+          <property name="directory" value="${XInstall2.Path}/bin" />
+          <!-- <call target="CreateMD5CheckSum" /> -->
+
+          <copy todir="${build.output.dir}"    overwrite="true">
+               <fileset basedir="${XInstall2.Path}/bin">
+                    <includes name="XInstall2.exe" />
+                    <includes name="*.pdb" />
+                    <includes name="*.MD5" />
+               </fileset>
+          </copy>
+     </target>
+
+     <!-- This target is used to remove all the compiled dlls -->
+     <target name="clean" description="remove all compiled dll">
+          <delete>
+             <fileset>
+                <includes name="${Util.Path}/bin/XInstall.*.dll" />
+                <includes name="${Util.Path}/bin/*.MD5" />
+                <includes name="${Core.Path}/bin/XInstall.dll" />
+                <includes name="${Core.Path}/bin/*.MD5" />
+                <includes name="${Actions.Path}/bin/XInstall.dll" />
+                <includes name="${Actions.Path}/bin/*.MD5" />
+                <includes name="${CustomTestActions.Path}/bin/*.dll}" />
+                <includes name="${CustomTestActions.Path}/bin/*.MD5}" />
+                <includes name="${XInstall2.Path}/bin/XInstall.*.dll" />
+                <includes name="${XInstall2.Path}/bin/*.MD5" />
+                <includes name="${build.output.dir}/XInstall*.*" />
+                <includes name="${build.output.dir}/custom.*.dll" />
+                <includes name="${build.output.dir}/*.MD5*" />
+                <includes name="${build.output.dir}/*.pdb" />
+             </fileset>
+          </delete>
+     </target>
+
+     <!-- build up a distribution package 
+          base on the boolean value set in ${debug}, dist.zip will create
+          either debug or release version of the final package.
+       -->
+     <target name="dist.code.zip"
+             description="to create a distrubtion zip files">
+             <zip zipfile="${dist.output.dir}/${dist.source.name}">
+                  <fileset basedir="${build.output.dir}">
+                       <includes name="**.*" />
+                  </fileset>
+             </zip>
+     </target>
+
+     <!-- source code distrubtion -->
+     <target name="dist.source.zip">
+          <zip zipfile="${dist.source.dir}/${dist.source.name}">
+               <fileset basedir="${currentpath}/..">
+                    <exculdes name="${Util.Path}/bin/**.*}" />
+                    <exculdes name="${Core.Path}/bin/**.*}" />
+                    <exculdes name="${Actions.Path}/bin/**.*}" />
+                    <exculdes name="${XInstall2.Path}/bin/**.*}" />
+                    <excludes name="**.MD5.MD5" />
+                    <excludes name="bin/*.swp" />
+                    <excludes name="build/**.*" />
+                    <excludes name="*.dll" />
+                    <excludes name="*.exe" />
+                    <includes name="**.*" />
+               </fileset>
+          </zip>
+     </target>
+
+     <!-- build all and generate an MD5 checksum -->
+     <target name="build" 
+             depends="XInstall2"
+             description="XInstall2 build start from here">
+     </target>
+
+     <!-- first build then create zip files -->
+     <target name="build.dist"
+             depends="build, dist.code.zip"
+             description="build and create distrubtion zip file">
+     </target>
+
+     <!-- clean up and build -->
+     <target name="flesh.build"
+             depends="clean, build">
+     </target>
+
+     <!-- define event handlers for handling 
+          sucuccessfully compiled target or
+          fail to compile
+     -->
+     <target name="project.success" 
+             description="this taget gets call when project successfully compile">
+        <echo message="successfully compile ${project.name} with the following components" />
+     </target>
+
+     <target name="project.fail">
+          <echo message="unable to compile components" />
+     </target>
+</project>

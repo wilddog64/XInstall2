@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<setup>
+     <package name="Active Directory Searching"
+              runnable="true"
+              packagedir="."
+              description="search ad">
+
+<!--
+              <admgmr adserver="seadc01"
+                      filter="(&#38;(objectCategory=person)(sn=liang))" />
+-->
+
+              <admgmr adserver="seadc01"
+                   properties="samaccountname,department,displayname,title,mail,manager,telephonenumber"
+                      filter="( &amp;(objectCategory=person)(name=mike*) )" />
+     </package>
+</setup>

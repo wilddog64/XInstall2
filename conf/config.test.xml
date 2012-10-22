@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<setup>
+    <package name="180WebSite_RollOut" runnable="true" packagedir="." Onbeforestart="BeforeRollOut" onsuccess="ActionSuccess">
+        <defvar name="blatpath" value="c:\tools\bin" />
+        <defvar name="mailserver" value="smtp.180prod.com" />
+        <defvar name="recipients" value="${logon_user}@180Solutions.com" />
+        <iiswebsite machinename="seadevweb01.180Solutions.com" action="replace" authmethods="4" assigndefaultapppool="false" serverbindings=":80:dev.www.mike.com" websitename="www.mike.com">
+            <AccessFlags>513</AccessFlags>
+            <Path>e:\web\www.mike.com</Path>
+            <ApplicationPool machinename="seadevweb01.180Solutions.com">
+                <AppPoolName>www.mike.com</AppPoolName>
+                <AppPoolIdentityType>2</AppPoolIdentityType>
+            </ApplicationPool>
+        </iiswebsite>
+        <iiswebsite machinename="seaqaweb01.180Solutions.com" action="replace" authmethods="4" assigndefaultapppool="false" serverbindings=":80:beta.www.mike.com" websitename="www.mike.com">
+            <AccessFlags>513</AccessFlags>
+            <Path>d:\web\beta\www.mike.com</Path>
+            <ApplicationPool machinename="seaqaweb01.180Solutions.com">
+                <AppPoolName>www.mike.com</AppPoolName>
+                <AppPoolIdentityType>2</AppPoolIdentityType>
+            </ApplicationPool>
+        </iiswebsite>
+        <iiswebsite machinename="seaitweb01.180Solutions.com" action="replace" authmethods="4" assigndefaultapppool="false" serverbindings=":80:it.www.mike.com" websitename="www.mike.com">
+            <AccessFlags>513</AccessFlags>
+            <Path>c:\web\www.mike.com</Path>
+            <ApplicationPool machinename="seaitweb01.180Solutions.com">
+                <AppPoolName>www.mike.com</AppPoolName>
+                <AppPoolIdentityType>2</AppPoolIdentityType>
+            </ApplicationPool>
+        </iiswebsite>
+        <iiswebsite machinename="sinstg01.180Prod.com" action="replace" authmethods="4" assigndefaultapppool="false" serverbindings=":80:staging.www.mike.com" websitename="www.mike.com">
+            <AccessFlags>513</AccessFlags>
+            <Path>c:\web\www.mike.com</Path>
+            <ApplicationPool machinename="sinstg01.180Solutions.com">
+                <AppPoolName>www.mike.com</AppPoolName>
+                <AppPoolIdentityType>2</AppPoolIdentityType>
+            </ApplicationPool>
+        </iiswebsite>
+    </package>
+</setup>
+

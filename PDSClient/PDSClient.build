@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="Windows-1252"?>
+<project name="PDSClient.Path" default="build">
+  <target name="build" description="${project_description}">
+    <!--csc compiling task-->
+    <csc target="library" output="${PDSClient.Path}\bin\${PDSClientLib}" debug="${debug}">
+      <!--library we need to references-->
+      <references basedir="${PDSClient.Path}">
+        <includes name="C:\WINDOWS\Microsoft.NET\Framework\v1.1.4322\System.dll" />
+        <includes name="C:\WINDOWS\Microsoft.NET\Framework\v1.1.4322\System.Data.dll" />
+        <includes name="C:\WINDOWS\Microsoft.NET\Framework\v1.1.4322\System.XML.dll" />
+        <includes name="C:\projects\dotnet\1.1\XInstall2\bin\..\Core\bin\${CoreLib}" />
+        <includes name="C:\projects\dotnet\1.1\XInstall2\bin\..\Util\bin\${UtilLib}" />
+        <includes name="C:\WINDOWS\Microsoft.NET\Framework\v1.1.4322\System.Web.Services.dll" />
+      </references>
+      <!--source files that needed to be compiled-->
+      <sources basedir="${PDSClient.Path}">
+        <includes name="AssemblyInfo.cs" />
+        <includes name="PDSClient.cs" />
+      </sources>
+    </csc>
+    <!--copy required dll components-->
+    <copy todir="${PDSClient.Path}\bin" overwrite="true">
+      <fileset>
+        <includes name="C:\projects\dotnet\1.1\XInstall2\bin\..\Core\bin\${CoreLib}" />
+        <includes name="C:\projects\dotnet\1.1\XInstall2\bin\..\Util\bin\${UtilLib}" />
+      </fileset>
+    </copy>
+  </target>
+</project>

@@ -1,0 +1,2 @@
+-- perl one line script to check pds return status code that is not zero
+perl -nle "print if /<STATUS>(\d+)<\/STATUS>/, $1 > 0" xinstall2.log | wc -l

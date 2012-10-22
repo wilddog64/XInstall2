@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<project name="XInstall2" default="build">
+
+     <property name="basedir" value="${nant.project.basedir}" />
+
+     <target name="build">
+       
+          <property name="conf" value="debug" />
+          <solution configuration="${conf}" solutionfile="${basedir}\..\XInstall2.sln" outputdir="${basedir}\..\build\bin\${conf}" />
+        
+
+          <!--
+          <solution configuration="debug" outputdir="${basedir}\..\build" >
+               <projects>
+                    <includes name="${basedir}\..\XInstall2\XInstall2.csproj"                                />
+                    <includes name="${basedir}\..\Util\Util.csproj"                                          />
+                    <includes name="${basedir}\..\Core\Core.csproj"                                          />
+                    <includes name="${basedir}\..\Actions\Actions.csproj"                                    />
+                    <includes name="${basedir}\..\..\F5\iControl\ControlPool\ControlPool\ControlPool.csproj" />
+                    <includes name="${basedir}\..\..\iControlProxy\iControlProxy.csproj"                     />
+               </projects>
+
+               <referenceprojects>
+                    <includes name="${basedir}\..\Util\Util.csproj"                                          />
+                    <includes name="${basedir}\..\Core\Core.csproj"                                          />
+                    <includes name="${basedir}\..\Actions\Actions.csproj"                                    />
+                    <includes name="${basedir}\..\..\ControlPool\ControlPool\ControlPool.csproj"             />
+                    <includes name="${basedir}\..\..\iControlProxy\iControlProxy.csproj"                     />
+               </referenceprojects>
+          </solution>
+          -->
+
+     </target>
+</project>

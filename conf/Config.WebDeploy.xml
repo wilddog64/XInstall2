@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<setup>
+    <package name="180_archive"
+             runnable="true"
+             packagedir="."
+             description="">
+             
+<!--
+	   onsuccess="ActionSuccess"             
+	   <defvar name="stagingserver1" value="sinstg01" />
+	   <defvar name="blatpath"       value="c:\tools\bin" />
+	   <defvar name="mailserver"     value="smtp.180prod.com" />
+	   <defvar name="recipients"     value="${logon_user}@180Solutions.com" />
+	   <defvar name="subject"        value="testing email from mike liang" />
+	   <defvar name="msg"            value="hey, sean: I can send email from process now!! ${current_date}" />
+	   
+	   
+       <robocopy action="mir"
+                 sourcedirectory="\\${stagingserver1}\staging\rollback\ads.180solutions.com"
+                 destinationdirectory="\\mliangserv\c$\web\ads.180solutions.com"
+                 createdestdir="true"
+                 runnable="false" />
+
+       <robocopy action="move"
+				 sourcedirectory="\\mliangserv\c$\web\ads.180solutions.com"
+				 destinationdirectory="mliangserv\c$\staging\${current_date}"
+				 copysub="true"
+				 copyempty="true"
+				 createdestdir="true"
+				 runnable="true" />
+-->
+	   <defvar name="remotesite" value="mliangserv" />
+           <defvar name="accessflag" value="513" />
+	   
+           <iiswebsite machinename="${remotesite}"
+                                   action="update"
+                                   port="85"
+                                   authmethods="4"
+                                   websitename="testing">
+
+              <AccessFlags>${accessflag}</AccessFlags>
+              <FrontPageWeb>1</FrontPageWeb>
+              <Path>c:\inetpub\wwwroot\test</Path>
+              <AppFriendlyName>Test App</AppFriendlyName>
+           </iiswebsite>
+<!--				   
+	   <ActionSuccess>
+		   <blat blatpath="${blatpath}" 
+				 subject="${subject}"
+				 recipients="${recipients}"
+				 smtpserver="${mailserver}"
+				 message="${msg}" />             
+       </ActionSuccess>
+-->       
+    </package>
+</setup>

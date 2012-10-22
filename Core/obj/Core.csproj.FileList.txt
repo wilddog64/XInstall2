@@ -1,0 +1,13 @@
+obj\Debug\ResolveAssemblyReference.cache
+obj\Debug\XInstall.Core.pdb
+bin\debug\XInstall.Core.dll
+bin\debug\XInstall.Core.pdb
+bin\debug\ControlPool.dll
+bin\debug\iControlProxy.dll
+bin\debug\XInstall.Util.dll
+bin\debug\ControlPool.pdb
+bin\debug\XInstall.Util.pdb
+bin\debug\iControlProxy.pdb
+obj\Debug\XInstall.Core.dll
+..\build\bin\debug\XInstall.Core.dll
+..\build\bin\debug\XInstall.Core.pdb

@@ -1,0 +1,5 @@
+C:\projects\DotNet\2.0\XInstall2\build\bin\debug\XInstall.Core.Actions.dll
+C:\projects\DotNet\2.0\XInstall2\build\bin\debug\XInstall.Core.Actions.pdb
+C:\projects\DotNet\2.0\XInstall2\Actions\obj\Debug\ResolveAssemblyReference.cache
+C:\projects\DotNet\2.0\XInstall2\Actions\obj\Debug\XInstall.Core.Actions.dll
+C:\projects\DotNet\2.0\XInstall2\Actions\obj\Debug\XInstall.Core.Actions.pdb

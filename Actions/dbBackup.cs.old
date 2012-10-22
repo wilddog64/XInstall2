@@ -1,0 +1,404 @@
+using System;
+using System.IO;
+using Interop.SQLDMO;
+using XInstall.Util.Log;
+
+namespace XInstall.Core.Actions {
+   /// <summary>
+   /// public class DBBackup - a class that perform
+   /// the database backup operation against a given
+   /// database server.
+   /// </summary>
+
+   public class DBBackup : ActionElement, ICleanUp, IAction {
+      string _strSqlServer            = "(local)";
+      string _strUserName             = null;
+      string _strUserPassword         = null;
+      string _strExitMessage          = null;
+      string _strBackupDbName         = null;
+      private string _strBackupTo     = null;
+      private string _strFileName     = null;
+      bool   _bTrustedConnection      = true;
+      bool   _bAllowGenerateException = false;
+      int    _iExitCode               = 0;
+
+#region Backup related variables
+      bool   _bInitBackupDatabase     = true;
+#endregion
+
+      SQLServer _mSQLServer              = null;
+      Interop.SQLDMO.Backup _bkBackupObj = null;
+
+#region public constructor methods
+      /// <summary>
+      /// constructor DBBackup initiates the
+      /// backup operation.  By default, trusted
+      /// connection is used.
+      /// </summary>
+      [Action("dbbackup")]
+      public DBBackup() {
+         // specially for backup operation
+         // so set base class's RequestBackup
+         // property to true
+         base.OutToConsole = true;
+         base.OutToFile    = true;
+      }
+
+#endregion
+
+#region public methods
+      [Action("backupdbname", Needed=true)]
+      public string DatabaseName
+      {
+
+         get {
+            return this._strBackupDbName;
+         }
+
+         set {
+            this._strBackupDbName = value;
+         }
+      }
+
+      /// <summary>
+      /// property BackupFrom -
+      ///     set the SQL Server we want to
+      ///     perform the backup operation
+      /// </summary>
+      [Action("backupfrom", Needed=true)]
+      public string BackupFrom
+      {
+
+         set {
+            this._strSqlServer = value;
+         }
+      }
+
+      /// <summary>
+      /// property FileName -
+      ///     sets the name of file for backup
+      /// </summary>
+      [Action("filename", Needed=true)]
+      public new string FileName
+      {
+
+         set {
+            this._strFileName = value;
+         }
+      }
+
+      /// <summary>
+      /// property BackupTo -
+      ///     set the path where the backup database
+      ///     file will be put to
+      /// </summary>
+      [Action("backupto", Needed=true)]
+      public string BackupTo
+      {
+
+         set {
+            string strPathName = Path.GetDirectoryName(value);
+            DirectoryInfo di = new DirectoryInfo ( strPathName );
+
+            if ( !di.Exists )
+               Directory.CreateDirectory( strPathName );
+
+            this._strBackupTo = strPathName                 +
+                                Path.DirectorySeparatorChar +
+                                this._strFileName;
+         }
+      }
+
+      /// <summary>
+      /// property UserName -
+      ///     set the user name will be use to
+      ///     connect to a given SQL Server if
+      ///     trusted connection is not used.
+      /// </summary>
+      [Action("username", Needed=false)]
+      public string UserName
+      {
+
+         get {
+            return this._strUserName;
+         }
+
+         set {
+            this._strUserName = value;
+         }
+      }
+
+      /// <summary>
+      /// property UserPassword -
+      ///     set the password associates with
+      ///     a given user.
+      /// </summary>
+      [Action("userpassword", Needed=false)]
+      public string UserPassword
+      {
+
+         get {
+            return this._strUserPassword;
+         }
+
+         set {
+            this._strUserPassword = value;
+         }
+      }
+
+      /// <summary>
+      /// property BackupDatabaseName -
+      ///     set the Database for a given SQL Server
+      ///     to be backup.
+      /// </summary>
+      [Action("backupdbname", Needed=true)]
+      public string BackupDatabaseName
+      {
+
+         get {
+            return this._strBackupDbName;
+         }
+
+         set {
+            this._strBackupDbName = value;
+         }
+      }
+
+      /// <summary>
+      /// property TrustedConnection -
+      ///     set a flag that indicates if trusted connection
+      ///     is used.
+      /// </summary>
+      [Action("trustedconnection", Needed=false, Default="true")]
+      public string TrustedConnection
+      {
+
+         set  {
+            this._bTrustedConnection = bool.Parse( value.ToString() );
+         }
+      }
+
+      /// <summary>
+      /// property AllowGenerateException -
+      ///     get/set a flag that tells whether DBBackup object should
+      ///     generate an exception automatically.
+      /// </summary>
+      [Action("generateexception", Needed=false, Default="false")]
+      public new string AllowGenerateException
+      {
+
+         set {
+            try {
+               this._bAllowGenerateException =
+                  bool.Parse( value.ToString() );
+
+            } catch ( Exception ) {
+               base.FatalErrorMessage( ".",
+                                       String.Format("{0}: boolean value parsing error",
+                                                     this.Name), 1660, false);
+            }
+         }
+      }
+
+      /// <summary>
+      /// set a flag to indicate if the action should be run or not
+      /// </summary>
+      [Action("runnable", Needed=false, Default="true")]
+      public new string Runnable
+      {
+
+         set {
+            base.Runnable = bool.Parse( value );
+         }
+      }
+
+      /// <summary>
+      /// set flag to indicate if object is going to skip any error
+      /// </summary>
+      [Action("skiperror", Needed=false, Default="false")]
+      public new string SkipError
+      {
+
+         set {
+            base.SkipError = bool.Parse( value );
+         }
+      }
+
+      /// <summary>
+      /// Private BackupDatabase() - a private method that use to
+      ///                            backup database from a given database server
+      /// </summary>
+      private void BackupDatabase () {
+         if ( this._bAllowGenerateException ) {
+            this._strExitMessage =
+               String.Format( " {0} request generates an exception! ", this.Name );
+            base.LogItWithTimeStamp( this._strExitMessage );
+            throw new Exception();
+         }
+
+         base.LogItWithTimeStamp (
+
+            String.Format("start backing up database:{0} to file:{1}",
+                          this.DatabaseName, this._strBackupTo) );
+
+         // setup required parameters for calling SQLBackup method from SQLDMO
+         // object
+         _bkBackupObj.Database   = this.DatabaseName;
+         _bkBackupObj.Files      = this._strBackupTo;
+         _bkBackupObj.Initialize = this._bInitBackupDatabase;
+
+         // setup callbackup function and invoke SQLBackup method.
+         _bkBackupObj.PercentComplete +=
+            new BackupSink_PercentCompleteEventHandler(_bkBackupObj_PercentComplete);
+         _bkBackupObj.SQLBackup( _mSQLServer );
+         base.LogItWithTimeStamp(
+            String.Format("backup database {0} to {1} complete successfully",
+                          this.DatabaseName, this._strBackupTo) );
+      }
+
+      /// <summary>
+      /// private void ConnectServer() -
+      ///     Connect to a given SQL Server.
+      ///     If isTrustedConnectionOn is true then
+      ///     we use Windows Authentication; otherwise,
+      ///     user name and password is requred to
+      ///     connect to a given server
+      /// </summary>
+      private void ConnectServer () {
+         if ( _mSQLServer != null )
+            return;
+
+         try {
+            _mSQLServer = new SQLServer ();
+
+            if ( this._bTrustedConnection )
+               _mSQLServer.LoginSecure = true;
+
+            _mSQLServer.Connect( this._strSqlServer, this.UserName, this.UserPassword );
+
+            if ( _mSQLServer != null )
+               _bkBackupObj = new Interop.SQLDMO.BackupClass ();
+
+         } catch ( Exception e ) {
+            this._strExitMessage =
+               String.Format( "{0} unable to connect to SQL Server {1}, Message {2}",
+                              this.Name, this._strSqlServer, e.Message );
+            base.FatalErrorMessage( ".", this.ExitMessage, 1660, false );
+         }
+      }
+
+#endregion
+
+#region public methods
+      /// <summary>
+      /// public override void Execute() -
+      ///     is an override method that calls
+      ///     base class's Execute method to
+      ///     perform backup operation.
+      /// </summary>
+      public override void Execute() {
+         base.Execute();
+      }
+
+      protected override void ParseActionElement() {
+         base.ParseActionElement();
+         this.ConnectServer();
+         this.BackupDatabase();
+         base.IsComplete = true;
+      }
+
+#endregion
+
+      /// <summary>
+      /// This is a callback function that shows the percentage complete
+      /// so far by the backup operation.
+      /// </summary>
+      /// <param name="strMsg">message indicate the backup process</param>
+      /// <param name="iPercent">percentage completed so far</param>
+      protected virtual void _bkBackupObj_PercentComplete
+      ( string strMsg, int iPercent ) {
+         base.LogItWithTimeStamp ( strMsg );
+      }
+
+#region ICleanUp Members
+
+      /// <summary>
+      /// public void RemoveIt() -
+      ///     a method derives from ICleanUp interface
+      ///     that perform a cleanup operation if it is
+      ///     required. It will remove the backup database
+      ///     file from the location where it is.
+      /// </summary>
+      public void RemoveIt() {
+         // TODO:  Add DBBackup.RemoveIt implementation
+
+         if ( Directory.Exists ( this._strBackupTo ) )
+            Directory.Delete( this._strBackupTo, true );
+      }
+
+#endregion
+
+#region IAction Members
+
+      /// <summary>
+      /// property ExitMessage -
+      ///     gets a message that cause Action abort
+      /// </summary>
+      public new string ExitMessage
+      {
+
+         get {
+            return this._strExitMessage;
+         }
+      }
+
+      /// <summary>
+      /// property ExitCode -
+      ///     gets exit code from the Action
+      /// </summary>
+      public new int ExitCode
+      {
+
+         get {
+            return this._iExitCode;
+         }
+      }
+
+      public bool IsCompelete
+      {
+
+         get {
+            return base.IsComplete;
+         }
+      }
+      /// <summary>
+      /// property Name -
+      ///     gets the name of constructor
+      /// </summary>
+      public new string Name
+      {
+
+         get {
+            return this.GetType().Name.ToLower();
+         }
+      }
+
+      protected override string ObjectName {
+
+         get {
+            return this.Name;
+         }
+      }
+
+#endregion
+   }
+}
+
+
+
+
+
+
+
+
+

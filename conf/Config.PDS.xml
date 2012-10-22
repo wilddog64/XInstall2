@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<setup>
+     <package name="Project Server - PDS call testing" 
+              runnable="true"
+              packagedir="."
+              actiondllpath="Custom.Actions.PDSClient.dll"
+              description="testing PDSClient.cs">
+              <pds projsrv="chengkai-01:88" 
+                   runnable="true"
+                   fromdb="true"
+                   >
+
+		     <!--
+		     <psusers fromfile="resource.dat" batchsize="0" />
+                     <pdsnewusers fromfile="users1.dat"
+                                  headerline="true"
+                                  batchsize="1" />
+		     -->
+                     <projectcheckout projecttype="resource_global" />
+                     <loadresources datasource="chengkai-01"
+                                    initcatalog="rpmbuild"
+                                    dbtable="resource"
+                                    batchsize="1" 
+                                    limit="10" />
+		     <projectcheckin projecttype="resource_global" />
+	     </pds>
+    </package>
+</setup>

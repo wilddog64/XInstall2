@@ -1,0 +1,3 @@
+obj\Debug\XInstall2.exe
+obj\Debug\XInstall2.pdb
+obj\Debug\ResolveAssemblyReference.cache

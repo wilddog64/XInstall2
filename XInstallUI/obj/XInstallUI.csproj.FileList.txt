@@ -1,0 +1,8 @@
+bin\Debug\XInstallUI.exe
+bin\Debug\XInstallUI.pdb
+obj\Debug\ResolveAssemblyReference.cache
+obj\Debug\XInstallUI.BuildDeploy.resources
+obj\Debug\XInstallUI.Properties.Resources.resources
+obj\Debug\XInstallUI.csproj.GenerateResource.Cache
+obj\Debug\XInstallUI.exe
+obj\Debug\XInstallUI.pdb

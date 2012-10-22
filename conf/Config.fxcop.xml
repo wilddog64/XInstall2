@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<setup>
+    <package name="RPMANI"
+             runnable="true"
+             packagedir="."
+             description="RPM Developement Installation for \\tkfsani01">
+<!--
+       <iisweb action="stop"
+                targetserver="tkfsani01"
+                websitename="RPMDEV"
+                websiteroot="e:\inetpub\RPMDev"
+                websitehostname="RPMDev"
+                dontstart="true"
+                port="95" />
+        <exec progname="c:\utils\CodeExam\MSFxCop\fxcopcmd.exe"
+             arguments="/p:c:\projects\XInstall2\bin\XInstall2.fxcop" />
+-->
+        <fxcop codebase="c:\utils\CodeExam\MSFxCop"
+               project="XInstall2.fxcop" />
+<!--
+       <robocopy action="mir"
+                 sourcedirectory="e:\RPMBuild\RRQ"
+                 destinationdirectory="\\tkfsani01\e$\inetpub\RPMDEV\RRQ"
+                 generateexception="false"  />
+                 
+       <robocopy action="mir"
+                 sourcedirectory="e:\RPMBuild\RPM_WS"
+                 destinationdirectory="\\tkfsani01\c$\inetpub\RPMDEV\RPM_WS"
+                 generateexception="false"  />
+
+
+        <iisvdir action="create"
+                 targetserver="tkfsani01"
+                 skiperror="true"
+                 websitename="RPMDEV"
+                 appfriendlyname="RRQ"
+                 virtualdirname="RRQ"
+                 mappath="e:\inetpub\RPMDev\RRQ" />
+
+        <iisvdir action="create"
+                 targetserver="tkfsani01"
+		     skiperror="true"
+                 websitename="RPMDEV"
+                 appfriendlyname="RPM_WS"
+                 virtualdirname="RPM_WS"
+                 mappath="e:\inetpub\RPMDev\RPM_WS" />
+
+        <iisweb action="start"
+                targetserver="tkfsani01"
+   	          skiperror="true"
+                websitename="RPMDEV"
+                websiteroot="e:\inetpub\RPMDEV"
+                websitehostname="tkfsdevi01" />
+-->
+    </package>
+
+
+<!--
+    <package name="RPMDEV"	
+             runnable="true"
+             packagedir="."
+             description="RPM Developement Installation">
+
+       <iisweb action="stop"
+                targetserver="chengkai-01"
+                websitename="RPMDEV"
+                websiteroot="c:\inetpub\RPMDev"
+                websitehostname="RPMDev"
+                dontstart="true"
+                port="85" />
+
+       <exec progname="E:\RPMBuild\RPM_DB\setup.bat"
+             arguments="chengkai-01, rpmdb" />
+
+       <robocopy action="mir"
+                 sourcedirectory="e:\RPMBuild\RRQ"
+                 destinationdirectory="\\chengkai-01\c$\inetpub\RPMDEV\RRQ"
+                 generateexception="false"  />
+                 
+       <robocopy action="mir"
+                 sourcedirectory="e:\RPMBuild\RPM_WS"
+                 destinationdirectory="\\chengkai-01\c$\inetpub\RPMDEV\RPM_WS"
+                 generateexception="false" />
+
+        <iisvdir action="create"
+                 targetserver="chengkai-01"
+                 skiperror="true"
+                 websitename="RPMDEV"
+                 appfriendlyname="RRQ"
+                 virtualdirname="RRQ"
+                 mappath="c:\inetpub\RPMDev\RRQ" />
+
+        <iisvdir action="create"
+                 targetserver="chengkai-01"
+		     skiperror="true"
+                 websitename="RPMDEV"
+                 appfriendlyname="RPM_WS"
+                 virtualdirname="RPM_WS"
+                 mappath="c:\inetpub\RPMDev\RPM_WS" />
+
+        <iisweb action="start"
+                targetserver="chengkai-01"
+   	          skiperror="true"
+                websitename="RPMDEV"
+                websiteroot="c:\inetpub\RPMDEV"
+                websitehostname="tkfsdevi01" />
+    </package>
+-->
+</setup>

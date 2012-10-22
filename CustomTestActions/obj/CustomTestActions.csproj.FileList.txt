@@ -1,0 +1,15 @@
+bin\Debug\CustomTestActions.dll
+bin\Debug\CustomTestActions.pdb
+bin\Debug\XInstall.Core.dll
+bin\Debug\XInstall.Util.dll
+bin\Debug\ControlPool.dll
+bin\Debug\iControlProxy.dll
+bin\Debug\ControlPool.pdb
+bin\Debug\XInstall.Core.pdb
+bin\Debug\XInstall.Util.pdb
+bin\Debug\iControlProxy.pdb
+obj\Debug\ResolveAssemblyReference.cache
+obj\Debug\CustomTestActions.dll
+obj\Debug\CustomTestActions.pdb
+..\build\bin\debug\CustomTestActions.dll
+..\build\bin\debug\CustomTestActions.pdb

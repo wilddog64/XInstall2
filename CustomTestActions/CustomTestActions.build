@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="Windows-1252"?>
+<project name="CustomTestActions.Path" default="build">
+  <target name="build" description="${project_description}">
+    <!--csc compiling task-->
+    <csc target="library" output="${CustomTestActions.Path}\bin\${CustomTestActionsLib}" debug="${debug}">
+      <!--library we need to references-->
+      <references basedir="${CustomTestActions.Path}">
+        <includes name="C:\WINDOWS\Microsoft.NET\Framework\v1.1.4322\System.dll" />
+        <includes name="C:\WINDOWS\Microsoft.NET\Framework\v1.1.4322\System.Data.dll" />
+        <includes name="C:\WINDOWS\Microsoft.NET\Framework\v1.1.4322\System.XML.dll" />
+        <includes name="C:\projects\DotNet\1.1\XInstall2\bin\..\Core\bin\${CoreLib}" />
+        <includes name="C:\projects\DotNet\1.1\XInstall2\bin\..\Util\bin\${UtilLib}" />
+      </references>
+      <!--source files that needed to be compiled-->
+      <sources basedir="${CustomTestActions.Path}">
+        <includes name="AssemblyInfo.cs" />
+        <includes name="PerfMon\PerfMon.cs" />
+        <includes name="PerfMon\PerfMonAttribute.cs" />
+        <includes name="PerfMon\PerfMonCounter.cs" />
+        <includes name="PerfMon\PerfMonCounterCategory.cs" />
+        <includes name="PerfMon\PerfMonCounterCategoryCollection.cs" />
+        <includes name="PerfMon\PerfMonCounterCollection.cs" />
+        <includes name="SQLTest\ISQLTest.cs" />
+        <includes name="SQLTest\SQL.cs" />
+        <includes name="SQLTest\SQLAttribute.cs" />
+        <includes name="SQLTest\SQLTest.cs" />
+        <includes name="SQLTest\SQLTestCollection.cs" />
+        <includes name="SQLTest\StoredProc.cs" />
+        <includes name="SQLTest\StoredProcCollection.cs" />
+        <includes name="WebTest\URL.cs" />
+        <includes name="WebTest\URLAttribute.cs" />
+        <includes name="WebTest\URLCollection.cs" />
+        <includes name="WebTest\WebTest.cs" />
+      </sources>
+    </csc>
+    <!--copy required dll components-->
+    <copy todir="${CustomTestActions.Path}\bin" overwrite="true">
+      <fileset>
+        <includes name="C:\projects\DotNet\1.1\XInstall2\bin\..\Core\bin\${CoreLib}" />
+        <includes name="C:\projects\DotNet\1.1\XInstall2\bin\..\Util\bin\${UtilLib}" />
+      </fileset>
+    </copy>
+  </target>
+</project>

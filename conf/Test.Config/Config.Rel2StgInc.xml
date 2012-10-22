@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<setup>
+    <package name="release_to_staging_incmental"
+             runnable="true"
+             packagedir="."
+             description="incremental rollout"
+             onbeforestart="BeforeRollOut"
+             onsuccess="ActionSuccess" 
+             onfail = "ActionFail" >
+                                   
+       <defvar name="rel_sitename"       value="ads.180solutions.com" />
+
+<!--   This is a production environment variables
+       <defvar name="prod_server_dir"    value="\\sinhis01\web\${rel_sitename}" />
+       <defvar name="release_server_dir" value ="\\inf01.180Solutions.com\release\web\${rel_sitename}\release" />
+       <defvar name="staging_server_dir" value="\\sinstg01\staging\${rel_sitename}" />
+-->
+       <defvar name="prod_server_dir"    value="\\seaitweb03\web\${rel_sitename}" />
+       <defvar name="release_server_dir" value="\\seaitweb01\c$\Rollout\release\web\${rel_sitename}\release" />
+       <defvar name="archive_server_dir" value="\\seaitweb01\c$\Rollout\release\web\${rel_sitename}\archive\${current_date}" />
+       <defvar name="staging_server_dir" value="\\seaitweb02\staging\${rel_sitename}" />
+
+       <!-- here are variables for sending an email -->
+       <defvar name="recipients"     value="${logon_user}@180Solutions.com" />
+       <defvar name="script_runner"  value="${logon_user}" />
+       <defvar name="machine_name"   value="${computer_name}" /> 
+       <defvar name="rollout_type"   value="${PackageDesc}" />
+       <defvar name="subject"        value="website: ${rel_sitename} ${PackageName} start" />
+       <defvar name="message"
+               value="${friendly_current_date}: ${rollout_type}, sync content from ${release_server_dir} to ${staging_server_dir} by ${logon_user}" />
+       <defvar name="msg"            
+            value="${message}" />
+
+       <defvar name="RoboCopyPath"   value="c:\tools\bin" />
+       <defvar name="Sender"         value="${logon_user}@180Solutions.com" />
+       <defvar name="mailserver"     value="smtp.180prod.com" />
+   
+       <!-- copy production version to staging first -->
+       <robocopy action="copysub"
+                 basepath="${RoboCopyPath}"
+                 sourcedirectory="${prod_server_dir}"
+                 destinationdirectory="\\${staging_server_dir}"
+                 createdestdir="true"
+                 runnable="true" />
+
+       <robocopy action="copysub"
+                 basepath="${RoboCopyPath}"
+                 sourcedirectory="${release_server_dir}"
+                 destinationdirectory="${staging_server_dir}"
+                 createdestdir="true"
+                 runnable="true" />
+
+
+       <ActionSuccess>
+            <robocopy action="move"
+                      basepath="${RoboCopyPath}"
+                      sourcedirectory="${release_server_dir}"
+                      destinationdirectory="${archive_server_dir}"
+                      copysub="true"
+                      copyempty="true"
+                      createdestdir="true"
+                      runnable="true" />
+
+                 <mkdir dirname="${release_server_dir}" />
+
+            <smtpmail sender="${sender}"
+                      subject="${subject}"
+                      recipients="${recipients}"
+                      smtpserver="${mailserver}"
+                      filterloginfo="copy\s+((?:from|to).+)"
+                      runnable="true"
+                      message="${friendly_current_date}: 
+                              ${rollout_type} complete successfully with following content (Check sync log in 
+                              &#60;A href='${current_unc_directory}\logs'&#62;${current_unc_directory}\logs&#60;/A&#62;, 
+                              sync by ${logon_user}):&#60;BR&#62;" />
+
+       </ActionSuccess>
+
+       <ActionFail>
+            <smtpmail sender="${sender}"
+                      subject="${friendly_current_date}: ${rollout_type} failed"
+                      recipients="${recipients}"
+                      smtpserver="${mailserver}"
+                      message="the following content failed to rollout,"
+                      filterloginfo="robocopy" />
+       </ActionFail>
+
+       <BeforeRollOut>
+
+            <smtpmail sender="${sender}"
+                      subject="${subject}"
+                      recipients="${recipients}"
+                      smtpserver="${mailserver}"
+                      runnable="true"
+                      message="${msg}" />
+
+       </BeforeRollOut>
+
+    </package>
+</setup>

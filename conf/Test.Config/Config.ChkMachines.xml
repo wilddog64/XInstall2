@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<setup>
+     <package name="Active Directory Searching"
+              runnable="true"
+              packagedir="."
+              description="check machines">
+
+              <regkey action="open" 
+                      machinename="irvweb01" />
+     </package>
+</setup>

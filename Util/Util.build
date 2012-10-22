@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="Windows-1252"?>
+<project name="XInstall.Util" default="util.build">
+  <property name="Util.Path" value="./bin" />
+  <property name="UtilLib"   value="XInstall.Util.dll" />
+  <property name="debug" value="true" />
+  <target name="util.build" description="Build XInstall.Util.dll">
+    
+    <csc target="library" output="${Util.Path}/${UtilLib}">
+      <sources basedir=".">
+        <include name="*.cs" />
+      </sources>
+    </csc>
+
+    <copy file="./bin/${UtilLib}" tofile="../Core/bin/${UtilLib}" overwrite="true" />
+
+  </target>
+</project>

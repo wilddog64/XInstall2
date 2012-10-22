@@ -1,0 +1,238 @@
+<setup xmlns="">
+  <package name="Ops System - Testing Package" 
+       Enable="true" 
+       actiondllpath="XInstall.CustomTestActions.dll" 
+       description="testing all components">
+
+    <PerfMon Enable="true" DisplayName="Testing PerfMon Counters">
+          
+           <CounterCategory MachineName="sinads01" CounterCategoryName="Web Service" DisplayName="SINADS01" Enable="true">
+                <Counter Name="Post Requests/sec" 
+                         InstanceName="_Total" 
+                         LowThreshold="0" 
+                         HighThreshold="200" 
+                         Enable="true" 
+                         DisplayName="sinads01 Web Service PostRequest/sec" />
+           </CounterCategory>
+
+           <CounterCategory MachineName="sinads02" CounterCategoryName="Web Service" DisplayName="SINADS02" Enable="true">
+                <Counter Name="Post Requests/sec" 
+                         InstanceName="_Total" 
+                         LowThreshold="0" 
+                         HighThreshold="200" 
+                         Enable="true" 
+                         DisplayName="sinads02 Web Service PostRequest/sec" />
+           </CounterCategory>
+
+           <CounterCategory MachineName="sinads03" CounterCategoryName="Web Service" DisplayName="SINADS03" Enable="true">
+                <Counter Name="Post Requests/sec" 
+                         InstanceName="_Total" 
+                         LowThreshold="0" 
+                         HighThreshold="200" 
+                         Enable="true" 
+                         DisplayName="sinads03 Web Service PostRequest/sec" />
+           </CounterCategory>
+
+           <CounterCategory MachineName="sinads04" CounterCategoryName="Web Service" DisplayName="SINADS04" Enable="true">
+                <Counter Name="Post Requests/sec" 
+                         InstanceName="_Total" 
+                         LowThreshold="0" 
+                         HighThreshold="200" 
+                         Enable="true" 
+                         DisplayName="sinads04 Web Service PostRequest/sec" />
+           </CounterCategory>
+
+           <CounterCategory MachineName="sinads05" CounterCategoryName="Web Service" DisplayName="SINADS05" Enable="true">
+                <Counter Name="Post Requests/sec" 
+                         InstanceName="_Total" 
+                         LowThreshold="0" 
+                         HighThreshold="200" 
+                         Enable="true" 
+                         DisplayName="sinads05 Web Service PostRequest/sec" />
+           </CounterCategory>
+
+           <CounterCategory MachineName="sinads06" CounterCategoryName="Web Service" DisplayName="SINADS06" Enable="true">
+                <Counter Name="Post Requests/sec" 
+                         InstanceName="_Total" 
+                         LowThreshold="0" 
+                         HighThreshold="200" 
+                         Enable="true" 
+                         DisplayName="sinads06 Web Service PostRequest/sec" />
+           </CounterCategory>
+
+           <CounterCategory MachineName="sinads07" CounterCategoryName="Web Service" DisplayName="SINADS07" Enable="true">
+                <Counter Name="Post Requests/sec" 
+                         InstanceName="_Total" 
+                         LowThreshold="0" 
+                         HighThreshold="200" 
+                         Enable="true" 
+                         DisplayName="sinads07 Web Service PostRequest/sec" />
+           </CounterCategory>
+
+           <CounterCategory MachineName="sinads08" CounterCategoryName="Web Service" DisplayName="SINADS08" Enable="true">
+                <Counter Name="Post Requests/sec" 
+                         InstanceName="_Total" 
+                         LowThreshold="0" 
+                         HighThreshold="200" 
+                         Enable="true" 
+                         DisplayName="sinads08 Web Service PostRequest/sec" />
+           </CounterCategory>
+
+           <CounterCategory MachineName="sinads09" CounterCategoryName="Web Service" DisplayName="SINADS09" Enable="true">
+                <Counter Name="Post Requests/sec" 
+                         InstanceName="_Total" 
+                         LowThreshold="0" 
+                         HighThreshold="200" 
+                         Enable="true" 
+                         DisplayName="sinads09 Web Service PostRequest/sec" />
+           </CounterCategory>
+
+           <CounterCategory MachineName="sinads10" CounterCategoryName="Web Service" DisplayName="SINADS10" Enable="true">
+                <Counter Name="Post Requests/sec" 
+                         InstanceName="_Total" 
+                         LowThreshold="0" 
+                         HighThreshold="200" 
+                         Enable="true" 
+                         DisplayName="sinads10 Web Service PostRequest/sec" />
+           </CounterCategory>
+
+           <CounterCategory MachineName="sinads11" CounterCategoryName="Web Service" DisplayName="SINADS11" Enable="true">
+                <Counter Name="Post Requests/sec" 
+                         InstanceName="_Total" 
+                         LowThreshold="0" 
+                         HighThreshold="200" 
+                         Enable="true" 
+                         DisplayName="sinads11 Web Service PostRequest/sec" />
+           </CounterCategory>
+
+           <CounterCategory MachineName="sinads12" CounterCategoryName="Web Service" DisplayName="SINADS12" Enable="true">
+                <Counter Name="Post Requests/sec" 
+                         InstanceName="_Total" 
+                         LowThreshold="0" 
+                         HighThreshold="200" 
+                         Enable="true" 
+                         DisplayName="sinads12 Web Service PostRequest/sec" />
+           </CounterCategory>
+
+
+           <CounterCategory MachineName="sinads14" CounterCategoryName="Web Service" DisplayName="SINADS14" Enable="true">
+                <Counter Name="Post Requests/sec" 
+                         InstanceName="_Total" 
+                         LowThreshold="0" 
+                         HighThreshold="200" 
+                         Enable="true" 
+                         DisplayName="sinads14 Web Service PostRequest/sec" />
+           </CounterCategory>
+
+    </PerfMon>
+
+         <WebTest runnable="true" DisplayName="BIS ADS">
+              <URL DisplayName="bisads" 
+                   Enable="true"
+                   URLString="http://bisads.180solutions.com/showme.aspx?did=999&#38;duid=monitor&#38;ver=6.9&#38;keyword=180SolutionsDannyVoTestGAD&#38;rnd=3&#38;partner_id=412823104&#38;mt=monitor&#38;qsc=0174076D66B93CB241722350C8EC78EB7CF9F81766A225D66FDD653C76712D019D" ResponseTime="3">
+              </URL>
+         </WebTest>
+
+
+         <WebTest runnable="true" DisplayName="one.eightys">
+              <URL DisplayName="180sa1"        URLString="http://180sa1.180prod.com/home.html"         Enable="true" ResponseTime="3" />
+              <URL DisplayName="180sa2"        URLString="http://180sa2.180prod.com/home.html"         Enable="true" ResponseTime="3" />
+              <URL DisplayName="1801"          URLString="http://1801.180prod.com/"                    Enable="true" ResponseTime="3" />
+              <URL DisplayName="1802"          URLString="http://1801.180prod.com/"                    Enable="true" ResponseTime="3" />
+         </WebTest>
+
+         <WebTest runnable="true" DisplayName="captioncities">
+              <URL DisplayName="captioncity" URLString="http://www.captioncity.com" Enable="true" ResponseTime="3" />
+              <URL DisplayName="captioncity1"  URLString="http://cc1.180prod.com/" Enable="true" ResponseTime="3" />
+              <URL DisplayName="captioncity2"  URLString="http://cc2.180prod.com/" Enable="true" ResponseTime="3" />
+         </WebTest>
+
+         <WebTest runnable="true" DisplayName="dpa">
+              <URL DisplayName="dpa horo"      URLString="http://astrology.zango.com/HoroscopeService.asmx" Enable="true" ResponseTime="3" />
+              <URL DisplayName="dpa movie"     URLString="http://movietimes.zango.com/MovieTimeService.asmx" Enable="true" ResponseTime="3" />
+              <URL DisplayName="dpa tv"        URLString="http://tvtimes.zango.com/TVTimesService.asmx" Enable="true" ResponseTime="3" />
+              <URL DisplayName="dpa weather"   URLString="http://weather.zango.com/WeatherService.asmx" Enable="true" ResponseTime="3" />
+         </WebTest>
+
+         <WebTest runnable="true" DisplayName="games.zango">
+              <URL DisplayName="gz1"           URLString="http://gz1.180prod.com/"  Enable="true" ResponseTime="3" />
+              <URL DisplayName="gz2"           URLString="http://gz2.180prod.com/"  Enable="true" ResponseTime="3" />
+              <URL DisplayName="igz1"          URLString="http://igz1.180prod.com/" Enable="true" ResponseTime="3" />
+              <URL DisplayName="igz2"          URLString="http://igz2.180prod.com/" Enable="true" ResponseTime="3" />
+              <URL DisplayName="igz3"          URLString="http://igz3.180prod.com/" Enable="true" ResponseTime="3" />
+              <URL DisplayName="igz4"          URLString="http://igz4.180prod.com/" Enable="true" ResponseTime="3" />
+         </WebTest>
+
+         <WebTest runnable="true" DisplayName="inf">
+              <URL DisplayName="iinf1"         URLString="http://iinf1.180prod.com/gateway/newgroundsinstall.aspx?productid=542&#38;val=526621&#38;referer=http%3A%2F%2Finfinity.zango.com%2Fsitetests%2Fdetectioncheck.aspx%3Fproductid%3D542" Enable="true" ResponseTime="3" />
+              <URL DisplayName="iinf2"         URLString="http://iinf2.180prod.com/gateway/newgroundsinstall.aspx?productid=542&#38;val=526621&#38;referer=http%3A%2F%2Finfinity.zango.com%2Fsitetests%2Fdetectioncheck.aspx%3Fproductid%3D542" Enable="true" ResponseTime="3" />
+              <URL DisplayName="iinf3"         URLString="http://iinf3.180prod.com/gateway/newgroundsinstall.aspx?productid=542&#38;val=526621&#38;referer=http%3A%2F%2Finfinity.zango.com%2Fsitetests%2Fdetectioncheck.aspx%3Fproductid%3D542" Enable="true" ResponseTime="3" />
+              <URL DisplayName="iinf4"         URLString="http://iinf4.180prod.com/gateway/newgroundsinstall.aspx?productid=542&#38;val=526621&#38;referer=http%3A%2F%2Finfinity.zango.com%2Fsitetests%2Fdetectioncheck.aspx%3Fproductid%3D542" Enable="true" ResponseTime="3" />
+              <URL DisplayName="inf1"          URLString="http://inf1.180prod.com/gateway/newgroundsinstall.aspx?productid=542&#38;val=526621&#38;referer=http%3A%2F%2Finfinity.zango.com%2Fsitetests%2Fdetectioncheck.aspx%3Fproductid%3D542" Enable="true" ResponseTime="3" />
+              <URL DisplayName="inf2"          URLString="http://inf2.180prod.com/gateway/newgroundsinstall.aspx?productid=542&#38;val=526621&#38;referer=http%3A%2F%2Finfinity.zango.com%2Fsitetests%2Fdetectioncheck.aspx%3Fproductid%3D542" Enable="true" ResponseTime="3" />
+          </WebTest>
+
+
+         <WebTest runnable="true" DisplayName="lp">
+              <URL DisplayName="lp1-4376"      URLString="http://lp1.180prod.com/?BID=4376"                 Enable="true" ResponseTime="3" />
+              <URL DisplayName="lp1-4513"      URLString="http://lp1.180prod.com/?BID=4513"                 Enable="true" ResponseTime="3" />
+              <URL DisplayName="lp2-4376"      URLString="http://lp2.180prod.com/?BID=4376"                 Enable="true" ResponseTime="3" />
+              <URL DisplayName="lp2-4513"      URLString="http://lp2.180prod.com/?BID=4513"                 Enable="true" ResponseTime="3" />
+              <URL DisplayName="lp3-4376"      URLString="http://lp3.180prod.com/?BID=4376"                 Enable="true" ResponseTime="3" />
+              <URL DisplayName="lp3-4513"      URLString="http://lp3.180prod.com/?BID=4513"                 Enable="true" ResponseTime="3" />
+              <URL DisplayName="lp4-4376"      URLString="http://lp4.180prod.com/?BID=4376"                 Enable="true" ResponseTime="3" />
+              <URL DisplayName="lp4-4513"      URLString="http://lp4.180prod.com/?BID=4513"                 Enable="true" ResponseTime="3" />
+         </WebTest>
+
+         <WebTest runnable="true" DisplayName="md">
+             <URL DisplayName="md1"           URLString="http://md1.180prod.com/"                          Enable="true" ResponseTime="3" />
+             <URL DisplayName="md2"           URLString="http://md2.180prod.com/"                          Enable="true" ResponseTime="3" />
+             <URL DisplayName="mdexternal"    URLString="http://www.metricsdirect.com/"                    Enable="true" ResponseTime="3" />
+         </WebTest>
+
+         <WebTest runnable="true" DisplayName="misc web urls">
+              <URL DisplayName="config" 
+                   URLString="http://bis.180solutions.com/config.aspx?did=999&#38;duid=monitor&#38;ver=6.9&#38;rnd=3&#38;partner_id=412823104&#38;mt=monitor&#38;qsc=0174076D66B93CB241722350C8EC78EB7CF9F81766A225D66FDD653C76712D019D" 
+                   Enable="true" ResponseTime="3" />
+              <URL DisplayName="downloads180" URLString="http://downloads.180solutions.com/" Enable="true" ResponseTime="3" />
+              <URL DisplayName="infinity"     URLString="http://infinity.zango.com/gateway/newgroundsinstall.aspx?productid=542&#38;val=526621&#38;referer=http%3A%2F%2Finfinity.zango.com%2Fsitetests%2Fdetectioncheck.aspx%3Fproductid%3D542" Enable="true" ResponseTime="3" />
+              <URL DisplayName="installs180" URLString="http://installs.180solutions.com/downloads/couche.jpg" Enable="true" ResponseTime="3" />
+              <URL DisplayName="lp4376"      URLString="http://lp.zango.com/?BID=4376" Enable="true" ResponseTime="3" />
+              <URL DisplayName="reports"     URLString="http://reports.metricsdirect.com/ReportServer?%2FMetrics+Direct+Reports%2FVisitors+per+Month&#38;SalesRelationshipId=6672&#38;userid=MDkeynote&#38;password=fsttest1&#38;begin_date=9%2F1%2F2004+12%3A00%3A00+AM&#38;end_date=10%2F31%2F2004+12%3A00%3A00+AM&#38;rs%3ACommand=Render&#38;rs%3AFormat=HTML4.0&#38;rc%3AToolbar=true&#38;rc%3AZoom=Page+Width&#38;rc%3AParameters=collapsed&#38;rc%3ADocMap=true&#38;rc%3AJavaScript=True&#38;rc%3ALinkTarget=_top&#38;rc%3AArea=Report" Enable="true" ResponseTime="3" />
+              <URL DisplayName="metricsdirect" URLString="http://www.metricsdirect.com/"               Enable="true" ResponseTime="3" />
+              <URL DisplayName="gameszango"    URLString="http://games.zango.com/"                     Enable="true" ResponseTime="3" />
+              <URL DisplayName="180"           URLString="http://www.180solutions.com"                 Enable="true" ResponseTime="3" />
+              <URL DisplayName="cts"           URLString="http://cts.metricsdirect.com"                Enable="true" ResponseTime="3" />
+              <URL DisplayName="downloads"     URLString="http://downloads.zango.com/keynote_test.htm" Enable="true" ResponseTime="3" />
+              <URL DisplayName="mail"          URLString="http://mail.180solutions.com/uptime.htm"     Enable="true" ResponseTime="3" />
+              <URL DisplayName="betagames"     URLString="http://beta.games.zango.com/" Enable="true" ResponseTime="3" />
+              <URL DisplayName="gameszangoext" URLString="http://games.zango.com/" Enable="true" ResponseTime="3" />
+              <URL DisplayName="geo1"          URLString="http://singeo01.180prod.com/geopointwebservice/geopointwebservice.asmx" Enable="true" ResponseTime="3" />
+              <URL DisplayName="ncase1"        URLString="http://ncase1.180prod.com/ncasehome.html"         Enable="true" ResponseTime="3" />
+              <URL DisplayName="ncase2"        URLString="http://ncase2.180prod.com/ncasehome.html"         Enable="true" ResponseTime="3" />
+              <URL DisplayName="nettracker"    URLString="http://sindb06.180prod.com/NetTracker/index.html" Enable="true" ResponseTime="3" />
+              <URL DisplayName="pz1"           URLString="http://pz1.180prod.com/"                          Enable="true" ResponseTime="3" />
+              <URL DisplayName="pz2"           URLString="http://pz2.180prod.com/"                          Enable="true" ResponseTime="3" />
+              <URL DisplayName="rs1"           URLString="http://rs1.180prod.com/ReportServer?%2FMetrics+Direct+Reports%2FVisitors+per+Month&#38;SalesRelationshipId=6672&#38;userid=MDkeynote&#38;password=fsttest1&#38;begin_date=9%2F1%2F2004+12%3A00%3A00+AM&#38;end_date=10%2F31%2F2004+12%3A00%3A00+AM&#38;rs%3ACommand=Render&#38;rs%3AFormat=HTML4.0&#38;rc%3AToolbar=true&#38;rc%3AZoom=Page+Width&#38;rc%3AParameters=collapsed&#38;rc%3ADocMap=true&#38;rc%3AJavaScript=True&#38;rc%3ALinkTarget=_top&#38;rc%3AArea=Report" Enable="true" ResponseTime="3" />
+         </WebTest>
+
+    <SQL Enable="true" DisplayName="Testing SQL">
+      <SQLTest DBServer="sindb09" Database="GTS" TrustedConnection="true" DisplayName="SINDB09" Enable="true">
+        <StoredProc Name="ToolsGetQueueSize" DisplayName="Test GTS" Enable="false">
+             <ExpectedResults DisplayName="GTSResult" 
+                              HighThreshold="100" 
+                              LowThreshold="20" 
+                              Enable="true"/>
+        </StoredProc>
+        <StoredProc Name="sp_who2" 
+                    TrustedConnection="true" 
+                    DisplayName="Check Database Existence">
+                    <ExpectedResults DisplayName="sp_who2_Result" 
+                                     ColName2LookFor="DBName" 
+                                     ExpectedString="GTS" 
+                                     Enable="true" />
+        </StoredProc>
+      </SQLTest>
+    </SQL>
+  </package>
+</setup>

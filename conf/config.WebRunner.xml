@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<setup>
+    <package name="web testing" runnable="false"
+             packagedir="."
+             description="WebRunner testing script">
+
+        <webrunner testname="sbproject"
+                   starturl="http://sbproject/projectserver"
+                   description="testing http://sbproject/projectserver website"
+                   weblogtype="/XML" weblogfilename="sbproject">
+
+           <defvar>
+               <var name="username"   value="Administrator" />
+               <var name="password"   value="(Longhorn" />
+               <var name="title"      value="Microsoft Office Project Web Access 2003 - sbproject" />
+               <var name="baseurl"    value="http://sbproject/projectserver" />
+               <var name="adminurl"   value=":baseurl/Admin/Admin.asp?_oid=-1" />
+               <var name="user_admin" value=":baseurl/Admin/Sec_Users.asp?_oid=-1" />
+               <var name="do_start"   value="start_testing" />
+               <var name="done"       value=" done, " />
+           </defvar>
+
+           <call label=":do_start" />
+           <print message="we are:donehappy time" />
+
+           <label name="start_testing">
+               <verify objecttype="title"  innertext=":title"
+                             expectedresult="false" />
+               <input  objecttype="textbox" name="UserName" TextToInput=":username" />
+               <input  objecttype="textbox" name="Password" TextToInput=":password" />
+               <click  objecttype="bytag"   tag="button" type="submit" id="logonBtn" />
+               <click  objecttype="link"    href=":adminurl" />
+               <click  objecttype="link"    href=":user_admin" />
+               <click  objecttype="bytag"   tag="button" id="idShowGridBtn" innertext="Show" />
+               <click  objecttype="bytag"
+                       tag="A"
+                       title="Click to export the current values in the grid for printing in Internet Explorer or Excel."
+                       id="idPrintGridLink"
+                       innertext="Print Grid" />
+
+               <findie objecttype="ie" title="Microsoft Office Project Web Access 2003 - Print Grid" />
+               <gethtmlattribute objecttype="bytag"
+                                 tag="body"
+                                 attributetoget="innerHTML"
+                                 searchfor="xml"
+                                 extractxml="true" />
+
+
+           </label>
+
+           <!--
+
+               <gethtmlattributebytag tag="
+           <getobjectbytag tag="xml" id="oXmlDataIsland" objecttoget="innerHTML" />
+           -->
+        </webrunner>
+    </package>
+</setup>

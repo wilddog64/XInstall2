@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="Windows-1252"?>
+<project name="XInstall2" default="build">
+   <property name="config" value="debug" />
+   <target name="build" description="build .net 2.0 XInstall2">
+      <solution configuration="${config}" solutionfile="XInstall2.sln" />
+   </target>
+</project>

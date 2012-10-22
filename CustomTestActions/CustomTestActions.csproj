@@ -1,0 +1,132 @@
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ProjectType>Local</ProjectType>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{9EE6CA08-7AB8-4D3A-86BF-A3D366C9D2E6}</ProjectGuid>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <AssemblyName>CustomTestActions</AssemblyName>
+    <DefaultClientScript>JScript</DefaultClientScript>
+    <DefaultHTMLPageLayout>Grid</DefaultHTMLPageLayout>
+    <DefaultTargetSchema>IE50</DefaultTargetSchema>
+    <DelaySign>false</DelaySign>
+    <OutputType>Library</OutputType>
+    <RootNamespace>CustomTestActions</RootNamespace>
+    <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <OutputPath>..\build\bin\debug\</OutputPath>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <BaseAddress>285212672</BaseAddress>
+    <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugSymbols>true</DebugSymbols>
+    <FileAlignment>4096</FileAlignment>
+    <NoStdLib>false</NoStdLib>
+    <Optimize>false</Optimize>
+    <RegisterForComInterop>false</RegisterForComInterop>
+    <RemoveIntegerChecks>false</RemoveIntegerChecks>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <WarningLevel>4</WarningLevel>
+    <DebugType>full</DebugType>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <OutputPath>bin\Release\</OutputPath>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <BaseAddress>285212672</BaseAddress>
+    <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
+    <DefineConstants>TRACE</DefineConstants>
+    <DebugSymbols>false</DebugSymbols>
+    <FileAlignment>4096</FileAlignment>
+    <NoStdLib>false</NoStdLib>
+    <Optimize>true</Optimize>
+    <RegisterForComInterop>false</RegisterForComInterop>
+    <RemoveIntegerChecks>false</RemoveIntegerChecks>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <WarningLevel>4</WarningLevel>
+    <DebugType>none</DebugType>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System">
+      <Name>System</Name>
+    </Reference>
+    <Reference Include="System.Data">
+      <Name>System.Data</Name>
+    </Reference>
+    <Reference Include="System.Xml">
+      <Name>System.XML</Name>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="PerfMon\PerfMon.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="PerfMon\PerfMonAttribute.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="PerfMon\PerfMonCounter.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="PerfMon\PerfMonCounterCategory.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="PerfMon\PerfMonCounterCategoryCollection.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="PerfMon\PerfMonCounterCollection.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="SQLTest\ISQLTest.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="SQLTest\SQL.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="SQLTest\SQLAttribute.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="SQLTest\SQLTest.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="SQLTest\SQLTestCollection.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="SQLTest\StoredProc.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="SQLTest\StoredProcCollection.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="WebTest\URL.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="WebTest\URLAttribute.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="WebTest\URLCollection.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="WebTest\WebTest.cs">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Core\Core.csproj">
+      <Name>Core</Name>
+      <Project>{118DEC61-2DF2-4022-B0B4-DAB11B68947E}</Project>
+      <Package>{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</Package>
+    </ProjectReference>
+    <ProjectReference Include="..\Util\Util.csproj">
+      <Name>Util</Name>
+      <Project>{1DBC9AF1-39D2-42B5-AE85-DEF59C003314}</Project>
+      <Package>{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</Package>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+</Project>

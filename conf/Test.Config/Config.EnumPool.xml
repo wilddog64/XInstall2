@@ -1,0 +1,19 @@
+<setup>
+     <package name="enum_prod_BigIP_pools"
+              runnable="true" >
+          <foreach item="machine_name"
+                   type="F5NodeGroup"
+                   bigiphost="172.16.1.10"
+                   in="INF-IMP-container"
+                   runnable="true">
+
+               <print message="${machine_name}" runnable="true">
+                    <!-- -->
+               </print>
+
+               <iiswebsite machinename="${machine_name}" action="listwebsites">
+                    <!-- -->
+               </iiswebsite>
+          </foreach>
+     </package>
+</setup>

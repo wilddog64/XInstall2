@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<setup>
+    <package name="release_to_staging_full"
+             runnable="true"
+             packagedir="."
+             description="full rollout"
+             onbeforestart="BeforeRollOut"
+             onsuccess="ActionSuccess" 
+             onfail = "ActionFail" >
+                                   
+       <defvar name="release_server" value="vmrelease" />
+       <defvar name="staging_server" value="vmstaging" />
+       <defvar name="prod_server"    value="vmprod" />
+       <defvar name="rel_sitename"   value="ads.180Solutions.com" />
+
+       <!-- here are variables for sending an email -->
+       <defvar name="blatpath"       value="c:\tools\bin" />
+       <defvar name="mailserver"     value="smtp.180prod.com" />
+       <defvar name="recipients"     value="${logon_user}@180Solutions.com" />
+       <defvar name="subject"        value="website: ${rel_sitename} ${PackageName} start" />
+       <defvar name="script_runner"  value="${logon_user}" />
+       <defvar name="machine_name"   value="${computer_name}" /> 
+       <defvar name="rollout_type"   value="${PackageDesc}" />
+       <defvar name="message"
+               value="${friendly_current_date}: ${rollout_type}, sync content from ${release_server} to ${staging_server} by ${logon_user}" />
+       <defvar name="msg"            
+            value="${message}" />
+
+       <defvar name="RoboCopyPath"   value="c:\tools\bin" />
+       <defvar name="Sender"         value="${logon_user}@180Solutions.com" />
+   
+       <robocopy action="mir"
+                 basepath="${RoboCopyPath}"
+                 sourcedirectory="\\${prod_server}\c$\web\${rel_sitename}"
+                 destinationdirectory="\\${staging_server}\c$\web\rollback\${rel_sitename}"
+                 createdestdir="true"
+                 runnable="false" />
+
+       <robocopy action="mir"
+                 basepath="${RoboCopyPath}"
+                 sourcedirectory="\\${release_server}\c$\release\web\${rel_sitename}\release"
+                 destinationdirectory="\\${staging_server}\c$\web\${rel_sitename}"
+                 createdestdir="true"
+                 runnable="false" />
+
+       <robocopy action="mir"
+                 basepath="${RoboCopyPath}"
+                 sourcedirectory="\\${staging_server}\c$\web\${rel_sitename}"
+                 destinationdirectory="\\${prod_server}\c$\web\${rel_sitename}"
+                 createdestdir="true"
+                 runnable="false" />
+
+       <ActionSuccess>
+          <!--
+            <robocopy action="move"
+                      basepath="${RoboCopyPath}"
+                      sourcedirectory="\\${release_server}\c$\release\web\${rel_sitename}\release"
+                      destinationdirectory="${release_server}\c$\release\web\${rel_sitename}\archive\${current_date}"
+                      copysub="true"
+                      copyempty="true"
+                      createdestdir="true"
+                      runnable="false" />
+            -->
+
+            <smtpmail blatpath="${blatpath}" 
+                      sender="${sender}"
+                      subject="${subject}"
+                      recipients="${recipients}"
+                      smtpserver="${mailserver}"
+                      filterloginfo="copy\s+((?:from|to).+)"
+                      runnable="true"
+                      message="${friendly_current_date}: 
+                              ${rollout_type} complete successfully with following content (Check sync log in 
+                              &#60;A href='${current_unc_directory}\logs'&#62;${current_unc_directory}\logs&#60;/A&#62;, 
+                              sync by ${logon_user}):&#60;BR&#62;" />
+
+       </ActionSuccess>
+
+       <ActionFail>
+            <smtpmail blatpath="${blatpath}"
+                      sender="${sender}"
+                      subject="${friendly_current_date}: ${rollout_type} failed"
+                      recipients="${recipients}"
+                      smtpserver="${mailserver}"
+                      message="the following content failed to rollout,"
+                      filterloginfo="robocopy" />
+       </ActionFail>
+
+       <BeforeRollOut>
+
+           <smtpmail blatpath="${blatpath}"
+                     sender="${sender}"
+                     subject="${subject}"
+                     recipients="${recipients}"
+                     smtpserver="${mailserver}"
+                     runnable="false"
+                     message="${msg}" />
+
+       </BeforeRollOut>
+
+    </package>
+</setup>

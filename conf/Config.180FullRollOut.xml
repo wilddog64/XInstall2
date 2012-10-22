@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<setup>
+    <package name="180_full_rollout_staging"
+             runnable="true"
+             packagedir="."
+             onbeforestart="BeforeRollOut"
+             onsuccess="ActionSuccess"
+             description="">
+                                   
+       <defvar name="release_server" value="vmrelease" />
+       <defvar name="staging_server" value="vmstaging" />
+       <defvar name="prod_server"    value="vmprod" />
+       <defvar name="rel_sitename"   value="ads.180Solutions.com" />
+       <defvar name="blatpath"       value="c:\tools\bin" />
+       <defvar name="mailserver"     value="smtp.180prod.com" />
+       <defvar name="recipients"     value="${logon_user}@180Solutions.com" />
+       <defvar name="subject"        value="testing email from mike liang" />
+       <defvar name="msg"            value="hey, sean: I can send email from process now!! ${current_date}" />
+       <defvar name="RoboCopyPath"   value="c:\tools\bin" />
+       <defvar name="Sender"         value="${logon_user}@180Solutions.com" />
+   
+       <robocopy action="mir"
+                 basepath="${RoboCopyPath}"
+                 sourcedirectory="\\${release_server}\c$\release\web\${rel_sitename}\release"
+                 destinationdirectory="\\${staging_server}\c$\web\rollback\${rel_sitename}"
+                 createdestdir="true"
+                 runnable="false" />
+
+       <robocopy action="mir"
+                 basepath="${RoboCopyPath}"
+                 sourcedirectory="\\${release_server}\c$\release\web\${rel_sitename}\release"
+                 destinationdirectory="\\${staging_server}\c$\web\${rel_sitename}"
+                 createdestdir="true"
+                 runnable="false" />
+
+       <robocopy action="mir"
+                 basepath="${RoboCopyPath}"
+                 sourcedirectory="\\${staging_server}\c$\web\${rel_sitename}"
+                 destinationdirectory="\\${prod_server}\c$\web\${rel_sitename}"
+                 createdestdir="true"
+                 runnable="false" />
+
+       <ActionSuccess>
+
+            <robocopy action="move"
+                      basepath="${RoboCopyPath}"
+                      sourcedirectory="\\${release_server}\c$\release\web\${rel_sitename}\release"
+                      destinationdirectory="${release_server}\c$\release\web\${rel_sitename}\archive\${current_date}"
+                      copysub="true"
+                      copyempty="true"
+                      createdestdir="true"
+                      runnable="true" />
+
+            <blat blatpath="${blatpath}" 
+                  sender="${sender}"
+                  subject="${subject}"
+                  recipients="${recipients}"
+                  smtpserver="${mailserver}"
+                  runnable="false"
+                  message="${msg}" />             
+
+       </ActionSuccess>
+
+       <BeforeRollOut>
+
+           <blat blatpath="${blatpath}"
+                 sender="${sender}"
+                 subject="rollout start"
+                 recipients="${recipients}"
+                 smtpserver="${mailserver}"
+                 runnable="true"
+                 message="roll out start by ${logon_user}&#64;180Solutions.com" />
+
+       </BeforeRollOut>
+
+    </package>
+</setup>

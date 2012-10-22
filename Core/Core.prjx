@@ -1,0 +1,44 @@
+<Project name="Core" standardNamespace="Core" description="" newfilesearch="None" enableviewstate="True" version="1.1" projecttype="C#">
+  <Contents>
+    <File name=".\ActionAttribute.cs" subtype="Code" buildaction="Compile" dependson="" data="" />
+    <File name=".\ActionElement.cs" subtype="Code" buildaction="Compile" dependson="" data="" />
+    <File name=".\ActionLoader.cs" subtype="Code" buildaction="Compile" dependson="" data="" />
+    <File name=".\ActionNodeCollection.cs" subtype="Code" buildaction="Compile" dependson="" data="" />
+    <File name=".\ActionPackage.cs" subtype="Code" buildaction="Compile" dependson="" data="" />
+    <File name=".\ActionPackageCollection.cs" subtype="Code" buildaction="Compile" dependson="" data="" />
+    <File name=".\ActionVariableException.cs" subtype="Code" buildaction="Compile" dependson="" data="" />
+    <File name=".\ActionVariables.cs" subtype="Code" buildaction="Compile" dependson="" data="" />
+    <File name=".\AdsiBase.cs" subtype="Code" buildaction="Compile" dependson="" data="" />
+    <File name=".\AssemblyInfo.cs" subtype="Code" buildaction="Compile" dependson="" data="" />
+    <File name=".\DBAccess.cs" subtype="Code" buildaction="Compile" dependson="" data="" />
+    <File name=".\ExternalPrg.cs" subtype="Code" buildaction="Compile" dependson="" data="" />
+    <File name=".\ForEach.cs" subtype="Code" buildaction="Compile" dependson="" data="" />
+    <File name=".\Interfaces.cs" subtype="Code" buildaction="Compile" dependson="" data="" />
+    <File name=".\Win32API.cs" subtype="Code" buildaction="Compile" dependson="" data="" />
+    <File name=".\WmiBase.cs" subtype="Code" buildaction="Compile" dependson="" data="" />
+    <File name=".\XmlConfigMgr.cs" subtype="Code" buildaction="Compile" dependson="" data="" />
+  </Contents>
+  <References>
+    <Reference type="Project" refto="iControlProxy" localcopy="True" />
+    <Reference type="Project" refto="Util" localcopy="True" />
+    <Reference type="Project" refto="ControlPool" localcopy="True" />
+  </References>
+  <DeploymentInformation target="" script="" strategy="File" />
+  <Configuration runwithwarnings="True" name="Debug">
+    <CodeGeneration runtime="MsNet" compiler="Csc" compilerversion="" warninglevel="4" nowarn="" includedebuginformation="True" optimize="False" unsafecodeallowed="False" generateoverflowchecks="False" mainclass="" target="Library" definesymbols="DEBUG;TRACE" generatexmldocumentation="False" win32Icon="" noconfig="False" nostdlib="False" />
+    <Execution commandlineparameters="" consolepause="True" />
+    <Output directory=".\bin\debug" assembly="XInstall.Core" executeScript="" executeBeforeBuild="" executeAfterBuild="" executeBeforeBuildArguments="" executeAfterBuildArguments="" />
+  </Configuration>
+  <Configurations active="Debug">
+    <Configuration runwithwarnings="True" name="Debug">
+      <CodeGeneration runtime="MsNet" compiler="Csc" compilerversion="" warninglevel="4" nowarn="" includedebuginformation="True" optimize="False" unsafecodeallowed="False" generateoverflowchecks="False" mainclass="" target="Library" definesymbols="DEBUG;TRACE" generatexmldocumentation="False" win32Icon="" noconfig="False" nostdlib="False" />
+      <Execution commandlineparameters="" consolepause="True" />
+      <Output directory=".\bin\debug" assembly="XInstall.Core" executeScript="" executeBeforeBuild="" executeAfterBuild="" executeBeforeBuildArguments="" executeAfterBuildArguments="" />
+    </Configuration>
+    <Configuration runwithwarnings="True" name="Release">
+      <CodeGeneration runtime="MsNet" compiler="Csc" compilerversion="" warninglevel="4" nowarn="" includedebuginformation="False" optimize="True" unsafecodeallowed="False" generateoverflowchecks="False" mainclass="" target="Library" definesymbols="TRACE" generatexmldocumentation="False" win32Icon="" noconfig="False" nostdlib="False" />
+      <Execution commandlineparameters="" consolepause="True" />
+      <Output directory="..\..\build\bin\release" assembly="XInstall.Core" executeScript="" executeBeforeBuild="" executeAfterBuild="" executeBeforeBuildArguments="" executeAfterBuildArguments="" />
+    </Configuration>
+  </Configurations>
+</Project>

@@ -1,0 +1,281 @@
+using System;
+using System.Diagnostics;
+using System.IO;
+
+namespace XInstall.Util.Log {
+    /// <summary>
+    /// Summary description for EventLog.
+    /// </summary>
+    [Serializable()]
+    public class LogEvent {
+        enum EVENTLOG_ENTRY
+        {
+            APPLICATION,
+            SYSTEM,
+            SECURITY,
+        }
+
+        // object variables
+        private EventLog _evtLog = null;
+
+        // property methods's private variables
+        private string _strEventLogMachineName        = ".";
+        private string _strEventLogSource             = null;
+        private string _strEventLogMessage            = null;
+        private EVENTLOG_ENTRY _evtEventLogEntry      = EVENTLOG_ENTRY.APPLICATION;
+        private EventLogEntryType _eletEvtLogEntyType = EventLogEntryType.Error;
+        private int _iEventLogID                      = 1660;
+
+        // default event catalog, you can also create a
+        // custom event catalog
+        private string[] _strEventEntries =
+            {
+                "APPLICATION",
+                "SYSTEM",
+                "SECURITY"
+            };
+
+        // what type of event you want to create
+        private string[] _strEventLogEntryTypes =
+            {
+                "Error",
+                "FailureAudit",
+                "Information",
+                "SuccessAudit",
+                "Warning"
+            };
+
+        /// <summary>
+        /// public LogEvent is a constructor
+        /// that initiates the LogEvent object
+        /// </summary>
+        public LogEvent() {
+            this._evtLog = new EventLog();
+            this._strEventLogSource =
+                Path.GetFileNameWithoutExtension(
+                    Environment.GetCommandLineArgs()[0] );
+        }
+
+
+#region public property methods
+
+
+        /// <summary>
+        /// property EventLogMessage -
+        ///     get/set the message to be written to an event
+        ///     database
+        /// </summary>
+        public string EventLogMessage
+        {
+            get {
+                return this._strEventLogMessage;
+            }
+            set {
+                this._strEventLogMessage = value;
+            }
+        }
+
+
+        /// <summary>
+        /// property EventLogType -
+        ///     set an EventLog Type to classify a
+        ///     given event.  Possible types are,
+        ///         Error, FailureAudit, Information,
+        ///         SuccessAudit, and Warnings.
+        /// </summary>
+        public string EventLogType
+        {
+            set {
+                switch ( value ) {
+                    case "Error":
+                        _eletEvtLogEntyType = EventLogEntryType.Error;
+                        break;
+                    case "FailureAudit":
+                        _eletEvtLogEntyType = EventLogEntryType.FailureAudit;
+                        break;
+                    case "Information":
+                        _eletEvtLogEntyType = EventLogEntryType.Information;
+                        break;
+                    case "SuccessAudit":
+                        _eletEvtLogEntyType = EventLogEntryType.SuccessAudit;
+                        break;
+                    case "Warning":
+                        _eletEvtLogEntyType = EventLogEntryType.Warning;
+                        break;
+                    default:
+                        throw new System.ArgumentException(
+                            String.Format("unknown Event Log Entry Type",
+                                          value));
+                }
+            }
+        }
+
+
+        /// <summary>
+        /// Property EventLogID -
+        ///     get/set an EventLog ID to
+        ///     identify a given event
+        /// </summary>
+        public int EventLogID
+        {
+            get {
+                return this._iEventLogID;
+            }
+            set {
+                this._iEventLogID = value;
+            }
+        }
+
+#endregion
+
+#region protected proerty methods
+        /// <summary>
+        /// Property EventLogMachine -
+        ///    get/set the machine that event is written to
+        /// </summary>
+        protected string EventLogMachine
+        {
+            get {
+                return this._strEventLogMachineName;
+            }
+            set {
+                this._strEventLogMachineName = value;
+            }
+        }
+
+
+        /// <summary>
+        /// property EventLogCategory -
+        ///     get/set the Event Category that a given
+        ///     event message to be writtent to.
+        /// </summary>
+        protected int EventLogCategory
+        {
+            get {
+                return (int) this._evtEventLogEntry;
+            }
+            set {
+                this._evtEventLogEntry =
+                    (EVENTLOG_ENTRY) int.Parse(value.ToString());
+            }
+        }
+
+        protected string EventLogName
+        {
+            get {
+                return this._strEventEntries[ (int) this.EventLogCategory ];
+            }
+            set {
+                switch ( EventLogCategory ) {
+                    case (int) EVENTLOG_ENTRY.APPLICATION:
+                        this._strEventLogSource =
+                            this._strEventEntries[ (int) this.EventLogCategory ];
+                        break;
+                    case (int) EVENTLOG_ENTRY.SECURITY:
+                        this._strEventLogSource =
+                            this._strEventEntries[ (int) this.EventLogCategory ];
+                        break;
+                    case (int) EVENTLOG_ENTRY.SYSTEM:
+                        this._strEventLogSource =
+                            this._strEventEntries[ (int) this.EventLogCategory ];
+                        break;
+                    default:
+                        this._strEventLogSource = value;
+                        break;
+                }
+            }
+        }
+
+
+        /// <summary>
+        /// property EventSource -
+        ///     get/set an Event Source for a given
+        ///     event message
+        /// </summary>
+        protected string EventSource
+        {
+            get {
+                return this._strEventLogSource;
+            }
+            set {
+                this._strEventLogSource = value;
+            }
+        }
+
+#endregion
+
+#region public methods
+        /// <summary>
+        /// public LogMessage -
+        ///     Logs a message to an event database
+        /// </summary>
+        /// <param name="strMessage">Message to be written</param>
+        public void LogMessage(string strMessage) {
+            this._evtLog.WriteEntry(
+                strMessage, this._eletEvtLogEntyType, this.EventLogID);
+        }
+
+
+        /// <summary>
+        /// public LogMessage - an overloaded method
+        ///     that performs the same functionality as
+        ///     LogMessage( strMessage )
+        /// </summary>
+        public void ReportEvent() {
+            string strEventSource = this.CreateEventSource();
+
+            try {
+                this._evtLog.Source = strEventSource;
+                this._evtLog.WriteEntry(
+                    this.EventLogMessage,
+                    this._eletEvtLogEntyType,
+                    this.EventLogID);
+            } catch ( System.Exception e ) {
+                throw e;
+            }
+        }
+
+#endregion
+
+#region private methods
+        /// <summary>
+        /// private string CreateEventSource() -
+        ///     create an event source if one does not
+        ///     exists and then return the event source
+        ///     name back to the caller.
+        /// </summary>
+        /// <returns>strEventSource is a name of the event source
+        /// we just created</returns>
+        private string CreateEventSource() {
+            // check if a given event source exists
+            // in a given machine's event database.
+            // Create one if it does not exis and return
+            // the name of the event source
+            string strEventSourceName = null;
+            try {
+                if (!EventLog.SourceExists(this.EventSource)) {
+                    EventSourceCreationData EvtSourceCreData =
+                        new EventSourceCreationData(EventSource,
+                                                    "ServiceLog");
+                    EventLog.CreateEventSource(EvtSourceCreData);
+
+                }
+                //EventLog.CreateEventSource(
+                //    this.EventSource,
+                //    this._strEventEntries[ (int) this.EventLogCategory ],
+                //    this.EventLogMachine );
+                strEventSourceName = this.EventSource;
+            }
+            // capturing possible exceptions when creating event source
+            catch ( System.ArgumentException ) {
+                throw new System.Exception("null arguments!");
+            } catch ( System.Exception e ) {
+                throw e;
+            }
+
+            // return the name of an event source
+            return strEventSourceName;
+        }
+#endregion
+    }
+}

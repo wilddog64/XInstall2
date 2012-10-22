@@ -1,0 +1,351 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<setup>
+    <package name="RPM"
+             runnable="true"
+             packagedir="."
+             description="RPM Developement Installation for \\tkfsani01">
+
+       <!-- start building RPMDev -->
+
+       <!-- 
+          for iisweb tag:
+
+             1. change action to create if the website is not there yet 
+             2. target server should be the one that you want to hit
+             3. websiteroot is the root directory of the of the webiste. The directory
+                will be created automatically if a given one does not exist.
+             4. websitehostname is the Header value property in the advanced web site
+                identity for a gvien web site.
+             5. if donstart is set to true, then after a given web site is created, it 
+                remains stop.
+             6. port when not set, will use stardard http port:80.  For RPM application,
+                the following ports are used: 
+                 
+                    RPMDev        - port 80
+                    RPMWebService - port 82
+                    RequestDAL    - port 83
+
+
+          for robocopy tag:
+
+             1. When action is set to mir, it will mirrow the source directory to 
+                destination.  Any thing not exist in the source directory will be
+                removed from the destination directory.
+
+             2. For RPMDev the destinationdirectory should be,
+                \\server_name\e$\inetput\RPMDev
+
+                For RPMWebService the destinationdirectory should be
+                \\server_name\e$\inetpub\RPMWebService
+
+                For RequestDAL the drestinaondirectory should be
+                \\server_name\e$\inetpub\RequestDAL
+
+         keys in web.config needed to be changed:
+
+       <copyfile filename="rpm.bak"
+                 from="\\tkfsdevsql01\e$\mssql\bak"
+                 to="\\chengkai-01\c$\public" />
+
+       <dbrestore databasename="RPM16"
+                  restoreto="chengkai-01"
+                  filename="rpm.bak"
+                  restorefrom="c:\public\"
+                  datapath="c:\mssql\data\"
+                  logpath="c:\mssql\data\" 
+                  runnable="false" /> 
+        -->
+   
+       <!-- webconfig, an xml tag that perform an update to the web.config file 
+            It supports the following tags,
+               
+               <update>
+                    <modifykey xpath="..." pattern="..." value="..." />
+                    .
+                    .
+                    .
+               </update>
+
+               the update tag perform an update to an element inside web.config by using
+               modifykey sub-element.  You can have multiple modifykey within update element.
+
+               modifykey required the following 3 attributes:
+
+                  1. xpath is a valid xpath expression that uses to locate a gvien element
+                     inside web.config
+                  2. pattern is a valid regular expression that is used to search for a string
+                     that can be matched.
+                  3. value is any string that is used to replace the pattern found.
+       -->
+
+       <!-- 
+          xmlwriter - 
+            A tag that perform an update to web.config file.
+            it support only one functionaility modifykey that is used to
+            update the element in a given xml file.
+            
+            modifykey has the following attributes:
+
+               . xpath a required attribute that accept a valid xpath expression
+               . pattern is an optional attribute and if provided it has to be a
+                 valild regular expression.
+               . value is an attribute that used to update a given key
+       -->
+       <!-- update RPMUI\web.config -->
+       <xmlwriter filename="..\RPMDev\web.config" runnable="false">
+            <update>
+               <modifykey xpath="//*/appSettings/add[@key='RPMWebApp.RPMWebService.RPMBL']/@value"
+                          pattern="\w+?(:\d{2,4}.+)"
+                          value="tkfssbi01$1" />
+
+               <modifykey xpath="//*/appSettings/add[@key='RPMWebApp.OnlineHelpRM']/@value"
+                          pattern="\w+?(:\d{2,4}.+)"
+                          value="tkfssbi01$1" />
+                          
+               <modifykey xpath="//*/appSettings/add[@key='RPMWebApp.OnlineHelpRQ']/@value"
+                          pattern="\w+?(:\d{2,4}.+)"
+                          value="tkfssbi01$1" />
+
+               <modifykey xpath="//*/appSettings/add[@key='RPMWebApp.OnlineHelpPDM']/@value"
+                          pattern="\w+?(:\d{2,4}.+)"
+                          value="tkfssbi01$1" />
+
+               <modifykey xpath="//*/appSettings/add[@key='RPMWebApp.OnlineHelpTM']/@value"
+                          pattern="\w+?(:\d{2,4}.+)"
+                          value="tkfssbi01$1" />
+
+               <modifykey xpath="//*/appSettings/add[@key='ErrorListPath']/@value"
+                          value="e:\inetpub\RPMUI\bin\RPMErrorList.xml" />
+            </update>
+       </xmlwriter>
+
+       <!-- update RPMWebService\web.config -->
+       <xmlwriter filename="..\RPMWebService\web.config" runnable="false">
+         <update>
+           <modifykey xpath="//*/appSettings/add[@key='RPMWebService.RequestDAL.RequestDALWS']/@value"
+                      pattern="\w+?(:\d{2,4}.+)"
+                      value="tkfssbi01$1" />
+
+           <modifykey xpath="//*/appSettings/add[@key='RPMWebService.PDSService.PDS']/@value"
+                      pattern="\w+?(/ProjectServer/PDS.WSDL)"
+                      value="tkfssbi01$1" />
+
+           <modifykey xpath="//*/appSettings/add[@key='PDSLoginPage']/@value"
+                      pattern="\w+?(/projectserver/lgnintau.asp)"
+                      value="tkfssbi01$1" />
+
+           <modifykey xpath="//*/appSettings/add[@key='ErrorListPath']/@value"
+                      value="e:\inetpub\RPMUI\bin\RPMErrorList.xml" />
+         </update>
+       </xmlwriter>
+
+       <xmlwriter filename="..\RequestDAL\web.config" runnable="false">
+         <update>
+           <modifykey xpath="//*/appSettings/add[@key='RPMConnection.ConnectionString']/@value"
+                      pattern="(.+;data source=)\w+(;.+)"
+                      value="chengkai-01" />
+
+           <modifykey xpath="//*/appSettings/add[@key='ErrorListPath']/@value"
+                      value="e:\inetpub\RequestDAL\bin\RPMErrorList.xml" />
+         </update>
+       </xmlwriter>
+
+       <!-- copy EventLogSourceInstaller.dll to destination server's system folder and
+            this is for the installutil.exe to install it. 
+        -->
+       <copyfile from="."
+                 to="\\tkfssbi01\c$\winnt\system32\" 
+                 filename="EventLogSourceInstaller.dll" />
+       
+       <exec progname="rexec.exe" 
+            arguments="/s tkfssbi01 c:\winnt\microsoft.net\framework\v1.1.4322\installutil.exe /a c:\winnt\system32\EventLogSourceInstaller.dll" />
+      
+       <!-- create the web site RPMApplication -->
+       <iisweb action="create"
+               targetserver="tkfssbi01"
+               websitename="RPMApplication"
+               websiteroot="e:\inetpub\RPMApplication"
+               dontstart="false"
+               port="8080" 
+               runnable="false" />
+
+       <!-- copy RPM UI components, this is the main --> 
+       <robocopy action="mir"
+                 sourcedirectory="..\RPMdev"
+                 destinationdirectory="\\tkfssbi01\e$\inetpub\RPMUI" 
+                 runnable="false" />
+
+       <!-- copy the RPM Web Service components -->
+       <robocopy action="mir"
+                 sourcedirectory="..\RPMWebService"
+                 destinationdirectory="\\tkfssbi01\e$\inetpub\RPMWebService" 
+                 runnable="false" />
+
+       <!-- copy RPMHelp system -->
+       <robocopy action="mir"
+                 sourcedirectory="..\RPMHelp"
+                 destinationdirectory="\\tkfssbi01\e$\inetpub\RPMHelp" 
+                 runnable="false" />
+
+       <!-- create a virtual directory, RPMUI -->
+       <iisvdir action="create"
+                targetserver="tkfssbi01"
+                websitename="RPMApplication"
+                appfriendlyname="RPMUI"
+                virtualdirname="RPMUI"
+                mappath="e:\inetpub\RPMUI"
+		runnable="false" />
+
+       <!-- create a virtual directory, RPMWebService -->
+       <iisvdir action="create"
+                targetserver="tkfssbi01"
+                websitename="RPMApplication"
+                appfriendlyname="RPMWebService"
+                virtualdirname="RPMWebService"
+                mappath="e:\inetpub\RPMWebService" 
+                runnable="false" />
+
+       <!-- create a virtual directory, for help file system -->
+       <!-- FlashHelpPDM -->
+       <iisvdir action="create"
+                targetserver="tkfssbi01"
+                websitename="RPMApplication"
+                appfriendlyname="FlashHelpPDM"
+                virtualdirname="FlashHelpPDM"
+                mappath="e:\inetpub\RPMHelp\FlashHelpPDM" 
+                runnable="false" />
+
+       <!-- create a virtual directory, FlashHelpRM-->
+       <iisvdir action="create"
+                targetserver="tkfssbi01"
+                websitename="RPMApplication"
+                appfriendlyname="FlashHelpRM"
+                virtualdirname="FlashHelpRM"
+                mappath="e:\inetpub\RPMHelp\FlashHelpRM" 
+                runnable="false" />
+
+       <!-- create a virtual directory, RPMWebService -->
+       <iisvdir action="create"
+                targetserver="tkfssbi01"
+                websitename="RPMApplication"
+                appfriendlyname="FlashHelpRQ"
+                virtualdirname="FlashHelpRQ"
+                mappath="e:\inetpub\RPMHelp\FlashHelpRQ" 
+                runnable="false" />
+
+       <!-- create a virtual directory, RPMWebService -->
+       <iisvdir action="create"
+                targetserver="tkfssbi01"
+                websitename="RPMApplication"
+                appfriendlyname="FlashHelpTM"
+                virtualdirname="FlashHelpTM"
+                mappath="e:\inetpub\RPMHelp\FlashHelpTM" 
+                runnable="false" />
+
+
+       <iisweb action="start"
+               targetserver="tkfssbi01"
+   	       skiperror="false"
+               websitename="RPMApplication"
+               websiteroot="e:\inetpub\RPMApp"
+               runnable="false" />
+
+       <!-- end building RPMDev -->
+
+       <!-- start building RequestDAL-->
+
+       <iisweb action="create"
+               targetserver="tkfssbi01"
+               websitename="RequestDAL"
+               websiteroot="e:\inetpub\RequestDAL"
+               dontstart="false"
+               port="8083" 
+               runnable="false" />
+
+       <robocopy action="mir"
+                 sourcedirectory="..\RequestDAL"
+                 destinationdirectory="\\tkfssbi01\e$\inetpub\RequestDAL" 
+                 runnable="false" />
+
+       <iisweb action="start"
+               targetserver="tkfssbi01"
+   	       skiperror="false"
+               websitename="RequestDAL"
+               websiteroot="e:\inetpub\RequestDAL"
+               runnable="false" />
+
+       <!-- end building RPMWebService -->
+
+       <!-- backup and restore database -->
+
+       <!-- 
+            for dbrestore tag:
+
+               1. datbasename is the name of database to be restored
+               2. restoreto is the database server for backup file to be stored
+               3. restorefrom is a path where the backup file located. Don't use an
+                  UNC name. DMO will look for the local drive letter.
+               4. datapath is the physical path for database data file locoated
+               5. logpath is the physical path for database log file located
+       -->
+
+
+       <!-- copy and restore database -->
+
+       <dbrestore databasename="RPM"
+                  restoreto="chengkai-01"
+                  filename="rpm.bak"
+                  restorefrom="c:\public"
+                  datapath="c:\mssql\data\"
+                  logpath="c:\mssql\data\" 
+                  runnable="false" 
+                  skiperror="true" /> 
+
+       <!-- copy and restore database -->
+       <copyfile from=".."
+                 to="\\chengkai-01\c$\public" 
+                 filename="rpm.bak" />
+
+       <!-- setup the permission for MCS_Resoumes 
+            uncomment this if MCS_Resumes folder is not 
+            created and the permissions are not set -->
+       <xcacls container="\\tkfssbi01\e$\MCS_Resumes"
+               progpath="."
+               type="Directory"
+               permissions="readwrite"
+               owner="RPMDev_RM" 
+               runnable="false" />
+
+       <xcacls container="\\tkfssbi01\e$\MCS_Resumes"
+               progpath="."
+               type="Directory"
+               permissions="read"
+               owner="RPMDev_RQ"
+               runnable="false" />
+
+       <!-- the following tags are used to install factory jobs -->
+       <!--
+       <exec progname="..\CP2RPMGeographyIntegration\Install.cmd"
+             arguments="chengkai-01 SIRFactoryDB install.log" />
+
+       <exec progname="..\CP2RPMResourceIntegration\Install.cmd"
+             arguments="chengkai-01 SIRFactoryDB install.log" />
+
+       <exec progname="..\GSP2RPMSkillsIntegration\Install.cmd"
+             arguments="chengkai-01 CPFactoryDB install.log" />
+        -->
+
+
+       <!-- need to create iis aspnet_client folder under iis root -->
+       <!--
+       <exec progname="rexec.exe" 
+             arguments="/s tkfssbi01 c:\winnt\microsoft.net\framework\v1.1.4322\aspnet_regiis.exe /a -c" />
+        -->
+
+       <!-- NTAuthentication need to be setup in the iis website from the top root -->
+       <!--
+       <exec programe="rexec.exe"
+             arguments='/s tkfssbi01 c:\inetpub\adminscripts\adsutil.vbs set w3svc\NTAuthenticationProviders "NTLM"' />
+        -->
+    </package>
+</setup>

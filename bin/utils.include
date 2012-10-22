@@ -1,0 +1,181 @@
+<?xml version="1.0"?>
+<project name="Utilities" 
+         default="init"
+         description="general utility targets">
+     
+     <!-- Utils.include v1.1
+          A commonly used tools for the build. For every new build, the following 
+          condition has to be made,
+
+          1. New build folder has to be create (The folder's name can be your project name).
+          2. The one bin folder has to be created under the newly created folder.
+          3. This file (Utils.include) has to exist in bin folder.
+          4. Obtain the lastest version of Nant (The current only is 0.84). 
+          5. This library once included and executed will create the following structure in your
+             project folder,
+
+             d:\your_proj_folder\build\bin
+                   debug
+                   release
+
+             d:\your_proj_folder\dist\
+                   debug
+                   release
+                   source
+
+             Note:
+                1. The build folder is used to stored final compiled components. If compilation directive
+                   is set to debug, the all the components will be copied to debug folder under build;
+                   otherwise, they will be copied to release folder.
+
+                2. The dist folder is used to stored all the zipped components based on the compilation
+                   directive.
+
+                   Note: For every zip file the timestamp will be added into file name.  The formate
+                         for the timestamp is,
+
+                              yyyyMMdd
+
+                         which obtains from build.date built-in Nant property.
+
+         The following target are supported:
+
+            1. init - this is a defualt target that performs the following initialization tasks:
+               
+               a. create debug, release, and source folders under build directory.
+               b. create debug and release folders under dist folder.
+
+            2. Some general puporse tagarts:
+
+               a. GetExecutedTargetNames - retrieve all the targets that has been executed.
+
+         Last modified date|Last modfied by|remark
+         __________________|_______________|____________________________________
+
+         2/27/2004          a-chlian        . initial creation.
+         3/03/2004          a-chlian        . add target CreateMD5CheckSum to generate
+                                              MD5 for each file in a given directory
+                                            . Finish document the utils.include build file.
+         1/09/2005          mliang          . Remove MD5 Checksum generation target
+     -->
+     <!-- build date/time stamp -->
+     <tstamp property="build.date" pattern="yyyyMMdd" verbose="true" />
+
+     <!-- build environment setup -->
+     <property name="sdroot"            value="c:\bin" />
+     <property name="debug"             value="true" />
+     <property name="currentpath"       value="${project::get-base-directory()}" />
+     <property name="build.dir"         value="${currentpath}\..\build" />
+     <property name="build.bin.dir"     value="${build.dir}" />
+     <property name="build.debug.dir"   value="${build.bin.dir}\bin\debug" />
+     <property name="build.release.dir" value="${build.bin.dir}\bin\release" />
+     <property name="dist.dir"          value="${currentpath}\..\dist" />
+     <property name="dist.debug.dir"    value="${dist.dir}\debug" />
+     <property name="dist.release.dir"  value="${dist.dir}\release" />
+     <property name="dist.source.dir"   value="${dist.dir}\source" />
+     <property name="build.output.dir"  
+               value="${build.debug.dir}"                  
+               if="${debug}" />
+     <property name="build.output.dir"  
+               value="${build.release.dir}"                
+               unless="${debug}" />
+     <property name="dist.debug.dir"    
+               value="${dist.debug.dir}"                   
+               if="${debug}" />
+     <property name="dist.release.dir"  
+               value="${dist.release.dir}"                 
+               unless="${debug}" />
+     <property name="dist.output.dir"   
+               value="${dist.debug.dir}"                   
+               if="${debug}" />
+     <property name="dist.output.dir"   
+               value="${dist.release.dir}"                 
+               unless="${debug}" />
+     <property name="dist.name"         
+               value="XInstall2.debug.${build.date}.zip"   
+               if="${debug}" />
+     <property name="dist.name"         
+               value="XInstall2.release.${build.date}.zip" 
+               unless="${debug}" />
+     <property name="dist.source.name"  value="XInstall2.source.${build.date}.zip" />
+     <property name="change_list"       value="changelist.txt" />
+     <property name="can_sd"            value="false" />
+
+     <!-- location of the BuildNantScript.exe -->
+     <property  name="BuildNantScript"   value="${currentpath}/BuildNantScript.exe" />
+     <if test="${file::exists('${BuildNantScript}')}">
+        <echo message="${BuildNantScript} exists" />
+     </if>  
+
+     <target name="init">
+             <!-- check to make sure required directories are all created -->
+             <!-- for build.debug.dir -->
+             <!-- <available type="Directory" resource="${build.debug.dir}" property="directory.exist" /> -->
+         <if test="${not directory::exists('${build.debug.dir}')}">
+            <mkdir dir="${build.debug.dir}" unless="${directory.exist}" />
+         </if>
+
+             <!-- for build.release.dir -->
+             <!-- <available type="Directory" resource="${build.release.dir}" property="directory.exist" /> -->
+         <if test="${not directory::exists('${build.release.dir}')}">
+              <mkdir dir="${build.release.dir}" unless="${directory.exist}" />
+         </if>
+
+             <!-- create distrubtion directoies -->
+             <!--< available type="Directory"       resource="${dist.release.dir}" property="directory.exist" />-->
+          <if test="${not directory::exists('${dist.release.dir}')}">
+             <mkdir dir="${dist.release.dir}"  unless="${directory.exist}" />
+          </if>
+
+          <!-- <available type="Directory"       resource="${dist.debug.dir}"   property="directory.exist" />-->
+          <if test="${not directory::exists('${dist.debug.dir}')">
+             <mkdir dir="${dist.debug.dir}"    unless="${directory.exist}" />
+          </if>
+
+          <!-- <available type="Directory"       resource="${dist.source.dir}"  property="directory.exist" />-->
+          <if test="${not directory::exists('${dist.source.dir}')}">
+             <mkdir dir="${dist.source.dir}"   unless="${directory.exist}" />
+          </if>
+     </target>
+
+
+     <!-- GenNantScript 
+          This target wraps the external program BuildNantScript to create a nant build file
+          by reading each project's csproj file.
+     -->
+     <target name="GenNantScript" 
+             description="call exteranl program BuildNantScript to generate a nant build file">
+             <property name="commandline"
+                       value="${csproj} ${buildfile} ${componentpath} ${outputlib}" />
+             <exec program="mono ${BuildNantScript}" 
+                   commandline="${commandline}" />
+             <available type="File" resource="${buildfile}" property="file.exist" />
+             <fail message="${buildfile} does not exist, abort!!" 
+                   unless="${file.exist}" />
+     </target>
+
+
+     <!-- GetExecutedTargetNames:
+          This segment of code retrieves all the targets that are executed,
+          creates property label_desc, then assigns all compiled targets
+          to it.
+     -->
+     <target name="GetExecutedTargetNames">
+          <script language="C#">
+               <code><![CDATA[
+                    public static void ScriptMain( Project project )
+                    {
+                         PropertyDictionary pd = project.Properties;
+                         TargetCollection   tc = project.Targets;
+
+                         StringBuilder CompiledTargets = new StringBuilder(); 
+                         foreach ( Target t in tc )
+                             if ( t.Executed )
+                                CompiledTargets.AppendFormat( "\t{0}{1} ", t.Name, Environment.NewLine ); 
+                         pd["label_desc"] = Environment.NewLine + CompiledTargets.ToString();
+                    }
+               ]]></code>
+          </script>
+     </target>
+
+</project>

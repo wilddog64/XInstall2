@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<setup>
+    <package name="Authorizaton Manager"
+             runnable="true"
+             packagedir="."
+             description="Genernate AzMan Policy">
+
+          <!-- WA010291L -->
+          <azman connectto="WA010291L" 
+               appname="RPM"
+               dbname="RolePlay"
+               actiontable="actions"
+               storelocation="c:\projects\RPMBuild\ResourceManagement\RPM_Solution\AzMan\RPMPolicy.xml"
+               storetype="XML"
+               readfromdb="true"
+               actionquery="select ActionID, Name, MethodName from Actions where ParentActionID is null"
+               description="build RPM Authorization Store" >
+               <sql>
+                    <![CDATA[
+
+
+                        SELECT MemberID MemID, MemberName MemName, MemberDescription MemDesc
+                          FROM Members
+                          WHERE MemberTypeID = 1;
+                        
+                        SELECT MemberID MemID, MemberName MemName, MemberDescription MemDesc
+                          FROM Members 
+                         WHERE MemberTypeID = 2;
+
+                         -- EXEC GetMems 1;
+                         SELECT m.MemberID MemParID
+                               ,cast(m.MemberName as varchar(100)) TaskName
+                               ,m1.MemberID OpID
+                               ,cast(m1.MemberName as varchar(100)) MemName
+                           FROM Members  m
+                          INNER join MemberRelationships mr
+                             ON ( m.MemberID = mr.MemberID )
+                          INNER join Members m1
+                             ON ( m1.MemberID = mr.MemberRelationID )
+                         WHERE m.MemberTypeID = 2
+
+
+                        SELECT MemberID MemID, MemberName MemName, MemberDescription MemDesc
+                          FROM Members 
+                         WHERE MemberTypeID = 3;
+
+
+                        SELECT m.MemberID MemParID
+                              ,cast(m.MemberName as varchar(100)) TaskName
+                              ,m1.MemberID OpID
+                              ,cast(m1.MemberName as varchar(100)) MemName
+                          FROM Members  m
+                         INNER join MemberRelationships mr
+                            ON ( m.MemberID = mr.MemberID )
+                         INNER join Members m1
+                            ON ( m1.MemberID = mr.MemberRelationID )
+                        WHERE m.MemberTypeID = 3
+                          AND m1.MemberID < 700
+                        
+
+                        SELECT m.MemberID GroupID, 
+                               CAST(m.MemberName as varchar(20)) GroupName, 
+                               m1.MemberID RoleID,
+                               CAST(m1.MemberName as varchar(20)) RoleName,
+                               CAST(m.MemberDescription as varchar(20)) MemberDescription
+                          FROM Members m 
+                         INNER join MemberTypes mt
+                            ON (m.MemberTypeID = mt.MemberTypeID)
+                         INNER join MemberRelationships mr
+                            ON (m.MemberID = mr.MemberRelationID)
+                         INNER join Members m1 
+                            ON ( mr.MemberID = m1.MemberID)
+                         WHERE m.MemberTypeID = 4
+                    ]]>
+               </sql>
+        </azman>
+   </package>
+</setup>

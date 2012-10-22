@@ -1,0 +1,130 @@
+<VisualStudioProject>
+    <CSHARP
+        ProjectType = "Local"
+        ProductVersion = "7.10.3077"
+        SchemaVersion = "2.0"
+        ProjectGuid = "{29C6AAD1-1D94-437A-8C7F-F9E330CED1E3}"
+    >
+        <Build>
+            <Settings
+                ApplicationIcon = ""
+                AssemblyKeyContainerName = ""
+                AssemblyName = "MSInstaller"
+                AssemblyOriginatorKeyFile = ""
+                DefaultClientScript = "JScript"
+                DefaultHTMLPageLayout = "Grid"
+                DefaultTargetSchema = "IE50"
+                DelaySign = "false"
+                OutputType = "Library"
+                PreBuildEvent = ""
+                PostBuildEvent = ""
+                RootNamespace = "XInstall.Custom.Actions.MSInstaller"
+                RunPostBuildEvent = "OnBuildSuccess"
+                StartupObject = ""
+            >
+                <Config
+                    Name = "Debug"
+                    AllowUnsafeBlocks = "false"
+                    BaseAddress = "285212672"
+                    CheckForOverflowUnderflow = "false"
+                    ConfigurationOverrideFile = ""
+                    DefineConstants = "DEBUG;TRACE"
+                    DocumentationFile = ""
+                    DebugSymbols = "true"
+                    FileAlignment = "4096"
+                    IncrementalBuild = "false"
+                    NoStdLib = "false"
+                    NoWarn = ""
+                    Optimize = "false"
+                    OutputPath = "..\build\bin\debug\"
+                    RegisterForComInterop = "false"
+                    RemoveIntegerChecks = "false"
+                    TreatWarningsAsErrors = "false"
+                    WarningLevel = "4"
+                />
+                <Config
+                    Name = "Release"
+                    AllowUnsafeBlocks = "false"
+                    BaseAddress = "285212672"
+                    CheckForOverflowUnderflow = "false"
+                    ConfigurationOverrideFile = ""
+                    DefineConstants = "TRACE"
+                    DocumentationFile = ""
+                    DebugSymbols = "false"
+                    FileAlignment = "4096"
+                    IncrementalBuild = "false"
+                    NoStdLib = "false"
+                    NoWarn = ""
+                    Optimize = "true"
+                    OutputPath = "..\build\bin\release\"
+                    RegisterForComInterop = "false"
+                    RemoveIntegerChecks = "false"
+                    TreatWarningsAsErrors = "false"
+                    WarningLevel = "4"
+                />
+            </Settings>
+            <References>
+                <Reference
+                    Name = "Microsoft.WindowsInstaller.Package"
+                    AssemblyName = "Microsoft.WindowsInstaller.Package"
+                    HintPath = "MSI\Microsoft.WindowsInstaller.Package.dll"
+                />
+                <Reference
+                    Name = "Microsoft.Cabinet"
+                    AssemblyName = "Microsoft.Cabinet"
+                    HintPath = "MSI\Microsoft.Cabinet.dll"
+                />
+                <Reference
+                    Name = "Microsoft.Cabinet.MiniExtract"
+                    AssemblyName = "Microsoft.Cabinet.MiniExtract"
+                    HintPath = "MSI\Microsoft.Cabinet.MiniExtract.dll"
+                />
+                <Reference
+                    Name = "Microsoft.WindowsInstaller.Data"
+                    AssemblyName = "Microsoft.WindowsInstaller.Data"
+                    HintPath = "MSI\Microsoft.WindowsInstaller.Data.dll"
+                />
+                <Reference
+                    Name = "Microsoft.WindowsInstaller"
+                    AssemblyName = "Microsoft.WindowsInstaller"
+                    HintPath = "MSI\Microsoft.WindowsInstaller.dll"
+                />
+                <Reference
+                    Name = "Microsoft.WindowsInstaller.FilePatch"
+                    AssemblyName = "Microsoft.WindowsInstaller.FilePatch"
+                    HintPath = "MSI\Microsoft.WindowsInstaller.FilePatch.dll"
+                />
+                <Reference
+                    Name = "System.XML"
+                    AssemblyName = "System.XML"
+                    HintPath = "..\..\..\WINDOWS\Microsoft.NET\Framework\v1.1.4322\System.XML.dll"
+                />
+                <Reference
+                    Name = "Core"
+                    Project = "{118DEC61-2DF2-4022-B0B4-DAB11B68947E}"
+                    Package = "{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}"
+                />
+                <Reference
+                    Name = "Util"
+                    Project = "{1DBC9AF1-39D2-42B5-AE85-DEF59C003314}"
+                    Package = "{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}"
+                />
+                <Reference
+                    Name = "CAProxy"
+                    AssemblyName = "CAProxy"
+                    HintPath = "MSI\CAProxy.dll"
+                />
+            </References>
+        </Build>
+        <Files>
+            <Include>
+                <File
+                    RelPath = "MSI.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+            </Include>
+        </Files>
+    </CSHARP>
+</VisualStudioProject>
+
