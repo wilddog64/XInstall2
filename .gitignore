@@ -4,3 +4,4 @@ build
 *.txt
 obj/
 *.old
+debug/
