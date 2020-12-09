@@ -112,10 +112,10 @@ namespace XInstall.Util.Log {
         protected StreamWriter LogFileStream
         {
             get {
-                FileIOPermission IOPermDenyRoot = new FileIOPermission( FileIOPermissionAccess.NoAccess, new string[] { "c:\\", Environment.SystemDirectory } );
+                // FileIOPermission IOPermDenyRoot = new FileIOPermission( FileIOPermissionAccess.NoAccess, new string[] { "c:\\", Environment.SystemDirectory } );
 
-                FileIOPermission IOPerm = new FileIOPermission( FileIOPermissionAccess.Write, new string[] { @"c:\temp" } );
-                IOPermDenyRoot.Union( IOPerm ).Demand();
+                // FileIOPermission IOPerm = new FileIOPermission( FileIOPermissionAccess.Write, new string[] { @"c:\temp" } );
+                // IOPermDenyRoot.Union( IOPerm ).Demand();
 
                 string strThisFile     = this.FileName;
                 FileStream   fsLogFile = null;
