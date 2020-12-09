@@ -2,10 +2,5 @@ build
 *.exe
 *.mdb
 *.txt
-*.txt
-*.txt
-*.txt
-*.txt
-*.txt
-*.txt
-*.txt
+obj/
+*.old
