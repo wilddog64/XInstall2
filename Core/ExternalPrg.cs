@@ -131,7 +131,7 @@ namespace XInstall.Core {
         public ExternalPrg( string strProgName, string strProgArgs, string strOutputFile ) {
             base.OutToConsole = true;
             base.OutToFile    = true;
-            
+
             _thisProcess      = new Process();
             _psiProcessInfo   = new ProcessStartInfo();
 
@@ -187,16 +187,16 @@ namespace XInstall.Core {
                 bool isMac = (this.PlatformID == 4 || this.PlatformID == 128) ? true : false;
                 // if extension is one of the following:
                 // .vbs, .js, .cmd, or .bat, then construct the execute file as %comspec%
-                // and assign /c ... to _psiProcessInfo.Arguments property; 
+                // and assign /c ... to _psiProcessInfo.Arguments property;
                 // otherwise, we simply assign the program to _psiProcessInfo.FileName property
-                if ( !isMac ) { 
+                if ( !isMac ) {
                   if ( strProgExtension.Equals(".vbs") ||
                        strProgExtension.Equals(".js")  ||
                        strProgExtension.Equals(".cmd") ||
                        strProgExtension.Equals(".bat") ) {
                       _psiProcessInfo.FileName  = _psiProcessInfo.EnvironmentVariables["comspec"];
                       _psiProcessInfo.Arguments = "/c " + String.Format("{0}", _strExtProgName);
-                  } 
+                  }
                   else
                       if ( !this.EchoBlank )
                           _psiProcessInfo.FileName = _strExtProgName;
@@ -220,7 +220,7 @@ namespace XInstall.Core {
         }
 
         protected int PlatformID {
-          get { 
+          get {
                 // check to see if we are running under Mac
                 return (int) Environment.OSVersion.Platform;
           }
@@ -418,7 +418,7 @@ namespace XInstall.Core {
                     this.OnProcessComplete( ProcessCompleteInfo );
                 }
                 _psiProcessInfo.Arguments = null;
-            } 
+            }
             catch ( System.InvalidOperationException ioe ) {
                 strErrorMessage = String.Format("Error Happened, source {0} - message {1}", ioe.Source, ioe.Message);
                 throw new Exception( strErrorMessage );
@@ -426,7 +426,7 @@ namespace XInstall.Core {
             catch ( System.ComponentModel.Win32Exception eWin32 ) {
                 strErrorMessage = String.Format("Win32 Source: {0}, Error Code {1}, Message {2}!", eWin32.Source, eWin32.ErrorCode, eWin32.Message);
                 throw new Exception( strErrorMessage );
-            } 
+            }
             catch ( System.Exception e ) {
                 strErrorMessage = String.Format("Unhandle error: {0}", e.Message);
                 throw new Exception( strErrorMessage );
