@@ -1,62 +1,135 @@
-﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" xmlns:Conversion="urn:Conversion">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{FF29BF83-FFB3-42D9-8490-F9AFE684A5FC}</ProjectGuid>
-    <RootNamespace>XInstall2</RootNamespace>
-    <AssemblyName>XInstall2</AssemblyName>
+    <TargetFramework>net5.0</TargetFramework>
     <OutputType>Exe</OutputType>
-    <ApplicationIcon />
-    <WarningLevel>4</WarningLevel>
     <NoWarn />
     <StartupObject />
     <NoStdLib>False</NoStdLib>
     <NoConfig>False</NoConfig>
     <RunPostBuildEvent>OnSuccessfulBuild</RunPostBuildEvent>
-    <PreBuildEvent />
-    <PostBuildEvent />
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>True</DebugSymbols>
-    <Optimize>False</Optimize>
-    <AllowUnsafeBlocks>False</AllowUnsafeBlocks>
-    <CheckForOverflowUnderflow>False</CheckForOverflowUnderflow>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
     <OutputPath>..\build\bin\debug\</OutputPath>
-    <TreatWarningsAsErrors>False</TreatWarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugSymbols>False</DebugSymbols>
-    <Optimize>True</Optimize>
-    <AllowUnsafeBlocks>False</AllowUnsafeBlocks>
-    <CheckForOverflowUnderflow>False</CheckForOverflowUnderflow>
-    <DefineConstants>TRACE</DefineConstants>
     <OutputPath>..\build\bin\release\</OutputPath>
-    <TreatWarningsAsErrors>False</TreatWarningsAsErrors>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="System" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
-    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AssemblyInfo.cs" />
     <Compile Include="XInstall.cs" />
     <Compile Include="XInstall2.cs" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
-    <ProjectReference Include="Core\Core.csproj">
-      <Project>{E89273A3-7F43-4521-941C-1C9982B733D8}</Project>
-      <Name>Core</Name>
-    </ProjectReference>
-    <ProjectReference Include="Util\Util.csproj">
-      <Project>{AA27203F-CDC1-4C53-A2C5-C461E7E2FEE9}</Project>
-      <Name>Util</Name>
-    </ProjectReference>
+    <ProjectReference Include="Core\Core.csproj" />
+    <ProjectReference Include="Util\Util.csproj" />
   </ItemGroup>
-  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.Targets" />
+  <ItemGroup>
+    <Compile Remove="Actions/ADManager.cs" />
+    <Compile Remove="Actions/ADSIAttributes.cs" />
+    <Compile Remove="Actions/AssemblyInfo.cs" />
+    <Compile Remove="Actions/AzMan.cs" />
+    <Compile Remove="Actions/Blat.cs" />
+    <Compile Remove="Actions/CopyFile.cs" />
+    <Compile Remove="Actions/dbRestore.cs" />
+    <Compile Remove="Actions/exec.cs" />
+    <Compile Remove="Actions/ExecScript.cs" />
+    <Compile Remove="Actions/FxCop.cs" />
+    <Compile Remove="Actions/IIsApplicationPool.cs" />
+    <Compile Remove="Actions/IIsAppPool.cs" />
+    <Compile Remove="Actions/IISBack.cs" />
+    <Compile Remove="Actions/IISVDir.cs" />
+    <Compile Remove="Actions/IIsVirtualDir.cs" />
+    <Compile Remove="Actions/IISWeb.cs" />
+    <Compile Remove="Actions/IIsWebSite.cs" />
+    <Compile Remove="Actions/MakeDir.cs" />
+    <Compile Remove="Actions/MSI.cs" />
+    <Compile Remove="Actions/nant.cs" />
+    <Compile Remove="Actions/osql.cs" />
+    <Compile Remove="Actions/PerfMon/PerfMon.cs" />
+    <Compile Remove="Actions/PerfMon/PerfMonServers.cs" />
+    <Compile Remove="Actions/Print.cs" />
+    <Compile Remove="Actions/Properties/Settings.Designer.cs" />
+    <Compile Remove="Actions/psexec.cs" />
+    <Compile Remove="Actions/RegAsm.cs" />
+    <Compile Remove="Actions/RegEx.cs" />
+    <Compile Remove="Actions/RegKey.cs" />
+    <Compile Remove="Actions/RExec.cs" />
+    <Compile Remove="Actions/Rmdir.cs" />
+    <Compile Remove="Actions/RoboCopy.cs" />
+    <Compile Remove="Actions/Rsync.cs" />
+    <Compile Remove="Actions/Say.cs" />
+    <Compile Remove="Actions/ServiceControl.cs" />
+    <Compile Remove="Actions/xcacls.cs" />
+    <Compile Remove="Actions/XmlValidator.cs" />
+    <Compile Remove="Actions/XmlWriter.cs" />
+    <Compile Remove="Core/ActionAttribute.cs" />
+    <Compile Remove="Core/ActionElement.cs" />
+    <Compile Remove="Core/ActionFieldAttribute.cs" />
+    <Compile Remove="Core/ActionLoader.cs" />
+    <Compile Remove="Core/ActionNodeCollection.cs" />
+    <Compile Remove="Core/ActionPackage.cs" />
+    <Compile Remove="Core/ActionPackageCollection.cs" />
+    <Compile Remove="Core/ActionVariableException.cs" />
+    <Compile Remove="Core/ActionVariables.cs" />
+    <Compile Remove="Core/AdsiBase.cs" />
+    <Compile Remove="Core/AssemblyInfo.cs" />
+    <Compile Remove="Core/DBAccess.cs" />
+    <Compile Remove="Core/DBMgr.cs" />
+    <Compile Remove="Core/DefineVars.cs" />
+    <Compile Remove="Core/ExternalPrg.cs" />
+    <Compile Remove="Core/ForEach.cs" />
+    <Compile Remove="Core/Interfaces.cs" />
+    <Compile Remove="Core/test.cs" />
+    <Compile Remove="Core/Win32API.cs" />
+    <Compile Remove="Core/WmiBase.cs" />
+    <Compile Remove="Core/XmlConfigMgr.cs" />
+    <Compile Remove="CustomTestActions/AssemblyInfo.cs" />
+    <Compile Remove="CustomTestActions/PerfMon.cs" />
+    <Compile Remove="CustomTestActions/PerfMon/PerfMon.cs" />
+    <Compile Remove="CustomTestActions/PerfMon/PerfMonAttribute.cs" />
+    <Compile Remove="CustomTestActions/PerfMon/PerfMonCounter.cs" />
+    <Compile Remove="CustomTestActions/PerfMon/PerfMonCounterCategory.cs" />
+    <Compile Remove="CustomTestActions/PerfMon/PerfMonCounterCategoryCollection.cs" />
+    <Compile Remove="CustomTestActions/PerfMon/PerfMonCounterCollection.cs" />
+    <Compile Remove="CustomTestActions/PerfMonCounter.cs" />
+    <Compile Remove="CustomTestActions/PerfMonCounterCategory.cs" />
+    <Compile Remove="CustomTestActions/PerfMonCounterCategoryCollection.cs" />
+    <Compile Remove="CustomTestActions/PerfMonCounterCollection.cs" />
+    <Compile Remove="CustomTestActions/SQLTest/ISQLTest.cs" />
+    <Compile Remove="CustomTestActions/SQLTest/SQL.cs" />
+    <Compile Remove="CustomTestActions/SQLTest/SQLAttribute.cs" />
+    <Compile Remove="CustomTestActions/SQLTest/SQLTest.cs" />
+    <Compile Remove="CustomTestActions/SQLTest/SQLTestCollection.cs" />
+    <Compile Remove="CustomTestActions/SQLTest/StoredProc.cs" />
+    <Compile Remove="CustomTestActions/SQLTest/StoredProcCollection.cs" />
+    <Compile Remove="CustomTestActions/WebTest/URL.cs" />
+    <Compile Remove="CustomTestActions/WebTest/URLAttribute.cs" />
+    <Compile Remove="CustomTestActions/WebTest/URLCollection.cs" />
+    <Compile Remove="CustomTestActions/WebTest/WebTest.cs" />
+    <Compile Remove="MSInstaller/MSI.cs" />
+    <Compile Remove="MyClass.cs" />
+    <Compile Remove="PDSClient/AssemblyInfo.cs" />
+    <Compile Remove="PDSClient/PDSClient.cs" />
+    <Compile Remove="test/TestXPathDoc.cs" />
+    <Compile Remove="Util/AssemblyInfo.cs" />
+    <Compile Remove="Util/Error.cs" />
+    <Compile Remove="Util/ErrorCollection.cs" />
+    <Compile Remove="Util/ISendMessage.cs" />
+    <Compile Remove="Util/Log.cs" />
+    <Compile Remove="Util/Trace.cs" />
+    <Compile Remove="WebTest/AssemblyInfo.cs" />
+    <Compile Remove="WebTest/WebTestAction.cs" />
+    <Compile Remove="XInstall2/AssemblyInfo.cs" />
+    <Compile Remove="XInstall2/XInstall.cs" />
+    <Compile Remove="XInstall2/XInstall2.cs" />
+    <Compile Remove="XInstallUI/BDE.cs" />
+    <Compile Remove="XInstallUI/BuildDeploy.cs" />
+    <Compile Remove="XInstallUI/BuildDeploy.Designer.cs" />
+    <Compile Remove="XInstallUI/Properties/AssemblyInfo.cs" />
+    <Compile Remove="XInstallUI/Properties/Resources.Designer.cs" />
+    <Compile Remove="XInstallUI/Properties/Settings.Designer.cs" />
+  </ItemGroup>
 </Project>

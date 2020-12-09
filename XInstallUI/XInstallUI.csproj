@@ -1,50 +1,22 @@
-﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>8.0.50727</ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{46311999-BC29-45A7-9A80-247F47EB2397}</ProjectGuid>
+    <TargetFramework>net5.0</TargetFramework>
     <OutputType>WinExe</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>XInstallUI</RootNamespace>
-    <AssemblyName>XInstallUI</AssemblyName>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="System" />
-    <Reference Include="System.Data" />
     <Reference Include="System.Deployment" />
-    <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
-    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BuildDeploy.cs">
+    <Compile Update="BuildDeploy.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="BuildDeploy.Designer.cs">
+    <Compile Update="BuildDeploy.Designer.cs">
       <DependentUpon>BuildDeploy.cs</DependentUpon>
     </Compile>
-    <Compile Include="BDE.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="BuildDeploy.resx">
+    <EmbeddedResource Update="BuildDeploy.resx">
       <SubType>Designer</SubType>
       <DependentUpon>BuildDeploy.cs</DependentUpon>
     </EmbeddedResource>
@@ -67,5 +39,10 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
   </ItemGroup>
-  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <Compile Remove="Properties/AssemblyInfo.cs" />
+    <Compile Remove="Properties/Resources.Designer.cs" />
+    <Compile Remove="Properties/Settings.Designer.cs" />
+    <EmbeddedResource Remove="Properties/Resources.resx" />
+  </ItemGroup>
 </Project>
