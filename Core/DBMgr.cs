@@ -2,7 +2,7 @@ using System;
 using System.IO;
 using System.Text;
 using System.Collections;
-using System.Data.SqlClient;
+using Microsoft.Data.SqlClient;
 using Interop.SQLDMO;
 using System.Runtime.InteropServices;
 
