@@ -29,9 +29,6 @@
     <DebugType>none</DebugType>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Accessibility">
-      <Name>Accessibility</Name>
-    </Reference>
     <Reference Update="System">
       <Name>System</Name>
     </Reference>
