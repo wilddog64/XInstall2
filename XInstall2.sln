@@ -1,4 +1,4 @@
-﻿Microsoft Visual Studio Solution File, Format Version 9.00
+Microsoft Visual Studio Solution File, Format Version 9.00
 # SharpDevelop 2.0.0.1135
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XInstall2", "XInstall2.csproj", "{FF29BF83-FFB3-42D9-8490-F9AFE684A5FC}"
 EndProject
