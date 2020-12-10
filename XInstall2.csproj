@@ -74,7 +74,6 @@
     <Compile Remove="Core/ActionPackageCollection.cs" />
     <Compile Remove="Core/ActionVariableException.cs" />
     <Compile Remove="Core/ActionVariables.cs" />
-    <Compile Remove="Core/AdsiBase.cs" />
     <Compile Remove="Core/AssemblyInfo.cs" />
     <Compile Remove="Core/DBAccess.cs" />
     <Compile Remove="Core/DBMgr.cs" />
