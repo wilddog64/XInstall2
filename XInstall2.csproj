@@ -120,11 +120,5 @@
     <Compile Remove="XInstall2/AssemblyInfo.cs" />
     <Compile Remove="XInstall2/XInstall.cs" />
     <Compile Remove="XInstall2/XInstall2.cs" />
-    <Compile Remove="XInstallUI/BDE.cs" />
-    <Compile Remove="XInstallUI/BuildDeploy.cs" />
-    <Compile Remove="XInstallUI/BuildDeploy.Designer.cs" />
-    <Compile Remove="XInstallUI/Properties/AssemblyInfo.cs" />
-    <Compile Remove="XInstallUI/Properties/Resources.Designer.cs" />
-    <Compile Remove="XInstallUI/Properties/Settings.Designer.cs" />
   </ItemGroup>
 </Project>
