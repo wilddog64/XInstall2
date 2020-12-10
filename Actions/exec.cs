@@ -302,7 +302,7 @@ namespace XInstall.Core.Actions
 	    protected override string GetArguments()
 	    {
 		    string[] strParams     = Regex.Split( this._arguments, @"[,]");
-		    string strParam        = null;
+		    // string strParam        = null;
 		    StringBuilder sbParams = new StringBuilder();
 
 		    // sbParams.Append("/c ");
