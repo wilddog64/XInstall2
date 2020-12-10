@@ -15,9 +15,6 @@
     <OutputPath>..\build\bin\release\</OutputPath>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="System.Windows.Forms" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\Actions\Actions.csproj" />
     <ProjectReference Include="..\Core\Core.csproj" />
     <ProjectReference Include="..\Util\Util.csproj" />
