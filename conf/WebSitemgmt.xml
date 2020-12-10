@@ -1,4 +1,4 @@
-﻿<setup>
+<setup>
     <package name="180WebSite_RollOut" runnable="true" packagedir="." Onbeforestart="BeforeRollOut" onsuccess="ActionSuccess">
         <defvar name="blatpath" value="c:\tools\bin" />
         <defvar name="mailserver" value="smtp.180prod.com" />
