@@ -30,8 +30,7 @@ namespace XInstall.Util {
         }
 
 
-        public Error this[ int Index ]
-        {
+        public Error this[ int Index ] {
             get { return (Error) this.List[ Index ]; }
         }
 
@@ -52,8 +51,7 @@ namespace XInstall.Util {
         }
 
 
-        public object Current
-        {
+        public object Current {
             get { return this.List[ this._CurrentIndex ]; }
         }
 

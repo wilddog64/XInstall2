@@ -91,8 +91,7 @@ namespace XInstall.Core {
             PKG_OPR_INDEX_OUTOF_RANGE,
             PKG_OPR_ACTIONOBJECT_EXCEPTION,
         }
-        private PACKAGE_OPR_CODE _enumPackageOprCode =
-            PACKAGE_OPR_CODE.PKG_OPR_CREATE_SUCCESSFULLY;
+        private PACKAGE_OPR_CODE _enumPackageOprCode = PACKAGE_OPR_CODE.PKG_OPR_CREATE_SUCCESSFULLY;
         private string[] _strMessages =
             {
                 @"{0}: package {1} was created successfully",
@@ -131,8 +130,8 @@ namespace XInstall.Core {
                 strCustomActionDLL = xnActionDLL.Value;
 
             base.LoadAssembly = Environment.CurrentDirectory +
-                                                Path.DirectorySeparatorChar  +
-                                                strCustomActionDLL;
+                                Path.DirectorySeparatorChar  +
+                                strCustomActionDLL;
 
             // the default core action dll will be loaded all the time.
             this.CreateActionPackage ( xnPackage );
@@ -325,8 +324,7 @@ namespace XInstall.Core {
         /// <summary>
         /// return the number of Action Objects
         /// </summary>
-        public new int Count
-        {
+        public new int Count {
             get { return this._alActionObjectList.Count; }
         }
 
@@ -340,8 +338,7 @@ namespace XInstall.Core {
         ///     required attribute.
         /// </remarks>
         [Action("description", Needed=false, Default="")]
-        public string PackageDescription
-        {
+        public string PackageDescription {
             get { return this._strPackageDescription; }
             set { this._strPackageDescription = value; }
         }
@@ -357,13 +354,12 @@ namespace XInstall.Core {
         ///     within itself.
         /// </remarks>
         [Action("allowgenerateexception", Needed=false, Default="false")]
-        public new string AllowGenerateException
-        {
+        public new string AllowGenerateException {
             set {
                 try {
                     base.AllowGenerateException = bool.Parse( value );
                 } 
-								catch ( Exception ) {
+			    catch ( Exception ) {
                     this._enumPackageOprCode = PACKAGE_OPR_CODE.PKG_OPR_BOOLEAN_PARSING_ERROR;
                     this._strExitMessage     = String.Format( this._strMessages[ this.ExitCode ], this.Name );
                     base.FatalErrorMessage( ".", this.ExitMessage, 1660 );
@@ -376,8 +372,7 @@ namespace XInstall.Core {
         /// gets the name of the class
         /// </summary>
         /// <remarks></remarks>
-        public new string Name
-        {
+        public new string Name {
             get { return this.GetType().Name; }
         }
 
@@ -387,8 +382,7 @@ namespace XInstall.Core {
         /// </summary>
         /// <remarks></remarks>
         [Action("name", Needed=true)]
-        public string PackageName
-        {
+        public string PackageName {
             get { return this._strPackageName; }
             set { this._strPackageName = value; }
         }
@@ -402,8 +396,7 @@ namespace XInstall.Core {
         ///     If not provided, the current directory will be used.
         /// </remarks>
         [Action("packagedir", Needed=false, Default=".")]
-        public string PackageDirectory
-        {
+        public string PackageDirectory {
             get { return this._strPackageDir; }
             set {
                 this._strPackageDir = value;
@@ -421,8 +414,7 @@ namespace XInstall.Core {
         /// exit message
         /// </summary>
         /// <remarks></remarks>
-        public new string ExitMessage
-        {
+        public new string ExitMessage {
             get { return this._strExitMessage; }
         }
 
@@ -431,8 +423,7 @@ namespace XInstall.Core {
         /// gets an exit code from the execution of an ActionPackage
         /// </summary>
         /// <remarks></remarks>
-        public new int ExitCode
-        {
+        public new int ExitCode {
             get { return (int) this._enumPackageOprCode; }
         }
 
@@ -442,8 +433,7 @@ namespace XInstall.Core {
         /// ActionPackage's execution is completed or not.
         /// </summary>
         /// <remarks></remarks>
-        public new bool IsComplete
-        {
+        public new bool IsComplete {
             get { return base.IsComplete; }
         }
 
@@ -453,8 +443,7 @@ namespace XInstall.Core {
         /// should be executed or not.
         /// </summary>
         [Action("runnable", Needed=false, Default="true")]
-        public new string Runnable
-        {
+        public new string Runnable {
             // get { return this._bRunnable; }
             get { return base.Runnable.ToString(); }
             set { base.Runnable = bool.Parse( value ); }
@@ -462,24 +451,21 @@ namespace XInstall.Core {
 
 
         [Action("onsuccess", Needed=false, Default="")]
-        public string OnSuccessHandler
-        {
+        public string OnSuccessHandler {
             get { return this._OnSuccessHandlerName; }
             set { this._OnSuccessHandlerName = value; }
         }
 
 
         [Action("onfail", Needed=false, Default="")]
-        public string OnFailHandler
-        {
+        public string OnFailHandler {
             get { return this._OnFailureHandlerName; }
             set { this._OnFailureHandlerName = value; }
         }
 
 
         [Action("onbeforestart", Needed=false, Default="")]
-        public string OnBeforeStartHandler
-        {
+        public string OnBeforeStartHandler {
             get { return this._OnBeforeStartHandlerName; }
             set { this._OnBeforeStartHandlerName = value; }
         }
@@ -509,8 +495,8 @@ namespace XInstall.Core {
                         if ( ae != null )
                             ae.Execute();
                     }
-                } 
-								catch ( Exception e ) {
+                }
+			    catch ( Exception e ) {
                     this.ProcessHandler( this._OnFailureHandler, 0 );
                     base.IsComplete = false;
 

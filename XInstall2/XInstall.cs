@@ -111,8 +111,7 @@ namespace XInstall {
         ///     program should start from where it fails
         ///     or not.
         /// </summary>
-        public bool Restartable
-        {
+        public bool Restartable {
             get {
                 return this._bRestartable;
             }
@@ -122,8 +121,7 @@ namespace XInstall {
         }
 
 
-        public bool StartGUI
-        {
+        public bool StartGUI {
             get {
                 return this._bStartGUI;
             }
@@ -133,8 +131,7 @@ namespace XInstall {
         }
 
 
-        protected override string ObjectName
-        {
+        protected override string ObjectName {
             get {
                 return this.GetType().Name;
             }
@@ -169,8 +166,7 @@ namespace XInstall {
         /// private property ConfigFile -
         ///     get/set the Xml configuration file
         /// </summary>
-        private string ConfigFile
-        {
+        private string ConfigFile {
             get {
                 // check to see if input is null
                 if ( this._strConfigFile == null )
@@ -197,8 +193,7 @@ namespace XInstall {
         ///     set, return the running program name with the .dmp
         ///     extension.
         /// </summary>
-        private string DumpFile
-        {
+        private string DumpFile {
             get {
                 if ( this._strDumpFile == null )
                     this._strDumpFile =
@@ -286,8 +281,7 @@ namespace XInstall {
         }
 
 
-        public new string Name
-        {
+        public new string Name {
             get {
                 return this.GetType().Name;
             }

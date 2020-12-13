@@ -11,8 +11,7 @@ namespace XInstall.Core {
             this._Name = Name;
         }
 
-        public string Name
-        {
+        public string Name {
             get { return this._Name; }
             set { this._Name = value; }
         }

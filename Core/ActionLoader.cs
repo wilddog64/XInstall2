@@ -43,8 +43,7 @@ namespace XInstall.Core {
 
 		// a private enumration for the internal
 		// return code
-		private enum ACTIONLOADER_OPERATION_CODE
-		{
+		private enum ACTIONLOADER_OPERATION_CODE {
 		   OPR_SUCCESS = 0,
 		   OPR_SPECIFY_ACTION_NOTFOUND,
 		   OPR_CANNOT_FIND_MEMBER,
@@ -70,8 +69,7 @@ namespace XInstall.Core {
 		   ACTIONLOADER_OPERATION_CODE.OPR_SUCCESS;
 
 		// error messages table
-		private string[] _strMessages =
-		   {
+		private string[] _strMessages = {
 		      @"{0}: successfully loaded assembly {1}",
 		      @"{0}: given action {1} does not have a coresponding class defined, exit code {2}",
 		      @"{0}: unable to find a given constructor's member {1}, exit code {2}",
@@ -132,8 +130,7 @@ namespace XInstall.Core {
 		/// property Name -
 		///     gets the class name of the object.
 		/// </summary>
-		public new string Name
-		{
+		public new string Name {
 		   get { return this.GetType().Name; }
 		}
 
@@ -142,8 +139,7 @@ namespace XInstall.Core {
 		/// property LoadAssembly -
 		///     sets the assembly file to be loaded
 		/// </summary>
-		public string LoadAssembly
-		{
+		public string LoadAssembly {
 		   set {
 			   string strAssemblyFile    = value;
 			   AssemblyName assemblyName = new AssemblyName();
@@ -179,8 +175,7 @@ namespace XInstall.Core {
 		/// property ExitCode -
 		///     gets an exitcode from the ClassLoader object
 		/// </summary>
-		public new int ExitCode
-		{
+		public new int ExitCode {
 		   get { return (int) this._cocOperationCode; }
 		}
 
@@ -189,8 +184,7 @@ namespace XInstall.Core {
 		/// property ExitMessage -
 		///     gets the error message from the object
 		/// </summary>
-		public new string ExitMessage
-		{
+		public new string ExitMessage {
 		   get { return this._strExitMessage; }
 		}
 
@@ -329,60 +323,60 @@ namespace XInstall.Core {
 			Type t     = null;
 			bool Found = false;
 			try {
-				// get types from loaded assembly and go
-				// through each one of them.
-				try {
-					for ( int iTypeIdx = 0; iTypeIdx < Types.Length; iTypeIdx++ ) {
-						// retrieve class information by calling Type's GetConstructor methods. As we
-						// are looking for the constructor that don't need parameters, Type.EmptyTypes
-						// enumration is used.
-						t  = Types[iTypeIdx];
-						if ( t.BaseType == null )
-							continue;
-						if ( !t.BaseType.IsClass )
-							continue;
+                // get types from loaded assembly and go
+                // through each one of them.
+                try {
+                    for ( int iTypeIdx = 0; iTypeIdx < Types.Length; iTypeIdx++ ) {
+                        // retrieve class information by calling Type's GetConstructor methods. As we
+                        // are looking for the constructor that don't need parameters, Type.EmptyTypes
+                        // enumration is used.
+                        t  = Types[iTypeIdx];
+                        if ( t.BaseType == null )
+                            continue;
+                        if ( !t.BaseType.IsClass )
+                            continue;
 
-						ciConstructorInfo = t.GetConstructor( BindingFlags.Public | BindingFlags.Instance, null, CallingConventions.Standard, Type.EmptyTypes, null);
+                        ciConstructorInfo = t.GetConstructor( BindingFlags.Public | BindingFlags.Instance, null, CallingConventions.Standard, Type.EmptyTypes, null);
 
-						// if a particular class is found we invoke its constructor and add it to our hash table
-						object[] objs = null;
-						if ( ciConstructorInfo != null ) {
-							objs = new object[2];
-							objAttributes = ciConstructorInfo.GetCustomAttributes(false);
-							if ( objAttributes.Length > 0 ) {
-								aa      = (ActionAttribute) objAttributes[0];
-								objs[0] = ciConstructorInfo;
-								objs[1] = null;
-								Found   = true;
-							}
-						} 
-            else {
-							Type[] tTypes = new Type[1]{ typeof( XmlNode ) };
-							ciConstructorInfo = t.GetConstructor( BindingFlags.Public | BindingFlags.Instance, null, CallingConventions.Standard, tTypes, null );
-							if ( ciConstructorInfo != null ) {
-								objAttributes = ciConstructorInfo.GetCustomAttributes(false);
-								if ( objAttributes.Length > 0 ) {
-									aa = objAttributes[0] as ActionAttribute;
-									if ( aa.Name.Equals("base") )
-										continue;
-									else {
-										objs    = new object[2];
-										aa      = (ActionAttribute) objAttributes[0];
-										objs[0] = ciConstructorInfo;
-										objs[1] = "true";
-										Found   = true;
-									}
-								}
-							} 
-              else continue;
-						}
-						if ( aa != null && !this._htTypeLookupTable.Contains( aa.Name ) )
-							this._htTypeLookupTable.Add( aa.Name, objs );
-					}
-				} 
-        catch ( Exception e ) {
-					base.FatalErrorMessage( ".", e.Message, 1660, false );
-				}
+                        // if a particular class is found we invoke its constructor and add it to our hash table
+                        object[] objs = null;
+                        if ( ciConstructorInfo != null ) {
+                            objs = new object[2];
+                            objAttributes = ciConstructorInfo.GetCustomAttributes(false);
+                            if ( objAttributes.Length > 0 ) {
+                                aa      = (ActionAttribute) objAttributes[0];
+                                objs[0] = ciConstructorInfo;
+                                objs[1] = null;
+                                Found   = true;
+                            }
+                        } 
+                        else {
+                            Type[] tTypes = new Type[1]{ typeof( XmlNode ) };
+                            ciConstructorInfo = t.GetConstructor( BindingFlags.Public | BindingFlags.Instance, null, CallingConventions.Standard, tTypes, null );
+                            if ( ciConstructorInfo != null ) {
+                                objAttributes = ciConstructorInfo.GetCustomAttributes(false);
+                                if ( objAttributes.Length > 0 ) {
+                                    aa = objAttributes[0] as ActionAttribute;
+                                    if ( aa.Name.Equals("base") )
+                                        continue;
+                                    else {
+                                        objs    = new object[2];
+                                        aa      = (ActionAttribute) objAttributes[0];
+                                        objs[0] = ciConstructorInfo;
+                                        objs[1] = "true";
+                                        Found   = true;
+                                    }
+                                }
+                            } 
+                            else continue;
+                        }
+                        if ( aa != null && !this._htTypeLookupTable.Contains( aa.Name ) )
+                            this._htTypeLookupTable.Add( aa.Name, objs );
+                    }
+                } 
+                catch ( Exception e ) {
+                    base.FatalErrorMessage( ".", e.Message, 1660, false );
+                }
 			} 
       catch ( ArgumentNullException ) {
 				this._cocOperationCode = ACTIONLOADER_OPERATION_CODE.OPR_CONSTRUCTOR_NAME_NEEDED;

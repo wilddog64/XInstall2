@@ -55,38 +55,32 @@ namespace XInstall.Util {
         }
 
 
-        public string TimeStamp
-        {
+        public string TimeStamp {
             get { return this._TimeStamp.ToString(); }
         }
 
 
-        public string ObjectName
-        {
+        public string ObjectName {
             get { return this._ObjectName; }
         }
 
 
-        public LEVEL Level
-        {
+        public LEVEL Level {
             get { return this._Level; }
         }
 
 
-        public int ErrorID
-        {
+        public int ErrorID {
             get { return this._ErrorID; }
         }
 
 
-        public string ErrorMessage
-        {
+        public string ErrorMessage {
             get { return this._ErrorMessage; }
         }
 
 
-        public SERVIRITY Servirity
-        {
+        public SERVIRITY Servirity {
             get { return this._Servirty; }
         }
 

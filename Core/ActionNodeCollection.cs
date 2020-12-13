@@ -112,8 +112,7 @@ namespace XInstall.Core {
         /// public object Current -
         ///     gets the current object in the list
         /// </summary>
-        public object Current
-        {
+        public object Current {
             get {
                 // range checking, throw an exception if
                 // index is out of range (underflow or overflow)
@@ -139,13 +138,11 @@ namespace XInstall.Core {
             return this._iCurrentActionNodeIdx >= this._iActionNodeIdx ? false : true;
         }
 
-        public int LoadStatus
-        {
+        public int LoadStatus {
             get { return base.ExitCode; }
         }
 
-        public string Message
-        {
+        public string Message {
             get { return base.ExitMessage; }
         }
 

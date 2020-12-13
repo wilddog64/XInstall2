@@ -80,7 +80,6 @@ namespace XInstall.Core {
             _strNodeName       = _xnNode.Name;
             _xacNodeAttributes = xnNode.Attributes;
             _xnlNodeList       = _xnNode.ChildNodes;
-
         }
 
 
@@ -88,8 +87,7 @@ namespace XInstall.Core {
         /// property NodeName -
         ///     gets a node name
         /// </summary>
-        public string NodeName
-        {
+        public string NodeName {
             get { return _strNodeName; }
         }
 
@@ -99,8 +97,7 @@ namespace XInstall.Core {
         ///     gets a boolean value that indicates if
         ///     a given node has a child nodes
         /// </summary>
-        public bool HasChildren
-        {
+        public bool HasChildren {
             get {
                 if ( _xnNode != null )
                     _hasChildren = _xnNode.HasChildNodes;
@@ -114,8 +111,7 @@ namespace XInstall.Core {
         ///     gets a boolean value that indicates if
         ///     a given node has attributes
         /// </summary>
-        public bool HasAttribute
-        {
+        public bool HasAttribute {
             get {
                 _hasAttribute = _xacNodeAttributes != null ? true : false;
                 return _hasAttribute;
@@ -127,8 +123,7 @@ namespace XInstall.Core {
         /// property Attributes -
         ///     gets attributes for a given node
         /// </summary>
-        public XmlAttributeCollection Attributes
-        {
+        public XmlAttributeCollection Attributes {
             get { return _xacNodeAttributes; }
         }
 
@@ -137,8 +132,7 @@ namespace XInstall.Core {
         /// property Node -
         ///     gets a particular Xml node
         /// </summary>
-        public XmlNode Node
-        {
+        public XmlNode Node {
             get { return _xnNode; }
         }
 
@@ -249,8 +243,7 @@ namespace XInstall.Core {
         /// property Name -
         ///     gets the current class name
         /// </summary>
-        public new string Name
-        {
+        public new string Name {
             get { return this.GetType().Name.ToLower(); }
         }
 

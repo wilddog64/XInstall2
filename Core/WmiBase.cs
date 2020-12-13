@@ -23,50 +23,42 @@ namespace XInstall.Core {
 
 #region protected virtual properties
 
-        public virtual string UserName
-        {
+        public virtual string UserName {
             get { return ""; }
             set {}
         }
 
-        public virtual string UserPass
-        {
+        public virtual string UserPass {
             get { return ""; }
             set {}
         }
 
-        public virtual string MachineName
-        {
+        public virtual string MachineName {
             get { return ""; }
             set {}
         }
 
-        public virtual string Key
-        {
+        public virtual string Key {
             get { return ""; }
             set {}
         }
 
-        protected virtual string Location
-        {
+        protected virtual string Location {
             get { return ""; }
             set {}
         }
 
-        public virtual string RelativePath
-        {
+        public virtual string RelativePath {
             get { return ""; }
             set {}
         }
 
-        public virtual string NamespacePath
-        {
+        public virtual string NamespacePath {
             get { return ""; }
             set {}
         }
 
-        public virtual string ClassName
-        {
+        public virtual string ClassName {
             get { return ""; }
             set { }
         }

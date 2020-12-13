@@ -23,8 +23,7 @@ namespace XInstall.Util.Log {
         }
 
 
-        public string LogMessage
-        {
+        public string LogMessage {
             get { return this._LogMessage; }
         }
 
@@ -109,8 +108,7 @@ namespace XInstall.Util.Log {
         ///     this property will return an open stream of the
         ///     log file that has been assigned to the class.
         /// </remarks>
-        protected StreamWriter LogFileStream
-        {
+        protected StreamWriter LogFileStream {
             get {
                 // FileIOPermission IOPermDenyRoot = new FileIOPermission( FileIOPermissionAccess.NoAccess, new string[] { "c:\\", Environment.SystemDirectory } );
 
@@ -149,8 +147,7 @@ namespace XInstall.Util.Log {
         /// <summary>
         /// Gets the name of object.
         /// </summary>
-        public string Name
-        {
+        public string Name {
             get {
                 return this.GetType().Name;
             }
@@ -167,8 +164,7 @@ namespace XInstall.Util.Log {
         /// under current directory's logs folder.  It will create
         /// the sub-directory if the one is not existed!
         /// </remarks>
-        public string FileName
-        {
+        public string FileName {
             get {
                 if ( this._strFileName == null || this._strFileName == String.Empty ) {
                     string strProgName = Path.GetFileNameWithoutExtension( Environment.GetCommandLineArgs()[0]);
@@ -202,8 +198,7 @@ namespace XInstall.Util.Log {
         /// This is how you control if you want you message to
         /// be written to a console.
         /// </remarks>
-        public bool OutToConsole
-        {
+        public bool OutToConsole {
             set { this._bOutputToConsole = bool.Parse( value.ToString() ); }
         }
 
@@ -216,8 +211,7 @@ namespace XInstall.Util.Log {
         /// This property is used to control a given message should be
         /// written to a file or not.
         /// </remarks>
-        public bool OutToFile
-        {
+        public bool OutToFile {
             set { this._bOutputToFile = bool.Parse( value.ToString() ); }
         }
 
@@ -225,8 +219,7 @@ namespace XInstall.Util.Log {
         /// <summary>
         /// gets a logged information
         /// </summary>
-        public ArrayList LogInformation
-        {
+        public ArrayList LogInformation {
             get { return this._Information; }
         }
 
@@ -358,14 +351,12 @@ namespace XInstall.Util.Log {
 #endregion
 
 #region protected properties
-        protected ErrorCollection Errors
-        {
+        protected ErrorCollection Errors {
             get { return _Errors; }
         }
 
 
-        protected UInt32 MsgID
-        {
+        protected UInt32 MsgID {
             get { return this._MsgID; }
         }
 

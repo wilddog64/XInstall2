@@ -16,14 +16,11 @@ namespace XInstall.Core {
         }
 
 
-        public override string Message
-        {
+        public override string Message {
             get { return base.Message; }
         }
 
-
-        public string VariableName
-        {
+        public string VariableName {
             get { return this._VariableName; }
         }
     }
@@ -62,13 +59,11 @@ namespace XInstall.Core {
             this._VariableName = VariableName;
         }
 
-        public override string Message
-        {
+        public override string Message {
             get { return base.Message; }
         }
 
-        public string VariableName
-        {
+        public string VariableName {
             get { return this._VariableName; }
         }
     }
@@ -85,13 +80,11 @@ namespace XInstall.Core {
             this._VariableName = VariableName;
         }
 
-        public override string Message
-        {
+        public override string Message {
             get { return base.Message; }
         }
 
-        public string VariableName
-        {
+        public string VariableName {
             get { return this._VariableName; }
         }
     }

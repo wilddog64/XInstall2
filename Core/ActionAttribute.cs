@@ -9,8 +9,7 @@ namespace XInstall.Core {
     ///     Constructors, Properties, and methods
     ///
     /// </summary>
-    [AttributeUsage( AttributeTargets.Constructor |
-                     AttributeTargets.Property)]
+    [AttributeUsage(AttributeTargets.Constructor | AttributeTargets.Property)]
     public class ActionAttribute : Attribute {
 #region private member variables
         private string _strName          = null;

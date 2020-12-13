@@ -11,7 +11,7 @@ namespace XInstall.Core {
     /// </summary>
     public class ActionPackageCollection : CollectionBase {
 #region private variables
-        private ActionPackage   _ActionPackage    = null;
+        private ActionPackage _ActionPackage = null;
         private enum PACKAGE_COLLECTION_OPR_CODE {
             PACKAGE_ADDED_SUCCESSFULLY = 0,
             PACKAGE_INDEX_OUTOF_RANGE,
@@ -55,14 +55,12 @@ namespace XInstall.Core {
         }
 
 
-        public new int Count
-        {
+        public new int Count {
             get { return base.List.Count; }
         }
 
 
-        public ActionElement this[ int iActionPackageIdx ]
-        {
+        public ActionElement this[ int iActionPackageIdx ] {
             get {
                 if ( iActionPackageIdx < 0 || iActionPackageIdx > base.List.Count ) {
                     this._enumPkgCollOprCode = PACKAGE_COLLECTION_OPR_CODE.PACKAGE_INDEX_OUTOF_RANGE;
@@ -75,22 +73,19 @@ namespace XInstall.Core {
         }
 
 
-        public string Name
-        {
+        public string Name {
             get { return this.GetType().Name; }
         }
 
 
-        public string ExitMessage
-        {
+        public string ExitMessage {
             get {
                 return this._strExitMessage;
             }
         }
 
 
-        public int ExitCode
-        {
+        public int ExitCode {
             get { return (int) this._enumPkgCollOprCode; }
         }
 

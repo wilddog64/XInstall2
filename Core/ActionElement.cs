@@ -172,8 +172,7 @@ namespace XInstall.Core {
         }
 
 
-        public ActionElement( ISendLogMessage SendLogMessageIF ) :
-                base( SendLogMessageIF ) {
+        public ActionElement( ISendLogMessage SendLogMessageIF ) : base( SendLogMessageIF ) {
             base.OutToConsole = true;
             base.OutToFile    = true;
             this._ThisInstance = (this as ActionElement);
@@ -186,8 +185,7 @@ namespace XInstall.Core {
         /// <summary>
         /// get/set an output file for logging purpose.
         /// </summary>
-        protected string OutputFile
-        {
+        protected string OutputFile {
             set { base.FileName = value; }
         }
 
@@ -196,8 +194,7 @@ namespace XInstall.Core {
         /// get/set a flag to indicate a given object
         /// has completed or not
         /// </summary>
-        public virtual bool IsComplete
-        {
+        public virtual bool IsComplete {
             get { return this._bIsCompleted; }
             set { this._bIsCompleted = value; }
         }
@@ -208,8 +205,7 @@ namespace XInstall.Core {
         /// is allowed to generated an exception
         /// </summary>
         [Action("allowgenerateexception", Needed=false, Default="false")]
-        protected bool AllowGenerateException
-        {
+        protected bool AllowGenerateException {
             get { return this._bAllowException; }
             set { this._bAllowException = value; }
         }
@@ -220,8 +216,7 @@ namespace XInstall.Core {
         /// an object is to be executed or not
         /// </summary>
         [Action("runnable", Needed=false, Default="false")]
-        protected bool Runnable
-        {
+        protected bool Runnable {
             get { return this._bRunnable; }
             set { this._bRunnable = value; }
         }
@@ -232,8 +227,7 @@ namespace XInstall.Core {
         /// is going to ignore an error or not
         /// </summary>
         [Action("skiperror", Needed=false, Default="false")]
-        protected bool SkipError
-        {
+        protected bool SkipError {
             get { return this._bSkipError; }
             set { this._bSkipError = value; }
         }
@@ -574,7 +568,7 @@ namespace XInstall.Core {
         /// <param name="xn">an XmlNode object</param>
         /// <param name="ActionObjects">table of loaded objects</param>
         /// <returns></returns>
-        protected object CreateObject( string    ObjectName, XmlNode   xn, Hashtable ActionObjects ) {
+        protected object CreateObject( string ObjectName, XmlNode xn, Hashtable ActionObjects ) {
             ConstructorInfo Ctor = null;
             object ObjInstance   = null;
             if ( ActionObjects.ContainsKey( ObjectName ) ) {
