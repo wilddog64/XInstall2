@@ -7,14 +7,12 @@ using System.Reflection;
 using System.Text;
 using System.Xml;
 
-namespace XInstall.Core.Actions
-{
+namespace XInstall.Core.Actions {
     /// <summary>
     /// Summary description for ExecScript.
     /// </summary>
 
-    public class ExecScript : ActionElement, IAction
-    {
+    public class ExecScript : ActionElement, IAction {
 	    string _Language = String.Empty;
 
 	    [Action("runscript")]
@@ -23,74 +21,60 @@ namespace XInstall.Core.Actions
 	    public override void ParseActionElement() {}
 
 	    [Action("language", Needed=false, Default="C#")]
-	    public string Language
-	    {
-
-		    get
-		    {
+	    public string Language {
+		    get {
 			    return this._Language;
 		    }
 
-		    set
-		    {
+		    set {
 			    this._Language = value;
 
-			    switch ( this._Language )
-			    {
-			    case "C#":
-				    break;
+			    switch ( this._Language ) {
+                    case "C#":
+                        break;
 
-			    case "CSharp":
-				    break;
+                    case "CSharp":
+                        break;
 
-			    case "J#":
-				    break;
+                    case "J#":
+                        break;
 
-			    case "VBNet":
-				    break;
+                    case "VBNet":
+                        break;
 
-			    default :
-				    base.FatalErrorMessage( ".", String.Format( @"unknown language specified: {0}", this._Language ), 1660, -99 );
-				    break;
+                    default :
+                        base.FatalErrorMessage( ".", String.Format( @"unknown language specified: {0}", this._Language ), 1660, -99 );
+                        break;
 			    }
 		    }
 	    }
 
 	    #region IAction Members
 
-	    public override void Execute()
-	    {
+	    public override void Execute() {
 		    base.Execute();
 	    }
 
-	    public new bool IsComplete
-	    {
-		    get
-		    {
+	    public new bool IsComplete {
+		    get {
 			    return base.IsComplete;
 		    }
 	    }
 
-	    public new string ExitMessage
-	    {
-		    get
-		    {
+	    public new string ExitMessage {
+		    get {
 			    return null;
 		    }
 	    }
 
-	    public new string Name
-	    {
-		    get
-		    {
+	    public new string Name {
+		    get {
 			    return this.GetType().Name;
 		    }
 	    }
 
-	    public new int ExitCode
-	    {
-		    get
-		    {
+	    public new int ExitCode {
+		    get {
 			    return 0;
 		    }
 	    }
@@ -98,47 +82,42 @@ namespace XInstall.Core.Actions
 	    #endregion
     }
 
-    internal class CodeRunner
-    {
+    internal class CodeRunner {
 
 	    private static
 	    CodeDomProvider CodeProvider = null;
 
 	    private CodeRunner() {}
 
-	    private CodeDomProvider GetLangProvider( string Lang )
-	    {
+	    private CodeDomProvider GetLangProvider( string Lang ) {
 
 		    CodeDomProvider CodeProvider = null;
 
-		    switch ( Lang )
-		    {
-		    case "C#":
-			    CodeProvider = new Microsoft.CSharp.CSharpCodeProvider();
-			    break;
-		    case "CSharp":
-			    CodeProvider = new Microsoft.CSharp.CSharpCodeProvider();
-			    break;
-		    case "VBNet":
-			    CodeProvider = new Microsoft.VisualBasic.VBCodeProvider();
-			    break;
-		    case "VB":
-			    CodeProvider = new Microsoft.VisualBasic.VBCodeProvider();
-			    break;
+		    switch ( Lang ) {
+                case "C#":
+                    CodeProvider = new Microsoft.CSharp.CSharpCodeProvider();
+                    break;
+                case "CSharp":
+                    CodeProvider = new Microsoft.CSharp.CSharpCodeProvider();
+                    break;
+                case "VBNet":
+                    CodeProvider = new Microsoft.VisualBasic.VBCodeProvider();
+                    break;
+                case "VB":
+                    CodeProvider = new Microsoft.VisualBasic.VBCodeProvider();
+                    break;
 		    }
 
 		    return CodeProvider;
 	    }
 
-	    private string CreateSkeletenCode( string Lang )
-	    {
+	    private string CreateSkeletenCode( string Lang ) {
 			CodeProvider                     = this.GetLangProvider( Lang );
 			CodeNamespace       Namespace    = new CodeNamespace( @"RunScript" );
 			CodeTypeDeclaration CodeTypeDecl = new CodeTypeDeclaration();
 
 			// now import necessary namespace
-			CodeNamespaceImport[] NamespaceImports =
-			{
+			CodeNamespaceImport[] NamespaceImports = {
 				new CodeNamespaceImport( @"System" ),
 				new CodeNamespaceImport( @"System.Collections" ),
 				new CodeNamespaceImport( @"System.Data" ),
@@ -190,57 +169,47 @@ namespace XInstall.Core.Actions
 			return CodeBuffer.GetStringBuilder().ToString();
 	    }
 
-	    private string ReadScriptSource( string FileName )
-	    {
+	    private string ReadScriptSource( string FileName ) {
 		    string Code = String.Empty;
 
-		    try
-		    {
-			    using( StreamReader sr = new StreamReader( FileName ) )
-			    {
+		    try {
+			    using( StreamReader sr = new StreamReader( FileName ) ) {
 				    Code = sr.ReadToEnd();
 			    }
 
 		    }
-		    catch ( FileNotFoundException FileNotFound )
-		    {
+		    catch ( FileNotFoundException FileNotFound ) {
 			    throw FileNotFound;
 
 		    }
-		    catch ( Exception e )
-		    {
+		    catch ( Exception e ) {
 			    throw e;
 		    }
 
 		    return Code;
 	    }
 
-	    private string ReadScriptSource( XmlNode ScriptNode )
-	    {
+	    private string ReadScriptSource( XmlNode ScriptNode ) {
 		    string Code = String.Empty;
 
-		    if ( ScriptNode.NodeType == XmlNodeType.CDATA )
-		    {
+		    if ( ScriptNode.NodeType == XmlNodeType.CDATA ) {
 			    Code = ScriptNode.Value;
 		    }
 
 		    return Code;
 	    }
 
-	    private Assembly CompileAssembly( string SourceCode, params object[] parameters )
-	    {
+	    private Assembly CompileAssembly( string SourceCode, params object[] parameters ) {
 		    ICodeCompiler CodeCompiler = CodeProvider.CreateCompiler();
 		    CompilerParameters CParams = new CompilerParameters();
 		    CParams.ReferencedAssemblies.AddRange( new string[] { @"System.dll", @"System.Xml.dll", @"System.Data.dll" } );
 		    CParams.GenerateInMemory = true;
 		    CompilerResults cr       = CodeCompiler.CompileAssemblyFromSource( CParams, SourceCode );
 
-		    if ( cr.Errors.Count > 0 )
-		    {
+		    if ( cr.Errors.Count > 0 ) {
 			    IEnumerator Enumerator = cr.Errors.GetEnumerator();
 
-			    while ( Enumerator.MoveNext() )
-			    {
+			    while ( Enumerator.MoveNext() ) {
 				    CompilerError Error = (CompilerError) Enumerator.Current;
 				    Console.Error.WriteLine( Error );
 				    Environment.Exit( -1 );

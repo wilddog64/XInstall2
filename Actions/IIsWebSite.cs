@@ -7,18 +7,14 @@ using System.Text;
 using System.Xml;
 
 
-namespace XInstall.Core.Actions
-{
-    public enum IIsAppMode
-    {
+namespace XInstall.Core.Actions {
+    public enum IIsAppMode {
 	    IN_PROCESS = 0,
 	    OUT_PROCESS,
 	    POOLED_PROCESS,
     }
 
-    public enum IISVDirAccessFlag :
-    int
-    {
+    public enum IISVDirAccessFlag : int {
 	    MD_ACCESS_EXECUTE           = 4,
 	    MD_ACCESS_NO_PHYSICALDIR    = 32768,
 	    MD_ACCESS_NO_REMOTE_EXEC    = 8192,
@@ -38,8 +34,7 @@ namespace XInstall.Core.Actions
     /// an IIS6 webiste.  The class uses DirectoryServices from
     /// AdsiBase class.
     /// </summary>
-    public class IIsWebSite : AdsiBase
-    {
+    public class IIsWebSite : AdsiBase {
 
 	    #region private member fields
 	    private XmlNode        _ActionNode  = null;
@@ -75,8 +70,7 @@ namespace XInstall.Core.Actions
 	    /// </summary>
 	    /// <param name="ActionNode">an XmlNode type variable</param>
 	    [Action("iiswebsite")]
-	    public IIsWebSite( XmlNode ActionNode ) : base( ActionNode )
-	    {
+	    public IIsWebSite( XmlNode ActionNode ) : base( ActionNode ) {
 		    this._ActionNode = ActionNode;
 	    }
 
@@ -93,14 +87,11 @@ namespace XInstall.Core.Actions
 	    /// the website will be created on the localhost.
 	    /// </remarks>
 	    [Action("machinename", Needed=false, Default="localhost")]
-	    public override string MachineName
-	    {
-		    get
-		    {
+	    public override string MachineName {
+		    get {
 			    return this._MachineName;
 		    }
-		    set
-		    {
+		    set {
 			    this._MachineName = value;
 		    }
 	    }
@@ -116,14 +107,11 @@ namespace XInstall.Core.Actions
 	    /// pool, set this property to "false", and work thereafter.
 	    /// </remarks>
 	    [Action("assigndefaultapppool", Needed=false, Default="true")]
-	    public string AssignDefaultAppPool
-	    {
-		    get
-		    {
+	    public string AssignDefaultAppPool {
+		    get {
 			    return this._DefaultAppPool;
 		    }
-		    set
-		    {
+		    set {
 			    this._DefaultAppPool    = value.ToLower();
 			    this._AssignDefaultPool = bool.Parse( this._DefaultAppPool );
 		    }
@@ -143,14 +131,11 @@ namespace XInstall.Core.Actions
 	    ///     update - update properties for a given site
 	    /// </remarks>
 	    [Action("action", Needed=false, Default="create")]
-	    public string Action
-	    {
-		    get
-		    {
+	    public string Action {
+		    get {
 			    return this._Action.ToLower();
 		    }
-		    set
-		    {
+		    set {
 			    this._Action = value;
 		    }
 	    }
@@ -164,14 +149,11 @@ namespace XInstall.Core.Actions
 	    /// </remarks>
 	    [Action("websitename", Needed=false, Default="DefaultWebSite")]
 	    [ADSI("ServerComment")]
-	    public string ServerComment
-	    {
-		    get
-		    {
+	    public string ServerComment {
+		    get {
 			    return this._WebSiteName;
 		    }
-		    set
-		    {
+		    set {
 			    this._WebSiteName = value;
 		    }
 	    }
@@ -193,14 +175,11 @@ namespace XInstall.Core.Actions
 	    /// </remarks>
 	    [Action("authmethods", Needed=false, Default="4")]
 	    [ADSI("AuthFlags")]
-	    public string AuthFlags
-	    {
-		    get
-		    {
+	    public string AuthFlags {
+		    get {
 			    return this._AuthFlags;
 		    }
-		    set
-		    {
+		    set {
 			    this._AuthFlags = value;
 		    }
 	    }
@@ -221,14 +200,11 @@ namespace XInstall.Core.Actions
 	    /// </example>
 	    [Action("serverbindings", Needed=false, Default=":85:")]
 	    [ADSI("ServerBindings")]
-	    public string ServerBindings
-	    {
-		    get
-		    {
+	    public string ServerBindings {
+		    get {
 			    return this._ServerBindings;
 		    }
-		    set
-		    {
+		    set {
 			    this._ServerBindings = value;
 		    }
 	    }
@@ -246,14 +222,11 @@ namespace XInstall.Core.Actions
 	    /// </remarks>
 	    [Action("ntauthenticationproviders", Needed=false, Default="NTLM")]
 	    [ADSI("NTAuthenticationProviders")]
-	    public string NTAuthenticationProviders
-	    {
-		    get
-		    {
+	    public string NTAuthenticationProviders {
+		    get {
 			    return this._AuthProviders;
 		    }
-		    set
-		    {
+		    set {
 			    this._AuthProviders = value;
 		    }
 	    }
@@ -268,14 +241,11 @@ namespace XInstall.Core.Actions
 	    /// </remarks>
 	    [Action("frontpageweb", Needed=false, Default="1")]
 	    [ADSI("FrontPageWeb")]
-	    public string FrontPageWeb
-	    {
-		    get
-		    {
+	    public string FrontPageWeb {
+		    get {
 			    return this._FrontPageWeb;
 		    }
-		    set
-		    {
+		    set {
 			    this._FrontPageWeb = value;
 		    }
 	    }
@@ -291,14 +261,11 @@ namespace XInstall.Core.Actions
 	    /// </remarks>
 	    [Action("defaultdocument", Needed=false, Default="Default.aspx, Default.htm")]
 	    [ADSI("DefaultDoc")]
-	    public string DefaultDoc
-	    {
-		    get
-		    {
+	    public string DefaultDoc {
+		    get {
 			    return this._DefaultDoc;
 		    }
-		    set
-		    {
+		    set {
 			    this._DefaultDoc = value;
 		    }
 	    }
@@ -313,10 +280,8 @@ namespace XInstall.Core.Actions
 	    /// will not be executed.
 	    /// </remarks>
 	    [Action("runnable", Needed=false, Default="true")]
-	    public new string Runnable
-	    {
-		    set
-		    {
+	    public new string Runnable {
+		    set {
 			    base.Runnable = bool.Parse( value );
 		    }
 	    }
@@ -331,23 +296,18 @@ namespace XInstall.Core.Actions
 	    /// not set it to true when running in a production environment.
 	    /// </remarks>
 	    [Action("AllowGenerateException", Needed=false, Default="false")]
-	    public new string AllowGenerateException
-	    {
-		    set
-		    {
+	    public new string AllowGenerateException {
+		    set {
 			    base.AllowGenerateException = bool.Parse( value );
 		    }
 	    }
 
 	    [Action("cvsfile", Needed=false, Default="")]
-	    public string CVSFile
-	    {
-		    get
-		    {
+	    public string CVSFile {
+		    get {
 			    return this._CVSFile;
 		    }
-		    set
-		    {
+		    set {
 			    this._CVSFile = value;
 		    }
 	    }
@@ -355,10 +315,8 @@ namespace XInstall.Core.Actions
 	    /// <summary>
 	    ///  get the name of a running object instance.
 	    /// </summary>
-	    public new string Name
-	    {
-		    get
-		    {
+	    public new string Name {
+		    get {
 			    return this.GetType().Name;
 		    }
 	    }
@@ -369,73 +327,57 @@ namespace XInstall.Core.Actions
 	    ///
 	    /// </summary>
 	    #region public override properties
-	    protected override string ObjectName
-	    {
-		    get
-		    {
+	    protected override string ObjectName {
+		    get {
 			    return this.Name;
 		    }
 	    }
 	    #endregion
 
 	    #region protected overrided properties
-	    protected override string SchemaClassName
-	    {
-		    get
-		    {
+	    protected override string SchemaClassName {
+		    get {
 			    return this._SchemaClassName;
 		    }
-		    set
-		    {
+		    set {
 			    this._SchemaClassName = value;
 		    }
 	    }
 
 
-	    protected override string AdsiProvider
-	    {
-		    get
-		    {
+	    protected override string AdsiProvider {
+		    get {
 			    return "IIS";
 		    }
 	    }
 
 
-	    protected override object ObjectInstance
-	    {
-		    get
-		    {
+	    protected override object ObjectInstance {
+		    get {
 			    return this;
 		    }
 	    }
 
 
-	    public override string AdsiPath
-	    {
-		    get
-		    {
+	    public override string AdsiPath {
+		    get {
 			    return "W3SVC";
 		    }
 	    }
 
-	    public DirectoryEntries WebSites
-	    {
-		    get
-		    {
+	    public DirectoryEntries WebSites {
+		    get {
 			    return base.Directories;
 		    }
 	    }
 
 
 
-	    public override string Port
-	    {
-		    get
-		    {
+	    public override string Port {
+		    get {
 			    return this._Port;
 		    }
-		    set
-		    {
+		    set {
 			    this._Port = value;
 		    }
 	    }
@@ -444,14 +386,11 @@ namespace XInstall.Core.Actions
 
 	    #region protected override methods
 
-	    protected override void ParseActionElement()
-	    {
+	    protected override void ParseActionElement() {
 		    base.ParseActionElement ();
 		    string Method = "unknown";
-		    try
-		    {
-			    switch ( this.Action )
-			    {
+		    try {
+			    switch ( this.Action ) {
 			    case "create":
 				    Method       = String.Format( "CreateWebSite( {0}, {1} )", "ServerComment", "_ActionNode" );
 				    this.WebSite = this.CreateWebSite( this.ServerComment, this._ActionNode );
@@ -490,22 +429,19 @@ namespace XInstall.Core.Actions
 				    break;
 			    }
 		    }
-		    catch ( System.ComponentModel.Win32Exception w32e )
-		    {
+		    catch ( System.ComponentModel.Win32Exception w32e ) {
 			    this.SetExitMessage( "AdsiPath {0}, Action {1}, Method {2} - Win32 error: {3}, Win32 error code {4} - website deleted",
 						 base.AdsiPathInfo, this.Action, Method, w32e.Message, w32e.ErrorCode );
 			    this.RemoveWebSite( this.ServerComment, this.MachineName, this._ActionNode );
 			    throw new Exception( this.ExitMessage );
 		    }
-		    catch ( System.Runtime.InteropServices.COMException ee )
-		    {
+		    catch ( System.Runtime.InteropServices.COMException ee ) {
 			    this.SetExitMessage( "AdsiPath {0}, Action {1}, Method {2} - com object error: {3}, error code {4} - website deleted",
 						 base.AdsiPathInfo, this.Action, Method, ee.Message, ee.ErrorCode );
 			    this.RemoveWebSite( this.ServerComment, this.MachineName, this._ActionNode );
 			    throw new Exception( this.ExitMessage );
 		    }
-		    catch ( Exception ex )
-		    {
+		    catch ( Exception ex ) {
 			    this.SetExitMessage( "AdsiPath {0}, Action {1}, Method {2} - general error: {3}, website deleted !!",
 						 base.AdsiPathInfo, this.Action, Method, ex.Message );
 			    this.RemoveWebSite( this.ServerComment, this.MachineName, this._ActionNode );
@@ -519,29 +455,23 @@ namespace XInstall.Core.Actions
 
 	    #region private methods
 
-	    private void RemoveWebSite( string WebSiteName, string MachineName, XmlNode ActionNode )
-	    {
+	    private void RemoveWebSite( string WebSiteName, string MachineName, XmlNode ActionNode ) {
 		    this.DeleteWebSite( WebSiteName );
 		    IIsWebSite.DeleteAppPool( ActionNode, MachineName );
-		    base.LogItWithTimeStamp(
-			string.Format( "{0}: {1} website {2} on {3} removed",
-				       this.Name, "RemoveWebSite", WebSiteName, MachineName ) );
+		    base.LogItWithTimeStamp( string.Format( "{0}: {1} website {2} on {3} removed", this.Name, "RemoveWebSite", WebSiteName, MachineName ) );
 	    }
 
-	    private DirectoryEntry CreateWebSite( string WebSiteName, XmlNode xn )
-	    {
+	    private DirectoryEntry CreateWebSite( string WebSiteName, XmlNode xn ) {
 		    this.SchemaClassName            = "IIsWebServer";
 		    Hashtable WebSiteProperties     = new Hashtable();
 		    Hashtable WebSiteVDirProperties = new Hashtable();
 
 		    this.SiteID               = this._Random.Next( 65536 );
-		    DirectoryEntry NewWebSite =
-			(DirectoryEntry) base.InvokeAdsiObjectMethod(
+		    DirectoryEntry NewWebSite = (DirectoryEntry) base.InvokeAdsiObjectMethod(
 			    "Create", this.SchemaClassName, SiteID );
 
 		    base.LogItWithTimeStamp(
-			String.Format( "{0}: {1} website {2} on {3} was created",
-				       this.Name, "CreateWebSite", WebSiteName, this.MachineName ) );
+			String.Format( "{0}: {1} website {2} on {3} was created", this.Name, "CreateWebSite", WebSiteName, this.MachineName ) );
 
 		    this.BindingAppVirtualDirectroy( NewWebSite, this.SiteID, xn );
 
@@ -554,11 +484,9 @@ namespace XInstall.Core.Actions
 	    }
 
 
-	    private void UpdateWebSiteProperties( string WebSiteName, XmlNode xn )
-	    {
+	    private void UpdateWebSiteProperties( string WebSiteName, XmlNode xn ) {
 		    this.SchemaClassName = "IIsWebServer";
-		    if ( this.WebSite == null )
-		    {
+		    if ( this.WebSite == null ) {
 			    this.WebSite = this.FindWebSite( WebSiteName );
 		    }
 
@@ -568,43 +496,35 @@ namespace XInstall.Core.Actions
 	    }
 
 
-	    private void DeleteWebSite( string WebSiteName )
-	    {
+	    private void DeleteWebSite( string WebSiteName ) {
 		    this.SchemaClassName = "IIsWebServer";
 
-		    if ( this.WebSite == null )
-		    {
+		    if ( this.WebSite == null ) {
 			    this.WebSite = this.FindWebSite( WebSiteName );
 		    }
 
-		    if ( this.WebSite == null )
-		    {
+		    if ( this.WebSite == null ) {
 			    return;
 		    }
 
 		    base.DeleteAdsiDirectoryObject( this.SiteID.ToString() );
-		    base.LogItWithTimeStamp(
-			String.Format( "{0}: Site {1} deleted", this.Name, WebSiteName ) );
+		    base.LogItWithTimeStamp( String.Format( "{0}: Site {1} deleted", this.Name, WebSiteName ) );
 	    }
 
 
-	    private void BindingAppVirtualDirectroy( DirectoryEntry NewSite, int SiteID, XmlNode xn )
-	    {
+	    private void BindingAppVirtualDirectroy( DirectoryEntry NewSite, int SiteID, XmlNode xn ) {
 		    this.BindingAppVirtualDirectroy( NewSite, SiteID, xn, true );
 	    }
 
 
-	    private void BindingAppVirtualDirectroy( DirectoryEntry NewSite, int SiteID, XmlNode xn, bool Create )
-	    {
+	    private void BindingAppVirtualDirectroy( DirectoryEntry NewSite, int SiteID, XmlNode xn, bool Create ) {
 		    this.SchemaClassName = "IISWebVirtualDir";
 
 		    DirectoryEntry SiteAppVirDir = null;
-		    if ( Create )
-		    {
+		    if ( Create ) {
 			    SiteAppVirDir = NewSite.Children.Add( "Root", this.SchemaClassName );
 		    }
-		    else
-		    {
+		    else {
 			    SiteAppVirDir = NewSite.Children.Find( "Root", this.SchemaClassName );
 		    }
 
@@ -644,18 +564,15 @@ namespace XInstall.Core.Actions
 	    }
 
 
-	    private Hashtable GetWebSiteProperties()
-	    {
+	    private Hashtable GetWebSiteProperties() {
 		    Hashtable PropertyCollection = new Hashtable();
 		    Type      ThisType           = this.GetType();
 		    PropertyInfo[] PropertyInfo = ThisType.GetProperties();
 
-		    for ( int i = 0; i < PropertyInfo.Length; i++ )
-		    {
+		    for ( int i = 0; i < PropertyInfo.Length; i++ ) {
 			    PropertyInfo pi         = PropertyInfo[i];
 			    object[] ADSIAttributes = pi.GetCustomAttributes( typeof( ADSIAttribute ), false);
-			    if (ADSIAttributes.Length != 0 )
-			    {
+			    if (ADSIAttributes.Length != 0 ) {
 				    string PropertyName  = ( ADSIAttributes[0] as ADSIAttribute ).Name;
 				    object PropertyValue = pi.GetGetMethod().Invoke( this, null );
 				    PropertyCollection.Add( PropertyName, PropertyValue );
@@ -666,24 +583,19 @@ namespace XInstall.Core.Actions
 	    }
 
 
-	    private DirectoryEntry FindWebSite( string WebSiteName )
-	    {
+	    private DirectoryEntry FindWebSite( string WebSiteName ) {
 		    DirectoryEntries Entries = this.Directories;
 		    DirectoryEntry FoundEntry = null;
-		    if ( Entries != null )
-		    {
-			    foreach ( DirectoryEntry Entry in Entries )
-			    {
+		    if ( Entries != null ) {
+			    foreach ( DirectoryEntry Entry in Entries ) {
 				    if ( Entry.SchemaClassName == this.SchemaClassName )
-					    if ( Entry.Properties[ "ServerComment" ].Value.Equals( WebSiteName ) )
-					    {
+					    if ( Entry.Properties[ "ServerComment" ].Value.Equals( WebSiteName ) ) {
 						    FoundEntry = Entry;
 						    break;
 					    }
 			    }
 
-			    if ( FoundEntry != null )
-			    {
+			    if ( FoundEntry != null ) {
 				    this.SiteID = Convert.ToInt32(FoundEntry.Name);
 			    }
 		    }
@@ -692,23 +604,18 @@ namespace XInstall.Core.Actions
 	    }
 
 
-	    private Hashtable GetVDirProertyValues( XmlNode xn )
-	    {
+	    private Hashtable GetVDirProertyValues( XmlNode xn ) {
 		    Hashtable PropertyCollection = null;
 
-		    if ( xn.HasChildNodes )
-		    {
+		    if ( xn.HasChildNodes ) {
 			    PropertyCollection = new Hashtable( xn.ChildNodes.Count );
 			    XmlNodeList XmlChildNodes = xn.ChildNodes;
-			    foreach ( XmlNode XmlChildNode in XmlChildNodes )
-			    {
+			    foreach ( XmlNode XmlChildNode in XmlChildNodes ) {
 				    string NodeName = XmlChildNode.Name;
-				    switch ( NodeName.ToLower() )
-				    {
+				    switch ( NodeName.ToLower() ) {
 				    case "path":
 					    string RemotePath =
-						String.Format( @"\\{0}\{1}",
-							       this.MachineName, XmlChildNode.InnerText.Replace( ':', '$' ) );
+						String.Format( @"\\{0}\{1}", this.MachineName, XmlChildNode.InnerText.Replace( ':', '$' ) );
 					    System.IO.Directory.CreateDirectory( RemotePath );
 					    break;
 				    case "applicationpool":
@@ -716,8 +623,7 @@ namespace XInstall.Core.Actions
 				    case "iisvdir":
 					    continue;
 				    }
-				    if ( !PropertyCollection.ContainsKey( NodeName ) )
-				    {
+				    if ( !PropertyCollection.ContainsKey( NodeName ) ) {
 					    PropertyCollection.Add( NodeName, XmlChildNode.InnerText );
 				    }
 			    }
@@ -734,67 +640,52 @@ namespace XInstall.Core.Actions
 		    string         AppPoolName,
 		    IIsAppMode     AppMode,
 		    string         MachineName,
-		    bool           Binding )
-	    {
+		    bool           Binding ) {
 		    String AdsiPath = String.Format( "IIS://{0}/W3SVC/AppPools", MachineName );
 
 		    DirectoryEntry AppPools = null;
 		    DirectoryEntry AppPool  = null;
 
-		    if ( !Binding )
-		    {
-			    try
-			    {
+		    if ( !Binding ) {
+			    try {
 				    AppPools = new DirectoryEntry( AdsiPath );
 				    AppPool  = AppPools.Children.Add(AppPoolName, "IIsApplicationPool" );
 				    AppPools.CommitChanges();
 			    }
-			    finally
-			    {
+			    finally {
 				    AppPools.Close();
 			    }
 		    }
 		    else
-			    NewSite.Invoke( "AppCreate3", new object[]
-		    {
-			    AppMode, AppPoolName, true
-		    }
-				  );
+			    NewSite.Invoke("AppCreate3", new object[] { AppMode, AppPoolName, true });
 
 		    return AppPool;
 	    }
 
 
-	    public static void DeleteAppPool( XmlNode AppPoolNode, string MachineName )
-	    {
+	    public static void DeleteAppPool( XmlNode AppPoolNode, string MachineName ) {
 		    string AppPoolName = AppPoolNode.SelectSingleNode( "ApplicationPool/AppPoolName" ).InnerText;
 		    String AdsiPath = String.Format( "IIS://{0}/W3SVC/AppPools", MachineName );
 
 		    DirectoryEntry AppPools = null;
 		    DirectoryEntry AppPool  = null;
 
-		    if ( AppPoolName.Length > 0 )
-		    {
-			    try
-			    {
+		    if ( AppPoolName.Length > 0 ) {
+			    try {
 				    AppPools = new DirectoryEntry( AdsiPath );
 				    AppPool  = AppPools.Children.Find( AppPoolName, "IIsApplicationPool" );
 
-				    if ( AppPool != null )
-				    {
+				    if ( AppPool != null ) {
 					    AppPools.Children.Remove( AppPool );
 					    AppPools.CommitChanges();
 				    }
 			    }
-			    catch (  Exception e )
-			    {
-				    if ( e.Message == "System cannot find the specified path" )
-				    {
+			    catch (  Exception e ) {
+				    if ( e.Message == "System cannot find the specified path" ) {
 					    return;
 				    }
 			    }
-			    finally
-			    {
+			    finally {
 				    AppPools.Close();
 			    }
 
@@ -802,30 +693,25 @@ namespace XInstall.Core.Actions
 	    }
 
 
-	    public static void UpdateAppPool( XmlNode AppPoolNode, string MachineName )
-	    {
+	    public static void UpdateAppPool( XmlNode AppPoolNode, string MachineName ) {
 		    String AdsiPath = String.Format( "IIS://{0}/W3SVC/AppPools", MachineName );
 		    string AppPoolName = AppPoolNode.SelectSingleNode( "ApplicationPool/AppPoolName" ).InnerText;
 
 		    DirectoryEntry AppPools = null;
 		    DirectoryEntry AppPool  = null;
 
-		    if ( AppPoolName.Length > 0 )
-		    {
+		    if ( AppPoolName.Length > 0 ) {
 
-			    try
-			    {
+			    try {
 				    AppPools = new DirectoryEntry( AdsiPath );
 				    AppPool = AppPools.Children.Find( AppPoolName, "IIsApplicationPool" );
 
-				    if ( AppPool != null )
-				    {
+				    if ( AppPool != null ) {
 					    Hashtable AppPoolProperties = IIsWebSite.GetAppPoolProperties( AppPoolNode );
 					    IIsWebSite.SetAppPoolProperties( AppPool, AppPoolProperties );
 				    }
 			    }
-			    finally
-			    {
+			    finally {
 				    AppPools.Close();
 			    }
 		    }
@@ -833,8 +719,7 @@ namespace XInstall.Core.Actions
 	    }
 
 
-	    public static void BindingDefaultAppPool( DirectoryEntry Entry, string MachineName )
-	    {
+	    public static void BindingDefaultAppPool( DirectoryEntry Entry, string MachineName ) {
 		    IIsWebSite.CreateAppPool( Entry,
 					      "DefaultAppPool",
 					      IIsAppMode.IN_PROCESS,
@@ -843,19 +728,15 @@ namespace XInstall.Core.Actions
 	    }
 
 
-	    public static Hashtable GetAppPoolProperties( XmlNode AppPoolInfo )
-	    {
+	    public static Hashtable GetAppPoolProperties( XmlNode AppPoolInfo ) {
 		    Hashtable AppPoolProperties = new Hashtable();
 
-		    if ( AppPoolInfo.HasChildNodes )
-		    {
+		    if ( AppPoolInfo.HasChildNodes ) {
 			    Hashtable TempProperties = new Hashtable();
 			    string AppPoolName       = String.Empty;
 			    XmlNodeList AppPoolNodes = AppPoolInfo.ChildNodes;
-			    foreach ( XmlNode AppPoolProperty in AppPoolNodes )
-			    {
-				    if ( AppPoolProperty.Name == "AppPoolName" )
-				    {
+			    foreach ( XmlNode AppPoolProperty in AppPoolNodes ) {
+				    if ( AppPoolProperty.Name == "AppPoolName" ) {
 					    AppPoolName = AppPoolProperty.InnerText;
 					    continue;
 				    }
@@ -867,13 +748,10 @@ namespace XInstall.Core.Actions
 	    }
 
 
-	    public static void SetAppPoolProperties( DirectoryEntry AppPool, Hashtable AppPoolProperties )
-	    {
-		    if ( AppPool != null & AppPoolProperties != null )
-		    {
+	    public static void SetAppPoolProperties( DirectoryEntry AppPool, Hashtable AppPoolProperties ) {
+		    if ( AppPool != null & AppPoolProperties != null ) {
 			    Hashtable Properties = (Hashtable) AppPoolProperties[ AppPool.Name ];
-			    foreach ( DictionaryEntry AppPoolProperty in Properties )
-			    {
+			    foreach ( DictionaryEntry AppPoolProperty in Properties ) {
 				    AppPool.Properties[ (string) AppPoolProperty.Key ].Value = AppPoolProperty.Value;
 				    AppPool.CommitChanges();
 			    }
@@ -886,79 +764,58 @@ namespace XInstall.Core.Actions
 
 	    #region private properties
 
-	    private int SiteID
-	    {
-		    get
-		    {
+	    private int SiteID {
+		    get {
 			    // return this._SiteID;
-			    if ( this._SiteID == -99 )
-			    {
+			    if ( this._SiteID == -99 ) {
 				    this.SchemaClassName = "IIsWebServer";
 				    this.WebSite         = this.FindWebSite( this.ServerComment );
 			    }
 			    return this._SiteID;
 		    }
-		    set
-		    {
+		    set {
 			    this._SiteID = value;
 		    }
 	    }
 
 
-	    private DirectoryEntry WebSite
-	    {
-		    get
-		    {
+	    private DirectoryEntry WebSite {
+		    get {
 			    return this._WebSite;
 		    }
-		    set
-		    {
+		    set {
 			    this._WebSite = value;
 		    }
 	    }
 
 
-	    private void PrintWebsites()
-	    {
-		    base.LogItWithTimeStamp(
-			String.Format( "{0}: Host Machine: {1}", this.ObjectName, this.MachineName ) );
+	    private void PrintWebsites() {
+		    base.LogItWithTimeStamp( String.Format( "{0}: Host Machine: {1}", this.ObjectName, this.MachineName ) );
 
-		    try
-		    {
-			    foreach ( DirectoryEntry de in this.WebSites )
-			    {
-				    base.LogItWithTimeStamp(
-					String.Format( "{0}: {1}", this.ObjectName,
-						       de.Properties[ "ServerComment" ].Value.ToString() ) );
+		    try {
+			    foreach ( DirectoryEntry de in this.WebSites ) {
+				    base.LogItWithTimeStamp( String.Format( "{0}: {1}", this.ObjectName, de.Properties[ "ServerComment" ].Value.ToString() ) );
 			    }
 		    }
 		    catch {}
 	    }
 
-	    private void PrintWebsites( string FileName )
-	    {
+	    private void PrintWebsites( string FileName ) {
 		    StringBuilder Buffer = new StringBuilder();
 		    this.PrintWebsites();
 
-		    if ( File.Exists( FileName ) )
-		    {
+		    if ( File.Exists( FileName ) ) {
 			    File.Delete( FileName );
 		    }
 
-		    using( StreamWriter sw = new StreamWriter( FileName, false ) )
-		    {
+		    using( StreamWriter sw = new StreamWriter( FileName, false ) ) {
 			    // Buffer.Append( this.MachineName + "\n" );
-			    foreach( DirectoryEntry de in this.WebSites )
-			    {
-				    try
-				    {
+			    foreach( DirectoryEntry de in this.WebSites ) {
+				    try {
 					    if (de.Properties.Contains( "ServerComment" ))
-						    Buffer.AppendFormat( "{0}\n",
-									 de.Properties["ServerComment"].Value.ToString() );
+						    Buffer.AppendFormat( "{0}\n", de.Properties["ServerComment"].Value.ToString() );
 				    }
-				    catch
-				    {
-				    }
+				    catch { }
 			    }
 			    Buffer = Buffer.Remove( Buffer.Length - 1, 1 );
 			    sw.WriteLine( Buffer.ToString() );

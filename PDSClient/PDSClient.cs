@@ -72,8 +72,7 @@ namespace XInstall.Custom.Actions {
 
         // error code handling
         // enumeration for the PDS operation codes
-        private enum PDS_OPR_CODE
-        {
+        private enum PDS_OPR_CODE {
             PDS_OPR_SUCCESS = 0,
             PDS_OPR_URL_NOT_PROVIDED,
             PDS_OPR_URL_ERROR,
@@ -101,8 +100,7 @@ namespace XInstall.Custom.Actions {
         private string _strExitMessage       = String.Empty;
 
         // error message table
-        private string[] _strMessages =
-            {
+        private string[] _strMessages = {
                 @"{0} - Successfully connect to {1}",
                 @"{0} - URL is required",
                 @"{0} - Given url {1} has problem, message {2}",
@@ -168,8 +166,7 @@ namespace XInstall.Custom.Actions {
         ///         http://chengkai-01/projectserver
         /// </remarks>
         [Action("projsrv", Needed=true)]
-        public string ProjectServer
-        {
+        public string ProjectServer {
             get {
                 return this._strProjectServer;
             }
@@ -204,8 +201,7 @@ namespace XInstall.Custom.Actions {
         /// be runnable
         /// </summary>
         [Action("runnable", Needed=false, Default="true")]
-        public new string Runnable
-        {
+        public new string Runnable {
             set {
                 base.Runnable = bool.Parse( value );
             }
@@ -217,8 +213,7 @@ namespace XInstall.Custom.Actions {
         /// not generate an exception.
         /// </summary>
         [Action("allowgenerateexception", Needed=false, Default="false")]
-        public new string AllowGenerateException
-        {
+        public new string AllowGenerateException {
             set {
                 base.AllowGenerateException = bool.Parse( value );
             }
@@ -239,24 +234,21 @@ namespace XInstall.Custom.Actions {
         }
 
         [Action("fromdb", Needed=false, Default="true")]
-        public string ReadFromDatabase
-        {
+        public string ReadFromDatabase {
             set {
                 this._ReadFromDatabase = bool.Parse( value );
             }
         }
 
         [Action("trustedconnection", Needed=false, Default="true")]
-        public string TrustedConnection
-        {
+        public string TrustedConnection {
             set {
                 this._UseTrustedConnection = bool.Parse( value );
             }
         }
 
         [Action("dbuser", Needed=false, Default="")]
-        public string DBUserName
-        {
+        public string DBUserName {
             get {
                 return this._UserName;
             }
@@ -266,8 +258,7 @@ namespace XInstall.Custom.Actions {
         }
 
         [Action("dbuserpasswd", Needed=false, Default="")]
-        public string DBUserPassword
-        {
+        public string DBUserPassword {
             get {
                 return this._UserPassword;
             }
@@ -277,8 +268,7 @@ namespace XInstall.Custom.Actions {
         }
 
         [Action("skiperror", Needed=false, Default="false")]
-        public new string SkipError
-        {
+        public new string SkipError {
             set {
                 base.SkipError = bool.Parse( value );
             }
@@ -346,8 +336,7 @@ namespace XInstall.Custom.Actions {
         }
 
         // private property method that retrieve the PDS security cookie
-        private string PDSCookie
-        {
+        private string PDSCookie {
             get {
                 if ( this._strCookie == String.Empty )
                     this._strCookie = this.GetPDSCookie();
@@ -811,8 +800,7 @@ namespace XInstall.Custom.Actions {
         /// returns the object exection state
         /// </summary>
         /// <remarks></remarks>
-        public new bool IsComplete
-        {
+        public new bool IsComplete {
             get {
                 return base.IsComplete;
             }
@@ -821,8 +809,7 @@ namespace XInstall.Custom.Actions {
         /// <summary>
         /// interface property that gets the message from PDSClient object.
         /// </summary>
-        public new string ExitMessage
-        {
+        public new string ExitMessage {
             get {
                 return this._strExitMessage;
             }
@@ -832,8 +819,7 @@ namespace XInstall.Custom.Actions {
         /// an interface property that returns the object name
         /// </summary>
         /// <remarks></remarks>
-        public new string Name
-        {
+        public new string Name {
             get {
                 return this.GetType().Name;
             }
@@ -843,8 +829,7 @@ namespace XInstall.Custom.Actions {
         /// an interface property that returns the exit code
         /// </summary>
         /// <remarks></remarks>
-        public new int ExitCode
-        {
+        public new int ExitCode {
             get {
                 return (int) this._enumPDSOprCode;
             }
@@ -857,8 +842,7 @@ namespace XInstall.Custom.Actions {
         /// <summary>
         /// an interface method that return the object name
         /// </summary>
-        protected override string ObjectName
-        {
+        protected override string ObjectName {
             get {
                 return this.Name;
             }

@@ -72,17 +72,15 @@ using System.Xml;
 
 
 
-namespace XInstall.Core.Actions
-{
+namespace XInstall.Core.Actions {
     /// <summary>
     /// Rsync class wraps the call to external program Robocopy
     /// from NT resouce kit.
     /// </summary>
-    public class Rsync : ExternalPrg
-    {
+    public class Rsync : ExternalPrg {
 	    #region private constant variables
 	    private const string _cntStrRsync = "rsync";
-	    private const char   _cntCQuote      = '"';
+	    private const char   _cntCQuote   = '"';
 	    #endregion
 
 	    private XmlNode _ActionNode = null;
@@ -117,8 +115,7 @@ namespace XInstall.Core.Actions
 
 	    // error message
 	    // enum type for the RSYNC exit code
-	    private enum RSYNC_EXIT_CODE
-	    {
+	    private enum RSYNC_EXIT_CODE {
 		    RSYNC_COPY_SUCCESSFULL,
 		    RSYNC_EXTRAFILESDIRS_FOUND,
 		    RSYNC_MISMATCHED_FILESDIRS,
@@ -135,8 +132,7 @@ namespace XInstall.Core.Actions
 
 
 	    private string _strExitMessage     = null;
-	    private string[] _strExitMessages  =
-	    {
+	    private string[] _strExitMessages  = {
 		    @"{0}: source dir {1} and destination dir {2} are not changed, no copy needed, exit code {3}",
 		    @"{0}: successfully copy source dir {1} to destination dir {2}, exit code {3}",
 		    @"{0}: extra directories/files found in source directory {1}, exit code {2}",
@@ -159,8 +155,7 @@ namespace XInstall.Core.Actions
 	    #endregion
 
 	    [Action("rsync")]
-	    public Rsync( XmlNode ActionNode ) : base( ActionNode )
-	    {
+	    public Rsync( XmlNode ActionNode ) : base( ActionNode ) {
 		    base.ProgramName           = _cntStrRsync;
 		    base.ProgramRedirectOutput = "true";
 		    this._ActionNode           = ActionNode;
@@ -176,22 +171,17 @@ namespace XInstall.Core.Actions
 	    ///     to copy from
 	    /// </summary>
 	    [Action("sourcedirectory", Needed=true)]
-	    public string SourceDirectory
-	    {
-		    get
-		    {
+	    public string SourceDirectory {
+		    get {
 			    return this._strSourceDir;
 		    }
 
-		    set
-		    {
-			    if ( value != null )
-			    {
+		    set {
+			    if ( value != null ) {
 				    this._strSourceDir = String.Format( "{0}", value );
 				    base.LogItWithTimeStamp( String.Format( "rsync: copy from {0}", this._strSourceDir ) );
 			    }
-			    else
-			    {
+			    else {
 				    this._enumRobocopyExitCode = RSYNC_EXIT_CODE.RSYNC_SOURCEDIR_NOT_PROVIDED;
 				    this._strExitMessage       = String.Format( this._strExitMessages[ this.ExitCode ], this.Name, this.ExitCode );
 				    base.FatalErrorMessage( ".", this.ExitMessage, 1660, false );
@@ -206,159 +196,124 @@ namespace XInstall.Core.Actions
 	    ///     for robocopy to copy to.
 	    /// </summary>
 	    [Action("destinationdirectory", Needed=true)]
-	    public string DestinationDirectory
-	    {
-		    get
-		    {
+	    public string DestinationDirectory {
+		    get {
 			    return this._strDestDir;
 		    }
-		    set
-		    {
+		    set {
 			    _strDestDir = value;
 			    base.LogItWithTimeStamp( String.Format( "rsync:copy to {0}", this._strDestDir ) );
 		    }
 	    }
 
 	    [Action("archive", Needed=false, Default="true")]
-	    public string Archive
-	    {
-		    set
-		    {
+	    public string Archive {
+		    set {
 			    _archiveOn = bool.Parse( value.ToString() );
 		    }
 	    }
 
 	    [Action("compress", Needed=false, Default="false")]
-	    public string Compress
-	    {
-		    set
-		    {
+	    public string Compress {
+		    set {
 			    _compress = bool.Parse( value.ToString() );
 		    }
 	    }
 
 	    [Action("delayUpdates", Needed=false, Default="false")]
-	    public string delayUpdates
-	    {
-		    set
-		    {
+	    public string delayUpdates {
+		    set {
 			    _delayUpdates = bool.Parse( value.ToString() );
 		    }
 	    }
 
 	    [Action("delete", Needed=false, Default="false")]
-	    public string delete
-	    {
-		    set
-		    {
+	    public string delete {
+		    set {
 			    _delete = bool.Parse( value.ToString() );
 		    }
 	    }
 
 	    [Action("deleteAfter", Needed=false, Default="false")]
-	    public string deleteAfter
-	    {
-		    set
-		    {
+	    public string deleteAfter {
+		    set {
 			    _deleteAfter = bool.Parse( value.ToString() );
 		    }
 	    }
 
 	    [Action("deleteBefore", Needed=false, Default="false")]
-	    public string deleteBefore
-	    {
-		    set
-		    {
+	    public string deleteBefore {
+		    set {
 			    _deleteBefore = bool.Parse( value.ToString() );
 		    }
 	    }
 
 	    [Action("deleteDelay", Needed=false, Default="false")]
-	    public string deleteDelay
-	    {
-		    set
-		    {
+	    public string deleteDelay {
+		    set {
 			    _deleteDelay = bool.Parse( value.ToString() );
 		    }
 	    }
 
 	    [Action("deleteDuring", Needed=false, Default="false")]
-	    public string deleteDuring
-	    {
-		    set
-		    {
+	    public string deleteDuring {
+		    set {
 			    _deleteDuring = bool.Parse( value.ToString() );
 		    }
 	    }
 
 	    [Action("deleteExcluded", Needed=false, Default="false")]
-	    public string deleteExcluded
-	    {
-		    set
-		    {
+	    public string deleteExcluded {
+		    set {
 			    _deleteExcluded = bool.Parse( value.ToString() );
 		    }
 	    }
 
 	    [Action("itemizeChanges", Needed=false, Default="false")]
-	    public string itemizeChanges
-	    {
-		    set
-		    {
+	    public string itemizeChanges {
+		    set {
 			    _itemize = bool.Parse( value.ToString() );
 		    }
 	    }
 
 	    [Action("partial", Needed=false, Default="false")]
-	    public string partial
-	    {
-		    set
-		    {
+	    public string partial {
+		    set {
 			    _partial = bool.Parse( value.ToString() );
 		    }
 	    }
 
 	    [Action("progress", Needed=false, Default="false")]
-	    public string progress
-	    {
-		    set
-		    {
+	    public string progress {
+		    set {
 			    _progress = bool.Parse( value.ToString() );
 		    }
 	    }
 
 	    [Action("reserveModifyTime", Needed=false, Default="false")]
-	    public string reserveModifyTime
-	    {
-		    set
-		    {
+	    public string reserveModifyTime {
+		    set {
 			    _reserveModifyTime = bool.Parse( value.ToString() );
 		    }
 	    }
 
 	    [Action("stats", Needed=false, Default="false")]
-	    public string stats
-	    {
-		    set
-		    {
+	    public string stats {
+		    set {
 			    _stats = bool.Parse( value.ToString() );
 		    }
 	    }
 
 	    [Action("verbose", Needed=false, Default="false")]
-	    public string verbose
-	    {
-		    set
-		    {
+	    public string verbose {
+		    set {
 			    _verbose = bool.Parse( value.ToString() );
 		    }
 	    }
 
 	    [Action("dryRun", Needed=false, Default="false")]
-	    public string dryRun
-	    {
-		    set
-		    {
+	    public string dryRun {
+		    set {
 			    _dryRun = bool.Parse( value.ToString() );
 		    }
 	    }
@@ -368,27 +323,21 @@ namespace XInstall.Core.Actions
 	    /// get/set files need to be excluded during the rsync copying
 	    /// </summary>
 	    [Action("excludeFiles", Needed=false, Default="")]
-	    public string ExcludeFiles
-	    {
-		    get
-		    {
+	    public string ExcludeFiles {
+		    get {
 			    return this._excluded;
 		    }
-		    set
-		    {
+		    set {
 			    this._excluded = value;
 		    }
 	    }
 
 	    [Action("includeFiles", Needed=false, Default="")]
-	    public string IncludeFiles
-	    {
-		    get
-		    {
+	    public string IncludeFiles {
+		    get {
 			    return this._included;
 		    }
-		    set
-		    {
+		    set {
 			    this._included = value;
 		    }
 	    }
@@ -398,10 +347,8 @@ namespace XInstall.Core.Actions
 	    /// property ExitCode -
 	    ///     gets the return code from Rsync
 	    /// </summary>
-	    public new int ExitCode
-	    {
-		    get
-		    {
+	    public new int ExitCode {
+		    get {
 			    return (int) this._enumRobocopyExitCode;
 		    }
 	    }
@@ -412,10 +359,8 @@ namespace XInstall.Core.Actions
 	    ///     gets the message associates with
 	    ///     the return code from Robocopy.
 	    /// </summary>
-	    public new string ExitMessage
-	    {
-		    get
-		    {
+	    public new string ExitMessage {
+		    get {
 			    return this._strExitMessage;
 		    }
 	    }
@@ -427,16 +372,12 @@ namespace XInstall.Core.Actions
 	    ///     should generate an exception or not.
 	    /// </summary>
 	    [Action("generateexception", Needed=false, Default="false")]
-	    public new string AllowGenerateException
-	    {
-		    set
-		    {
-			    try
-			    {
+	    public new string AllowGenerateException {
+		    set {
+			    try {
 				    base.AllowGenerateException = bool.Parse( value.ToString() );
 			    }
-			    catch ( Exception )
-			    {
+			    catch ( Exception ) {
 				    this._enumRobocopyExitCode = RSYNC_EXIT_CODE.RSYNC_BOOLEAN_PARSE_ERROR;
 				    this._strExitMessage       = String.Format( this._strExitMessages [ this.ExitCode ], this.Name, this.ExitCode );
 				    throw;
@@ -449,37 +390,29 @@ namespace XInstall.Core.Actions
 	    /// set a flag to indicate if the action should be run or not
 	    /// </summary>
 	    [Action("runnable", Needed=false, Default="true")]
-	    public new string Runnable
-	    {
-		    set
-		    {
+	    public new string Runnable {
+		    set {
 			    base.Runnable = bool.Parse( value );
 		    }
 	    }
 
 
 	    [Action("createdestdir", Needed=false, Default="false")]
-	    public string CreateDestDir
-	    {
-		    get
-		    {
+	    public string CreateDestDir {
+		    get {
 			    return this._CreateDestDir;
 		    }
-		    set
-		    {
+		    set {
 			    this._CreateDestDir = value;
 		    }
 	    }
 
 	    [Action("basepath", Needed=false, Default=".")]
-	    public override string BasePath
-	    {
-		    get
-		    {
+	    public override string BasePath {
+		    get {
 			    return this._BasePath;
 		    }
-		    set
-		    {
+		    set {
 			    this._BasePath = value;
 		    }
 	    }
@@ -493,16 +426,14 @@ namespace XInstall.Core.Actions
 	    /// public override void Execute() -
 	    ///     carry out the robocopy action
 	    /// </summary>
-	    public override void Execute()
-	    {
+	    public override void Execute() {
 		    // supply the argument and execute the program
 		    // base.ProgramArguments = this.Arguments;
 		    base.Execute ();
 
 		    // These exit code should raise an exception
 		    if ( (RSYNC_EXIT_CODE) base.ProgramExitCode == RSYNC_EXIT_CODE.RSYNC_COPYERROR_HAPPENED ||
-			    (RSYNC_EXIT_CODE) base.ProgramExitCode == RSYNC_EXIT_CODE.RSYNC_INSUFFIENCET_PERMISSIONS )
-		    {
+			    (RSYNC_EXIT_CODE) base.ProgramExitCode == RSYNC_EXIT_CODE.RSYNC_INSUFFIENCET_PERMISSIONS ) {
 			    throw new Exception( this.ExitMessage );
 		    }
 	    }
@@ -512,10 +443,8 @@ namespace XInstall.Core.Actions
 
 	    #region protected methods
 
-	    protected override object ObjectInstance
-	    {
-		    get
-		    {
+	    protected override object ObjectInstance {
+		    get {
 			    return this;
 		    }
 	    }
@@ -540,96 +469,71 @@ namespace XInstall.Core.Actions
 	    ///     return an arguments for the robocopy program
 	    /// </summary>
 	    /// <returns></returns>
-	    protected override string GetArguments()
-	    {
+	    protected override string GetArguments() {
 
 		    string strArguments = null;
 
 		    // first construct source and destination directories
 		    bool CreateDestDir = bool.Parse( this.CreateDestDir );
 
-		    if ( CreateDestDir )
-		    {
-			    try
-			    {
+		    if ( CreateDestDir ) {
+			    try {
 				    this._strDestDir = String.Format( @"\\{0}", this._strDestDir.Trim( new char[] { '"', '\\' } ) );
-				    if ( !Directory.Exists( this._strDestDir ) )
-				    {
+				    if ( !Directory.Exists( this._strDestDir ) ) {
 					    Directory.CreateDirectory( this._strDestDir );
 				    }
 			    }
-			    catch ( Exception e )
-			    {
+			    catch ( Exception e ) {
 				    this._strExitMessage = String.Format( "{0}: unable to create directory {1} - {2}", base.Name, this._strDestDir, e.Message );
 				    throw new Exception( this._strExitMessage );
 			    }
 		    }
 
 		    _sbProgArgs.Append( "-" );
-		    if ( _archiveOn )   // archive is on
-		    {
+		    if ( _archiveOn ) { // archive is on
 			    _sbProgArgs.Append( "a" );
 		    }
 
-		    if ( _compress )   // compress is on
-		    {
+		    if ( _compress ) { // compress is on
 			    _sbProgArgs.Append( "z" );
 		    }
 
-		    if ( _dryRun )   // show what rsync does but not actually doing anything
-		    {
+		    if ( _dryRun ) { // show what rsync does but not actually doing anything
 			    _sbProgArgs.Append( "n" );
 		    }
 
-		    if ( _progress )   // show progress
-		    {
+		    if ( _progress ) { // show progress
 			    _sbProgArgs.Append( "P" );
 		    }
 
-		    if ( _itemize )   // itemize
-		    {
+		    if ( _itemize ) { // itemize
 			    _sbProgArgs.Append( "i" );
 		    }
 
-		    if ( _delayUpdates )   // delay update is on
-		    {
+		    if ( _delayUpdates ) { // delay update is on
 			    _sbProgArgs.Append( " --delay-update " );
 		    }
 
 		    if ( _delete )   // enable deletion
-		    {
 			    _sbProgArgs.Append( " --delete " );
-		    }
 
 		    if ( _deleteAfter )   // enable delete after
-		    {
 			    _sbProgArgs.Append( " --delete-after " );
-		    }
 
 		    if ( _deleteBefore )   // enable delete before
-		    {
 			    _sbProgArgs.Append( " --delete-before " );
-		    }
 
 		    if ( _deleteDelay )   // enable delay deletion
-		    {
 			    _sbProgArgs.Append( " --delete-delay " );
-		    }
 
 		    if ( _deleteDuring )   // enable delete during
-		    {
 			    _sbProgArgs.Append( " --delete-during " );
-		    }
 
 		    if ( _deleteExcluded )   // enable delete excluded files at destination
-		    {
 			    _sbProgArgs.Append( " --delete-excluded " );
-		    }
 
 		    if ( _partial )   //
-		    {
 			    _sbProgArgs.Append( " --partial " );
-		    }
 
 		    this._sbProgArgs.AppendFormat(" {0} {1} ", this._strSourceDir, this._strDestDir);
 		    strArguments = this._sbProgArgs.ToString();
@@ -645,10 +549,8 @@ namespace XInstall.Core.Actions
 	    /// property Name -
 	    ///     gets the name of constructor
 	    /// </summary>
-	    public new string Name
-	    {
-		    get
-		    {
+	    public new string Name {
+		    get {
 			    return this.GetType().Name.ToLower();
 		    }
 	    }
@@ -656,19 +558,15 @@ namespace XInstall.Core.Actions
 
 	    #region IAction Members
 
-	    public new bool IsComplete
-	    {
-		    get
-		    {
+	    public new bool IsComplete {
+		    get {
 			    return base.IsComplete;
 		    }
 	    }
 
 
-	    protected override string ObjectName
-	    {
-		    get
-		    {
+	    protected override string ObjectName {
+		    get {
 			    return this.Name;
 		    }
 	    }

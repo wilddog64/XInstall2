@@ -46,8 +46,7 @@ namespace XInstall.Custom.Actions.MSInstaller {
 #region MSI public methods/properties
 
         [Action("silentinstall", Needed=false, Default="false")]
-        public string SilentInstallation
-        {
+        public string SilentInstallation {
             set {
                 this._SilentInstall = bool.Parse( value );
                 if ( this._SilentInstall ) {
@@ -59,8 +58,7 @@ namespace XInstall.Custom.Actions.MSInstaller {
         }
 
         [Action("packagelocation", Needed=true)]
-        public string PackageLocation
-        {
+        public string PackageLocation {
             get {
                 return this._PackageLocation;
             }
@@ -73,8 +71,7 @@ namespace XInstall.Custom.Actions.MSInstaller {
         }
 
         [Action("enablelogging", Needed=false, Default="true")]
-        public string EnableLogging
-        {
+        public string EnableLogging {
             set {
                 this._EnableLogging = bool.Parse( value );
                 if ( !this._EnableLogging ) {
@@ -86,8 +83,7 @@ namespace XInstall.Custom.Actions.MSInstaller {
         }
 
         [Action("installlogfile", Needed=false, Default="auto")]
-        public string InstallLogFile
-        {
+        public string InstallLogFile {
             get {
                 return this._InstallLogFileName;
             }
@@ -100,8 +96,7 @@ namespace XInstall.Custom.Actions.MSInstaller {
         }
 
         [Action("removeall", Needed=false, Default="false")]
-        public string RemoveAll
-        {
+        public string RemoveAll {
             set {
                 this._RemoveAll = bool.Parse( value );
                 if ( this._RemoveAll ) {
@@ -112,8 +107,7 @@ namespace XInstall.Custom.Actions.MSInstaller {
         }
 
         [Action("projectserveruser", Needed=false, Default="MSProjectServerUser")]
-        public string ProjectServerUser
-        {
+        public string ProjectServerUser {
             set {
                 if ( !this._RemoveAll ) {
                     base.LogItWithTimeStamp( @"add ProjectServerUser" );
@@ -123,8 +117,7 @@ namespace XInstall.Custom.Actions.MSInstaller {
         }
 
         [Action("projectserveruserpassword", Needed=false, Default="(9Longhorn)")]
-        public string ProjectServerUserPassword
-        {
+        public string ProjectServerUserPassword {
             set {
                 if ( !this._RemoveAll ) {
                     base.LogItWithTimeStamp( @"adding ProjectServerUserPassword" );
@@ -134,8 +127,7 @@ namespace XInstall.Custom.Actions.MSInstaller {
         }
 
         [Action("projectuser", Needed=false, Default="MSProjectUser")]
-        public string ProjectUser
-        {
+        public string ProjectUser {
             set {
                 if ( !this._RemoveAll ) {
                     base.LogItWithTimeStamp( @"adding ProjectUser" );
@@ -145,8 +137,7 @@ namespace XInstall.Custom.Actions.MSInstaller {
         }
 
         [Action("projectuserpassword", Needed=false, Default="(9Longhorn")]
-        public string ProjectUserPassword
-        {
+        public string ProjectUserPassword {
             set {
                 if ( !this._RemoveAll ) {
                     base.LogItWithTimeStamp( @"adding ProjectUser Password" );
@@ -157,8 +148,7 @@ namespace XInstall.Custom.Actions.MSInstaller {
 
 
         [Action("webroot", Needed=false, Default="1")]
-        public string WebSiteRoot
-        {
+        public string WebSiteRoot {
             set {
                 if ( !this._RemoveAll ) {
                     base.LogItWithTimeStamp( @"adding Web Root" );
@@ -168,8 +158,7 @@ namespace XInstall.Custom.Actions.MSInstaller {
         }
 
         [Action("intraneturlservername", Needed=false, Default="local")]
-        public string IntraNetServerName
-        {
+        public string IntraNetServerName {
             set {
                 if ( !this._RemoveAll ) {
                     base.LogItWithTimeStamp( @"adding intra net url server" );
@@ -180,8 +169,7 @@ namespace XInstall.Custom.Actions.MSInstaller {
         }
 
         [Action("extraneturlservername", Needed=false, Default="")]
-        public string ExtraNetServerName
-        {
+        public string ExtraNetServerName {
             set {
                 if ( !this._RemoveAll ) {
                     if ( value.Length != 0 ) {
@@ -194,8 +182,7 @@ namespace XInstall.Custom.Actions.MSInstaller {
         }
 
         [Action("projectserveradminpwd", Needed=false, Default="(9Longhorn")]
-        public string ProjectServerAdminPassword
-        {
+        public string ProjectServerAdminPassword {
             set {
                 if ( !this._RemoveAll ) {
                     base.LogItWithTimeStamp( @"adding project server admin password" );
@@ -205,8 +192,7 @@ namespace XInstall.Custom.Actions.MSInstaller {
         }
 
         [Action("usehighsecurity", Needed=false, Default="true")]
-        public string UseHighSecurity
-        {
+        public string UseHighSecurity {
             set {
                 if ( !this._RemoveAll ) {
                     base.LogItWithTimeStamp( @"adding ProjectUser Password" );
@@ -220,8 +206,7 @@ namespace XInstall.Custom.Actions.MSInstaller {
         }
 
         [Action("sqlservername", Needed=true)]
-        public string SQLServerName
-        {
+        public string SQLServerName {
             set {
                 if ( !this._RemoveAll ) {
                     base.LogItWithTimeStamp( @"adding SQL Server" );
@@ -231,8 +216,7 @@ namespace XInstall.Custom.Actions.MSInstaller {
         }
 
         [Action("sqldbname", Needed=true)]
-        public string SQLDBName
-        {
+        public string SQLDBName {
             set {
                 if ( !this._RemoveAll ) {
                     base.LogItWithTimeStamp( @"adding SQL Server Password" );
@@ -242,8 +226,7 @@ namespace XInstall.Custom.Actions.MSInstaller {
         }
 
         [Action("sqlwinauth", Needed=false, Default="true")]
-        public string SQLAuthType
-        {
+        public string SQLAuthType {
             set {
                 if ( !this._RemoveAll ) {
                     base.LogItWithTimeStamp( @"adding SQL Authzentication Password" );
@@ -258,8 +241,7 @@ namespace XInstall.Custom.Actions.MSInstaller {
         }
 
         [Action("createnewdb", Needed=false, Default="true")]
-        public string CreateNewProjectServerDatabase
-        {
+        public string CreateNewProjectServerDatabase {
             set {
                 if ( !this._RemoveAll ) {
                     base.LogItWithTimeStamp( @"adding create new project database" );
@@ -271,8 +253,7 @@ namespace XInstall.Custom.Actions.MSInstaller {
         }
 
         [Action("saname", Needed=false, Default="sa")]
-        public string SAName
-        {
+        public string SAName {
             set {
                 if ( !this._RemoveAll ) {
                     base.LogItWithTimeStamp( @"adding SANAME" );
@@ -282,8 +263,7 @@ namespace XInstall.Custom.Actions.MSInstaller {
         }
 
         [Action("sapassword", Needed=false, Default="03ck18")]
-        public string SAPassword
-        {
+        public string SAPassword {
             set {
                 if ( !this._RemoveAll ) {
                     base.LogItWithTimeStamp( @"adding SAPASSWORD" );
@@ -294,8 +274,7 @@ namespace XInstall.Custom.Actions.MSInstaller {
         }
 
         [Action("runnable", Needed=false, Default="true")]
-        public new string Runnable
-        {
+        public new string Runnable {
             set {
                 base.Runnable = bool.Parse( value );
             }
@@ -333,31 +312,27 @@ namespace XInstall.Custom.Actions.MSInstaller {
             base.IsComplete = true;
         }
 
-        public new bool IsComplete
-        {
+        public new bool IsComplete {
             get {
                 // TODO:  Add MSI.IsComplete getter implementation
                 return base.IsComplete;
             }
         }
 
-        public new string ExitMessage
-        {
+        public new string ExitMessage {
             get {
                 // TODO:  Add MSI.ExitMessage getter implementation
                 return null;
             }
         }
 
-        public new string Name
-        {
+        public new string Name {
             get {
                 return this.GetType().Name.ToLower();
             }
         }
 
-        public new int ExitCode
-        {
+        public new int ExitCode {
             get {
                 // TODO:  Add MSI.ExitCode getter implementation
                 return 0;

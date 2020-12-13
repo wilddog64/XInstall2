@@ -3,13 +3,11 @@ using System.Diagnostics;
 using System.IO;
 using System.Reflection;
 
-namespace XInstall.Core.Actions
-{
+namespace XInstall.Core.Actions {
     /// <summary>
     /// Summary description for FxCop.
     /// </summary>
-    public class FxCop : ActionElement, IAction
-    {
+    public class FxCop : ActionElement, IAction {
 	    // member variables
 	    private string _Message      = String.Empty;
 	    private string _Location     = String.Empty;
@@ -19,8 +17,7 @@ namespace XInstall.Core.Actions
 	    private string _FxOutputFile = String.Empty;
 
 	    // error handling related variables
-	    private enum FXCOP_OPR_CODE
-	    {
+	    private enum FXCOP_OPR_CODE {
 		    FXCOP_OPR_SUCCESS,
 		    FXCOP_OPR_DIRECTORY_NOT_EXIST,
 		    FXCOP_OPR_BINARY_NOT_EXIST,
@@ -30,8 +27,7 @@ namespace XInstall.Core.Actions
 
 	    }
 	    private FXCOP_OPR_CODE _FxCopOprCode = FXCOP_OPR_CODE.FXCOP_OPR_SUCCESS;
-	    private string[] _MessageTable       =
-	    {
+	    private string[] _MessageTable       = {
 		    "{0}: {1} - operation successfully complete",
 		    "{0}: {1} - provided directory {1} does not exist!",
 		    "{0}: {1} - cannot find {2} image!",
@@ -59,17 +55,13 @@ namespace XInstall.Core.Actions
 	    ///     it to the url format: file://...
 	    /// </remarks>
 	    [Action("codebase", Needed=true)]
-	    public string CodeBase
-	    {
-		    get
-		    {
+	    public string CodeBase {
+		    get {
 			    return String.Format( @"file://{0}/{1}", this._CodeBase, this._FxCopBin );
 		    }
-		    set
-		    {
+		    set {
 			    this._CodeBase = value;
-			    if ( !Directory.Exists( this._CodeBase ) )
-			    {
+			    if ( !Directory.Exists( this._CodeBase ) ) {
 				    this.SetExitMessage( FXCOP_OPR_CODE.FXCOP_OPR_DIRECTORY_NOT_EXIST, this.Name, @"CodeBase", this._CodeBase);
 				    base.FatalErrorMessage( ".", this.ExitMessage, 1660 );
 			    }
@@ -85,17 +77,13 @@ namespace XInstall.Core.Actions
 	    ///     will automatically generate the output file for you.
 	    /// </remarks>
 	    [Action("OutputFile", Needed=false, Default="auto")]
-	    public string FxCopOutputTo
-	    {
-		    get
-		    {
+	    public string FxCopOutputTo {
+		    get {
 			    return String.Format( @"/out:{0}", this._FxOutputFile);
 		    }
-		    set
-		    {
+		    set {
 			    this._FxOutputFile = value;
-			    if ( this._FxOutputFile.ToLower().Equals( @"auto" ) )
-			    {
+			    if ( this._FxOutputFile.ToLower().Equals( @"auto" ) ) {
 				    this._FxOutputFile = Path.GetFileNameWithoutExtension( Environment.GetCommandLineArgs()[0]) + ".xml";
 			    }
 		    }
@@ -106,17 +94,13 @@ namespace XInstall.Core.Actions
 	    /// </summary>
 	    /// <remarks></remarks>
 	    [Action("project", Needed=false)]
-	    public string FxCopProject
-	    {
-		    get
-		    {
+	    public string FxCopProject {
+		    get {
 			    return String.Format( @"/project:{0}", this._Project );
 		    }
-		    set
-		    {
+		    set {
 			    this._Project = value;
-			    if (!File.Exists( this._Project ) )
-			    {
+			    if (!File.Exists( this._Project ) ) {
 				    this.SetExitMessage( FXCOP_OPR_CODE.FXCOP_OPR_PROJECT_FILE_NOT_EXIST, this.Name, @"FxCopProject", this._Project);
 				    base.FatalErrorMessage( ".", this.ExitMessage, 1660, this.ExitCode );
 			    }
@@ -127,25 +111,20 @@ namespace XInstall.Core.Actions
 	    /// set a flag to indicate if the action should be run or not
 	    /// </summary>
 	    [Action("runnable", Needed=false, Default="true")]
-	    public new string Runnable
-	    {
-		    set
-		    {
+	    public new string Runnable {
+		    set {
 			    base.Runnable = bool.Parse( value );
 		    }
 	    }
 
 	    [Action("skiperror", Needed=false, Default="false")]
-	    public new string SkipError
-	    {
-		    set
-		    {
+	    public new string SkipError {
+		    set {
 			    base.SkipError = bool.Parse( value );
 		    }
 	    }
 
-	    public override void ParseActionElement()
-	    {
+	    public override void ParseActionElement() {
 
 		    base.ParseActionElement();
 		    AssemblyName assemblyName = new AssemblyName();
@@ -171,21 +150,17 @@ namespace XInstall.Core.Actions
 		    string[] p       = { FxProject, FxOutput };
 		    object[] args    = new object[1] { p };
 
-		    try
-		    {
+		    try {
 			    mi.Invoke( obj, args );
 			    string line = null;
-			    while ( (line = Console.ReadLine() ) != null )
-			    {
+			    while ( (line = Console.ReadLine() ) != null ) {
 				    base.LogItWithTimeStamp( line );
 			    }
 		    }
-		    catch ( ArgumentException ae )
-		    {
+		    catch ( ArgumentException ae ) {
 			    throw ae;
 		    }
-		    catch ( Exception e )
-		    {
+		    catch ( Exception e ) {
 			    throw e;
 		    }
 
@@ -193,14 +168,12 @@ namespace XInstall.Core.Actions
 	    }
 
 	    #region private utility methods/properties
-	    private void SetExitMessage( FXCOP_OPR_CODE FxCopOprCode, params object[] Parameters )
-	    {
+	    private void SetExitMessage( FXCOP_OPR_CODE FxCopOprCode, params object[] Parameters ) {
 		    this._FxCopOprCode = FxCopOprCode;
 		    this._Message      = String.Format( this._MessageTable[ this.ExitCode ], Parameters );
 	    }
 
-	    private string GetProjectDirectory()
-	    {
+	    private string GetProjectDirectory() {
 		    string ProjectFullPath = this.FxCopProject;
 
 		    string ProjectDirectory = ProjectFullPath.Substring( ProjectFullPath.IndexOf( @":", 0 ),
@@ -213,48 +186,37 @@ namespace XInstall.Core.Actions
 
 	    #region IAction Members
 
-	    public override void Execute()
-	    {
+	    public override void Execute() {
 		    base.Execute();
 		    base.IsComplete = true;
 	    }
 
-	    public new bool IsComplete
-	    {
-		    get
-		    {
+	    public new bool IsComplete {
+		    get {
 			    return base.IsComplete;
 		    }
 	    }
 
-	    public new string ExitMessage
-	    {
-		    get
-		    {
+	    public new string ExitMessage {
+		    get {
 			    return this._Message;
 		    }
 	    }
 
-	    public new string Name
-	    {
-		    get
-		    {
+	    public new string Name {
+		    get {
 			    return this.GetType().Name;
 		    }
 	    }
 
-	    public new int ExitCode
-	    {
-		    get
-		    {
+	    public new int ExitCode {
+		    get {
 			    return (int) this._FxCopOprCode;
 		    }
 	    }
 
-	    public override string ObjectName
-	    {
-		    get
-		    {
+	    public override string ObjectName {
+		    get {
 			    return this.Name;
 		    }
 	    }

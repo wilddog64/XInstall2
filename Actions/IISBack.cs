@@ -2,15 +2,13 @@ using System;
 using System.Text;
 using System.IO;
 
-namespace XInstall.Core.Actions
-{
+namespace XInstall.Core.Actions {
     /// <summary>
     /// class IISBack - this class wraps the iisback.vbs
     ///     into C#. It inherits the ExternalPrg class for
     ///     handling the external process.
     /// </summary>
-    public class IISBack : ExternalPrg, ICleanUp, IAction
-    {
+    public class IISBack : ExternalPrg, ICleanUp, IAction {
 
 	    #region constant variables
 	    // the iisback.vbs vb script application
@@ -36,13 +34,11 @@ namespace XInstall.Core.Actions
 	    /// called program does exist in the system.
 	    /// </summary>
 	    [Action("iisback", Needed=true)]
-	    public IISBack() : base ()
-	    {
+	    public IISBack() : base () {
 		    _strIIsBackFullPath = Path.Combine( Environment.GetEnvironmentVariable( @"WINDIR" ), @"System32" ) + _cntStrIIsBack;
 
 		    FileInfo fi = new FileInfo( _strIIsBackFullPath );
-		    if ( !fi.Exists )
-		    {
+		    if ( !fi.Exists ) {
 			    throw new Exception ( String.Format("{0} does not exist, abort", _strIIsBackFullPath));
 		    }
 		    base.ProgramName           = _cntStrIIsBack;
@@ -60,11 +56,9 @@ namespace XInstall.Core.Actions
 	    ///     output file for writing external program's output
 	    /// </param>
 	    public IISBack( string strArgs, string strOutputFile ) :
-	    base ( strArgs, strOutputFile )
-	    {
+	    base ( strArgs, strOutputFile ) {
 		    FileInfo fi = new FileInfo( _strIIsBackFullPath );
-		    if ( !fi.Exists )
-		    {
+		    if ( !fi.Exists ) {
 			    base.FatalErrorMessage( ".", String.Format("{0}: {1} does not exist, abort", this.Name, _strIIsBackFullPath), 1660, 1);
 		    }
 		    base.ProgramName           = _cntStrIIsBack;
@@ -80,14 +74,11 @@ namespace XInstall.Core.Actions
 	    ///     get/set the IIS server we need to backup
 	    /// </summary>
 	    [Action("server", Needed=true)]
-	    public string BackupFrom
-	    {
-		    get
-		    {
+	    public string BackupFrom {
+		    get {
 			    return this._strBackupServer;
 		    }
-		    set
-		    {
+		    set {
 			    this._strBackupServer = value;
 		    }
 	    }
@@ -98,19 +89,15 @@ namespace XInstall.Core.Actions
 	    ///     get/set the backup file name
 	    /// </summary>
 	    [Action("backupfile", Needed=true)]
-	    public string BackupFileName
-	    {
-		    get
-		    {
-			    if ( this._strBackupFileName == null )
-			    {
+	    public string BackupFileName {
+		    get {
+			    if ( this._strBackupFileName == null ) {
 				    base.FatalErrorMessage( ".", String.Format( "{0}: BackupFileName cannot be null!", this.Name ), 1660, 2);
 			    }
 
 			    return _strBackupFileName;
 		    }
-		    set
-		    {
+		    set {
 			    this._strBackupFileName = value;
 		    }
 	    }
@@ -123,20 +110,15 @@ namespace XInstall.Core.Actions
 	    ///     overwrited.
 	    /// </summary>
 	    [Action("allowoverwrite", Needed=false, Default=false)]
-	    public string OverwriteBackupFile
-	    {
-		    get
-		    {
+	    public string OverwriteBackupFile {
+		    get {
 			    return _bAllowOverwrite.ToString();
 		    }
-		    set
-		    {
-			    try
-			    {
+		    set {
+			    try {
 				    this._bAllowOverwrite = bool.Parse( value.ToString() );
 			    }
-			    catch ( Exception )
-			    {
+			    catch ( Exception ) {
 				    base.FatalErrorMessage( ".", "boolean variable parsing error", 1660, 3 );
 			    }
 		    }
@@ -148,14 +130,11 @@ namespace XInstall.Core.Actions
 	    ///     set/set the logfile to be used
 	    /// </summary>
 	    [Action("logfile", Needed=false, Default="auto")]
-	    public string LogFile
-	    {
-		    get
-		    {
+	    public string LogFile {
+		    get {
 			    return base.ProgramOutputFile;
 		    }
-		    set
-		    {
+		    set {
 			    base.ProgramOutputFile = value;
 		    }
 	    }
@@ -167,10 +146,8 @@ namespace XInstall.Core.Actions
 	    ///     it can be either /backup or /restore
 	    /// </summary>
 	    [Action("action", Needed=true)]
-	    public string Action
-	    {
-		    set
-		    {
+	    public string Action {
+		    set {
 			    this._strAction = value;
 		    }
 	    }
@@ -180,10 +157,8 @@ namespace XInstall.Core.Actions
 	    ///     get the external program start time in
 	    ///     short time format
 	    /// </summary>
-	    public string StartTime
-	    {
-		    get
-		    {
+	    public string StartTime {
+		    get {
 			    return base.ProgramStartTime.ToShortTimeString();
 		    }
 	    }
@@ -194,10 +169,8 @@ namespace XInstall.Core.Actions
 	    ///    get the external program end time in
 	    ///    short time format
 	    /// </summary>
-	    public string EndTime
-	    {
-		    get
-		    {
+	    public string EndTime {
+		    get {
 			    return base.ProgramExitTime.ToShortTimeString();
 		    }
 	    }
@@ -209,10 +182,8 @@ namespace XInstall.Core.Actions
 	    ///     external program
 	    /// </summary>
 	    [Action("exitcode", Needed=false)]
-	    public new int ExitCode
-	    {
-		    get
-		    {
+	    public new int ExitCode {
+		    get {
 			    return base.ProgramExitCode;
 		    }
 	    }
@@ -223,16 +194,12 @@ namespace XInstall.Core.Actions
 	    ///     generate an exception automatically.
 	    /// </summary>
 	    [Action("generateexception", Needed=false, Default=false)]
-	    public new string AllowGenerateException
-	    {
-		    set
-		    {
-			    try
-			    {
+	    public new string AllowGenerateException {
+		    set {
+			    try {
 				    base.AllowGenerateException = bool.Parse( value.ToString() );
 			    }
-			    catch ( Exception )
-			    {
+			    catch ( Exception ) {
 				    base.FatalErrorMessage( ".", "boolean variable parsing error!", 1660, 4 );
 			    }
 		    }
@@ -242,10 +209,8 @@ namespace XInstall.Core.Actions
 	    /// set a flag to indicate if the action should be run or not
 	    /// </summary>
 	    [Action("runnable", Needed=false, Default="true")]
-	    public new string Runnable
-	    {
-		    set
-		    {
+	    public new string Runnable {
+		    set {
 			    base.Runnable = bool.Parse( value );
 		    }
 	    }
@@ -255,10 +220,8 @@ namespace XInstall.Core.Actions
 	    /// </summary>
 	    /// <remarks></remarks>
 	    [Action("skiperror", Needed=false, Default="false")]
-	    public new string SkipError
-	    {
-		    set
-		    {
+	    public new string SkipError {
+		    set {
 			    base.SkipError = bool.Parse( value );
 		    }
 	    }
@@ -303,8 +266,7 @@ namespace XInstall.Core.Actions
 	    ///     to provide the ability to perform a
 	    ///     clean up operation when necessary.
 	    /// </summary>
-	    public override void RemoveIt()
-	    {
+	    public override void RemoveIt() {
 		    // TODO:  Add IISBack.RemoveIt implementation
 	    }
 	    #endregion
@@ -318,25 +280,21 @@ namespace XInstall.Core.Actions
 	    ///     it to the caller.
 	    /// </summary>
 	    /// <returns>a valid argument list</returns>
-	    protected override string GetArguments()
-	    {
+	    protected override string GetArguments() {
 		    // an argument list
 		    StringBuilder sbProgArgs = new StringBuilder();
 
 		    // check if server is given
-		    if ( this.BackupFrom != null )
-		    {
+		    if ( this.BackupFrom != null ) {
 			    sbProgArgs.AppendFormat("/s {0}", this.BackupFrom);
 		    }
 
 		    // now we need to see what kind of action a user
 		    // is asking for.
-		    switch ( this._strAction )
-		    {
+		    switch ( this._strAction ) {
 		    case "backup":
 			    sbProgArgs.AppendFormat(" /backup /b {0}", this.BackupFileName);
-			    if ( this._bAllowOverwrite )
-			    {
+			    if ( this._bAllowOverwrite ) {
 				    sbProgArgs.Append(" /overwrite");
 			    }
 			    break;
@@ -365,10 +323,8 @@ namespace XInstall.Core.Actions
 	    ///     gets a message that is coresponding to the
 	    ///     exit code.
 	    /// </summary>
-	    public new string ExitMessage
-	    {
-		    get
-		    {
+	    public new string ExitMessage {
+		    get {
 			    return base.ProgramOutput;
 		    }
 	    }
@@ -377,10 +333,8 @@ namespace XInstall.Core.Actions
 	    /// property IsComplete
 	    ///     get/set the state of Action
 	    /// </summary>
-	    public new bool IsComplete
-	    {
-		    get
-		    {
+	    public new bool IsComplete {
+		    get {
 			    return this._bIsCompleted;
 		    }
 	    }
@@ -389,18 +343,14 @@ namespace XInstall.Core.Actions
 	    /// property Name -
 	    ///     gets the name of constructor
 	    /// </summary>
-	    public new string Name
-	    {
-		    get
-		    {
+	    public new string Name {
+		    get {
 			    return this.GetType().Name.ToLower();
 		    }
 	    }
 
-	    public override string ObjectName
-	    {
-		    get
-		    {
+	    public override string ObjectName {
+		    get {
 			    return this.Name;
 		    }
 	    }

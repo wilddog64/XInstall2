@@ -7,18 +7,15 @@ using System.Xml;
 using XInstall.Core;
 using XInstall.Util;
 
-namespace XInstall.Core.Actions
-{
-    public class SC : ActionElement, IAction
-    {
+namespace XInstall.Core.Actions {
+    public class SC : ActionElement, IAction {
 	    private XmlNode _ActionNode   = null;
 	    private Hashtable _Actions    = new Hashtable();
 	    // private ServiceController _sc = null;
 	    private string _ServerName    = String.Empty;
 	    private string _Action        = String.Empty;
 
-	    private enum SC_ACTIONS_FLAG
-	    {
+	    private enum SC_ACTIONS_FLAG {
 		    SC_STOP = 0,
 		    SC_START,
 		    SC_PAUSE,
@@ -29,8 +26,7 @@ namespace XInstall.Core.Actions
 	    }
 
 	    // for error handling code
-	    private enum SC_OPR_CODE
-	    {
+	    private enum SC_OPR_CODE {
 		    SC_OPR_SUCCESS = 0,
 		    SC_OPR_ACTION_NOT_DEFINED,
 		    SC_OPR_BOOLEAN_PARSING_ERROR,
@@ -40,8 +36,7 @@ namespace XInstall.Core.Actions
 	    }
 	    private SC_OPR_CODE _ScOprCode = SC_OPR_CODE.SC_OPR_SUCCESS;
 
-	    string[] _Messages =
-	    {
+	    string[] _Messages = {
 		    "{0}: {1} operation complete successfully!",
 		    "{0}: required action {1} is not defined!",
 		    "{0}: {1} error parsing boolean variable!",
@@ -52,54 +47,43 @@ namespace XInstall.Core.Actions
 	    string _strExitMessage = String.Empty;
 
 	    [Action("sc", Needed=true)]
-	    public SC( XmlNode ActionNode )
-	    {
-		    this._ActionNode       = ActionNode;
+	    public SC( XmlNode ActionNode ) {
+		    this._ActionNode = ActionNode;
 		    // this._sc               = new ServiceController();
 		    this.SetupActionsTable();
 	    }
 
 	    [Action("runnable", Needed=false, Default="true")]
-	    public new string Runnable
-	    {
-		    set
-		    {
+	    public new string Runnable {
+		    set {
 			    base.Runnable = bool.Parse(value);
 		    }
 	    }
 
 	    [Action("skiperror", Needed=false, Default="false")]
-	    public new string SkipError
-	    {
-		    set
-		    {
+	    public new string SkipError {
+		    set {
 			    base.SkipError = bool.Parse(value);
 		    }
 	    }
 
 	    [Action("servername", Needed=false, Default=".")]
-	    public string ServerName
-	    {
-		    get
-		    {
+	    public string ServerName {
+		    get {
 			    return this._ServerName;
 		    }
-		    set
-		    {
+		    set {
 			    this._ServerName = value;
 			    // this._sc.MachineName = this._ServerName;
 		    }
 	    }
 
 	    [Action("action", Needed=false)]
-	    public string Action
-	    {
-		    get
-		    {
+	    public string Action {
+		    get {
 			    return this._Action;
 		    }
-		    set
-		    {
+		    set {
 			    this._Action = value;
 			    //                switch ( this._Action ) {
 			    //                case "start":
@@ -128,8 +112,7 @@ namespace XInstall.Core.Actions
 	    }
 
 	    #region private methods/properties
-	    private void SetupActionsTable()
-	    {
+	    private void SetupActionsTable() {
 		    this._Actions.Add( @"stop",    "StopService"    );
 		    this._Actions.Add( @"start",   "StartService"   );
 		    this._Actions.Add( @"pause",   "PauseService"   );
@@ -138,19 +121,16 @@ namespace XInstall.Core.Actions
 		    this._Actions.Add( @"delete",  "DeleteService"  );
 	    }
 
-	    private void CallMethod( object obj, XmlNode xn )
-	    {
+	    private void CallMethod( object obj, XmlNode xn ) {
 		    // get method name from an input XML
 		    string Tag        = xn.Name.ToLower();
 		    string MethodName = String.Empty;
 		    object[] Params   = null;
-		    if ( this._Actions.ContainsKey( Tag ) )
-		    {
+		    if ( this._Actions.ContainsKey( Tag ) ) {
 			    MethodName = (string) this._Actions[ Tag ];
 			    Params = new object[2] { MethodName, xn };
 		    }
-		    else
-		    {
+		    else {
 			    this.SetExitMessage(
 				SC_OPR_CODE.SC_OPR_ACTION_NOT_DEFINED,
 				this.Name, MethodName);
@@ -160,14 +140,11 @@ namespace XInstall.Core.Actions
 		    // retrieve type information from an object
 		    Type t = obj.GetType();
 		    MethodInfo mi = t.GetMethod( MethodName );
-		    if ( mi != null )
-		    {
-			    try
-			    {
+		    if ( mi != null ) {
+			    try {
 				    mi.Invoke( this, Params );
 			    }
-			    catch ( Exception e )
-			    {
+			    catch ( Exception e ) {
 				    this.SetExitMessage(
 					SC_OPR_CODE.SC_OPR_METHOD_INVOCATION_ERROR,
 					this.Name, MethodName, e.Message );
@@ -177,8 +154,7 @@ namespace XInstall.Core.Actions
 	    }
 
 	    // SetExitMessage - setup message for writing to file and event log
-	    private void SetExitMessage( SC_OPR_CODE ScOprCode, params object[] objParams )
-	    {
+	    private void SetExitMessage( SC_OPR_CODE ScOprCode, params object[] objParams ) {
 		    this._ScOprCode = ScOprCode;
 		    this._strExitMessage = String.Format( this._Messages[ this.ExitCode ], objParams );
 	    }
@@ -189,40 +165,32 @@ namespace XInstall.Core.Actions
 
 	    private void PauseService( string MethodName, XmlNode xn ) {}
 
-	    private void RestartService( string MethodName, XmlNode xn )
-	    {
+	    private void RestartService( string MethodName, XmlNode xn ) {
 
 		    XmlNode MachineName = xn.Attributes.GetNamedItem( "machinename" );
 		    XmlNode ServiceName = xn.Attributes.GetNamedItem( "servicename" );
 		    ArrayList MachineInfos = new ArrayList();
-		    if ( MachineName != null && ServiceName != null )
-		    {
+		    if ( MachineName != null && ServiceName != null ) {
 			    ServiceController sc = new ServiceController( ServiceName.Value, MachineName.Value );
 			    MachineInfos.Add( sc );
 		    }
-		    else
-		    {
-			    foreach ( XmlNode ChildNode in xn.ChildNodes )
-			    {
-				    if ( !ChildNode.Name.Equals( "machine" ) )
-				    {
+		    else {
+			    foreach ( XmlNode ChildNode in xn.ChildNodes ) {
+				    if ( !ChildNode.Name.Equals( "machine" ) ) {
 					    this.SetExitMessage(
 						SC_OPR_CODE.SC_OPR_UNRECONGIZED_TAG,
 						this.Name, MethodName, ChildNode.Name );
 					    base.FatalErrorMessage( ".", this.ExitMessage, 1660, this.ExitCode );
 				    }
-				    else
-				    {
+				    else {
 					    MachineName = ChildNode.Attributes.GetNamedItem( "name" );
 					    ServiceName = ChildNode.Attributes.GetNamedItem( "servicename" );
-					    if ( MachineName.Value != null && ServiceName.Value != null )
-					    {
+					    if ( MachineName.Value != null && ServiceName.Value != null ) {
 						    ServiceController sc =
 							new ServiceController( ServiceName.Value, MachineName.Value );
 						    MachineInfos.Add( sc );
 					    }
-					    else
-					    {
+					    else {
 						    this.SetExitMessage(
 							SC_OPR_CODE.SC_OPR_MISSING_ATTRIBUTES,
 							this.Name, "name, servicename", MethodName );
@@ -233,11 +201,9 @@ namespace XInstall.Core.Actions
 		    }
 
 		    IEnumerator Machines = MachineInfos.GetEnumerator();
-		    while ( Machines.MoveNext() )
-		    {
+		    while ( Machines.MoveNext() ) {
 			    ServiceController sc = (ServiceController) Machines.Current;
-			    if ( sc.CanStop )
-			    {
+			    if ( sc.CanStop ) {
 				    sc.Stop();
 				    sc.Start();
 			    }
@@ -252,60 +218,47 @@ namespace XInstall.Core.Actions
 
 	    #region IAction Members
 
-	    public override void Execute()
-	    {
+	    public override void Execute() {
 		    // TODO:  Add ServiceControl.Execute implementation
 		    base.Execute();
 	    }
 
-	    public override void ParseActionElement()
-	    {
+	    public override void ParseActionElement() {
 		    base.ParseActionElement ();
-		    foreach ( XmlNode xn in this._ActionNode.ChildNodes )
-		    {
+		    foreach ( XmlNode xn in this._ActionNode.ChildNodes ) {
 			    this.CallMethod( this, xn );
 		    }
 	    }
 
-	    public new bool IsComplete
-	    {
-		    get
-		    {
+	    public new bool IsComplete {
+		    get {
 			    // TODO:  Add ServiceControl.IsComplete getter implementation
 			    return false;
 		    }
 	    }
 
-	    public new string ExitMessage
-	    {
-		    get
-		    {
+	    public new string ExitMessage {
+		    get {
 			    // TODO:  Add ServiceControl.ExitMessage getter implementation
 			    return null;
 		    }
 	    }
 
-	    public new string Name
-	    {
-		    get
-		    {
+	    public new string Name {
+		    get {
 			    // TODO:  Add ServiceControl.Name getter implementation
 			    return this.GetType().Name;
 		    }
 	    }
 
-	    public override string ObjectName
-	    {
-		    get
-		    {
+	    public override string ObjectName {
+		    get {
 			    return this.Name;
 		    }
 	    }
 
-	    public new int ExitCode
-	    {
-		    get
-		    {
+	    public new int ExitCode {
+		    get {
 			    // TODO:  Add ServiceControl.ExitCode getter implementation
 			    return (int) this._ScOprCode;
 		    }

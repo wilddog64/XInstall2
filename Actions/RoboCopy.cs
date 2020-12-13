@@ -72,14 +72,12 @@ using System.Xml;
 
 
 
-namespace XInstall.Core.Actions
-{
+namespace XInstall.Core.Actions {
     /// <summary>
     /// RoboCopy class wraps the call to external program Robocopy
     /// from NT resouce kit.
     /// </summary>
-    public class RoboCopy : ExternalPrg
-    {
+    public class RoboCopy : ExternalPrg {
 	    #region private constant variables
 	    private const string _cntStrRoboCopy = "robocopy.exe";
 	    private const char   _cntCQuote      = '"';
@@ -110,8 +108,7 @@ namespace XInstall.Core.Actions
 
 	    // error message
 	    // enum type for the ROBOCOPY exit code
-	    private enum ROBOCOPY_EXIT_CODE
-	    {
+	    private enum ROBOCOPY_EXIT_CODE {
 		    ROBOCOPY_NOCOPY_HAPPENDED         = 0,
 		    ROBOCOPY_COPY_SUCCESSFULL         = 1,
 		    ROBOCOPY_EXTRAFILESDIRS_FOUND     = 2,
@@ -129,8 +126,7 @@ namespace XInstall.Core.Actions
 
 
 	    private string _strExitMessage     = null;
-	    private string[] _strExitMessages  =
-	    {
+	    private string[] _strExitMessages  = {
 		    @"{0}: source dir {1} and destination dir {2} are not changed, no copy needed, exit code {3}",
 		    @"{0}: successfully copy source dir {1} to destination dir {2}, exit code {3}",
 		    @"{0}: extra directories/files found in source directory {1}, exit code {2}",
@@ -154,8 +150,7 @@ namespace XInstall.Core.Actions
 	    #endregion
 
 	    [Action("robocopy")]
-	    public RoboCopy( XmlNode ActionNode ) : base( ActionNode )
-	    {
+	    public RoboCopy( XmlNode ActionNode ) : base( ActionNode ) {
 		    base.ProgramName           = _cntStrRoboCopy;
 		    base.ProgramRedirectOutput = "true";
 		    this._ActionNode           = ActionNode;
@@ -169,10 +164,8 @@ namespace XInstall.Core.Actions
 	    ///     sets an action for robocopy to execute
 	    /// </summary>
 	    [Action("action", Needed=true)]
-	    public string Action
-	    {
-		    set
-		    {
+	    public string Action {
+		    set {
 			    _strAction = value;
 		    }
 	    }
@@ -184,29 +177,20 @@ namespace XInstall.Core.Actions
 	    ///     to copy from
 	    /// </summary>
 	    [Action("sourcedirectory", Needed=true)]
-	    public string SourceDirectory
-	    {
-		    get
-		    {
+	    public string SourceDirectory {
+		    get {
 			    return this._strSourceDir;
 		    }
 
-		    set
-		    {
-			    if ( value != null )
-			    {
+		    set {
+			    if ( value != null ) {
 				    this._strSourceDir = String.Format( "{0}", value );
 				    base.LogItWithTimeStamp(
-					String.Format( "robocopy: copy from {0}",
-						       this._strSourceDir ) );
+					String.Format( "robocopy: copy from {0}", this._strSourceDir ) );
 			    }
-			    else
-			    {
-				    this._enumRobocopyExitCode =
-					ROBOCOPY_EXIT_CODE.ROBOCOPY_SOURCEDIR_NOT_PROVIDED;
-				    this._strExitMessage       =
-					String.Format( this._strExitMessages[ this.ExitCode ],
-						       this.Name, this.ExitCode );
+			    else {
+				    this._enumRobocopyExitCode = ROBOCOPY_EXIT_CODE.ROBOCOPY_SOURCEDIR_NOT_PROVIDED;
+				    this._strExitMessage       = String.Format( this._strExitMessages[ this.ExitCode ], this.Name, this.ExitCode );
 				    base.FatalErrorMessage( ".", this.ExitMessage, 1660, false );
 			    }
 		    }
@@ -219,18 +203,13 @@ namespace XInstall.Core.Actions
 	    ///     for robocopy to copy to.
 	    /// </summary>
 	    [Action("destinationdirectory", Needed=true)]
-	    public string DestinationDirectory
-	    {
-		    get
-		    {
+	    public string DestinationDirectory {
+		    get {
 			    return this._strDestDir;
 		    }
-		    set
-		    {
+		    set {
 			    _strDestDir = value;
-			    base.LogItWithTimeStamp(
-				String.Format( "robocopy:copy to {0}",
-					       this._strDestDir ) );
+			    base.LogItWithTimeStamp( String.Format( "robocopy:copy to {0}", this._strDestDir ) );
 		    }
 	    }
 
@@ -243,27 +222,21 @@ namespace XInstall.Core.Actions
 	    ///     times.
 	    /// </summary>
 	    [Action("retrytimes", Needed=false, Default="3")]
-	    public string RetryTimes
-	    {
-		    get
-		    {
+	    public string RetryTimes {
+		    get {
 			    return _iNumOfRetry;
 		    }
-		    set
-		    {
+		    set {
 			    _iNumOfRetry = value;
 		    }
 	    }
 
 	    [Action("testonly", Needed=false, Default="false")]
-	    public string TestOnly
-	    {
-		    get
-		    {
+	    public string TestOnly {
+		    get {
 			    return this._TestOnly;
 		    }
-		    set
-		    {
+		    set {
 			    this._TestOnly = value;
 		    }
 	    }
@@ -274,14 +247,11 @@ namespace XInstall.Core.Actions
 	    ///     default to 15 seconds.
 	    /// </summary>
 	    [Action("waittime", Needed=false, Default="15")]
-	    public string WaitTime
-	    {
-		    get
-		    {
+	    public string WaitTime {
+		    get {
 			    return _iWaitTime;
 		    }
-		    set
-		    {
+		    set {
 			    _iWaitTime = value;
 		    }
 	    }
@@ -293,23 +263,17 @@ namespace XInstall.Core.Actions
 	    ///     robocopy.
 	    /// </summary>
 	    [Action("outputfile", Needed=false, Default="auto")]
-	    public new string OutputFile
-	    {
-		    get
-		    {
+	    public new string OutputFile {
+		    get {
 			    return this._strOutputFile;
 		    }
-		    set
-		    {
+		    set {
 			    if ( value.Equals("auto") )
 				    this._strOutputFile  = Directory.GetCurrentDirectory() +
-							   Path.DirectorySeparatorChar                        +
-							   @"logs"                                            +
-							   Path.DirectorySeparatorChar                        +
-							   Path.ChangeExtension(
-							       Path.GetFileName (
-								   Environment.GetCommandLineArgs()[0] ),
-							       ".log" );
+							   Path.DirectorySeparatorChar                 +
+							   @"logs"                                     +
+							   Path.DirectorySeparatorChar                 +
+							   Path.ChangeExtension( Path.GetFileName ( Environment.GetCommandLineArgs()[0] ), ".log" );
 			    base.ProgramOutputFile  = this._strOutputFile;
 		    }
 	    }
@@ -324,19 +288,15 @@ namespace XInstall.Core.Actions
 	    ///     destination. Default is on.
 	    /// </summary>
 	    [Action("preservesecinfo", Needed=false, Default="false")]
-	    public string PreserveSecInfo
-	    {
-		    set
-		    {
+	    public string PreserveSecInfo {
+		    set {
 			    this._bPreSEC = bool.Parse( value.ToString() );
 		    }
 	    }
 
 	    [Action("noprogress", Needed=false, Default="true")]
-	    public string NoProgress
-	    {
-		    set
-		    {
+	    public string NoProgress {
+		    set {
 			    _bNoProgress = bool.Parse(value.ToString());
 		    }
 	    }
@@ -351,12 +311,9 @@ namespace XInstall.Core.Actions
 	    ///     on.
 	    /// </summary>
 	    [Action("restartable", Needed=false, Default="true")]
-	    public string Restartable
-	    {
-		    set
-		    {
-			    this._bRestartable =
-				bool.Parse( value.ToString() );
+	    public string Restartable {
+		    set {
+			    this._bRestartable = bool.Parse( value.ToString() );
 		    }
 
 	    }
@@ -368,14 +325,11 @@ namespace XInstall.Core.Actions
 	    ///     should use comma as a sepeator.
 	    /// </summary>
 	    [Action("files", Needed=false, Default="")]
-	    public string Files
-	    {
-		    get
-		    {
+	    public string Files {
+		    get {
 			    return this._strFiles;
 		    }
-		    set
-		    {
+		    set {
 			    this._strFiles = value;
 		    }
 	    }
@@ -385,10 +339,8 @@ namespace XInstall.Core.Actions
 	    /// property ExitCode -
 	    ///     gets the return code from RoboCopy
 	    /// </summary>
-	    public new int ExitCode
-	    {
-		    get
-		    {
+	    public new int ExitCode {
+		    get {
 			    return (int) this._enumRobocopyExitCode;
 		    }
 	    }
@@ -399,10 +351,8 @@ namespace XInstall.Core.Actions
 	    ///     gets the message associates with
 	    ///     the return code from Robocopy.
 	    /// </summary>
-	    public new string ExitMessage
-	    {
-		    get
-		    {
+	    public new string ExitMessage {
+		    get {
 			    return this._strExitMessage;
 		    }
 	    }
@@ -414,22 +364,15 @@ namespace XInstall.Core.Actions
 	    ///     should generate an exception or not.
 	    /// </summary>
 	    [Action("generateexception", Needed=false, Default="false")]
-	    public new string AllowGenerateException
-	    {
-		    set
-		    {
-			    try
-			    {
+	    public new string AllowGenerateException {
+		    set {
+			    try {
 				    base.AllowGenerateException =
 					bool.Parse( value.ToString() );
 			    }
-			    catch ( Exception )
-			    {
-				    this._enumRobocopyExitCode =
-					ROBOCOPY_EXIT_CODE.ROBOCOPY_BOOLEAN_PARSE_ERROR;
-				    this._strExitMessage     =
-					String.Format( this._strExitMessages [ this.ExitCode ],
-						       this.Name, this.ExitCode );
+			    catch ( Exception ) {
+				    this._enumRobocopyExitCode = ROBOCOPY_EXIT_CODE.ROBOCOPY_BOOLEAN_PARSE_ERROR;
+				    this._strExitMessage       = String.Format( this._strExitMessages [ this.ExitCode ], this.Name, this.ExitCode );
 				    throw;
 			    }
 		    }
@@ -440,24 +383,19 @@ namespace XInstall.Core.Actions
 	    /// set a flag to indicate if the action should be run or not
 	    /// </summary>
 	    [Action("runnable", Needed=false, Default="true")]
-	    public new string Runnable
-	    {
-		    set
-		    {
+	    public new string Runnable {
+		    set {
 			    base.Runnable = bool.Parse( value );
 		    }
 	    }
 
 
 	    [Action("createdestdir", Needed=false, Default="false")]
-	    public string CreateDestDir
-	    {
-		    get
-		    {
+	    public string CreateDestDir {
+		    get {
 			    return this._CreateDestDir;
 		    }
-		    set
-		    {
+		    set {
 			    this._CreateDestDir = value;
 		    }
 	    }
@@ -465,42 +403,33 @@ namespace XInstall.Core.Actions
 
 
 	    [Action("copysub", Needed=false, Default="false")]
-	    public string CopySub
-	    {
-		    get
-		    {
+	    public string CopySub {
+		    get {
 			    return this._CopySub;
 		    }
-		    set
-		    {
+		    set {
 			    this._CopySub = value;
 		    }
 	    }
 
 
 	    [Action("copyempty", Needed=false, Default="false")]
-	    public string CopyEmpty
-	    {
-		    get
-		    {
+	    public string CopyEmpty {
+		    get {
 			    return this._CopyEmpty;
 		    }
-		    set
-		    {
+		    set {
 			    this._CopyEmpty = value;
 		    }
 	    }
 
 
 	    [Action("basepath", Needed=false, Default=".")]
-	    public override string BasePath
-	    {
-		    get
-		    {
+	    public override string BasePath {
+		    get {
 			    return this._BasePath;
 		    }
-		    set
-		    {
+		    set {
 			    this._BasePath = value;
 		    }
 	    }
@@ -514,18 +443,15 @@ namespace XInstall.Core.Actions
 	    /// public override void Execute() -
 	    ///     carry out the robocopy action
 	    /// </summary>
-	    public override void Execute()
-	    {
+	    public override void Execute() {
 		    // supply the argument and execute the program
 		    // base.ProgramArguments = this.Arguments;
 		    base.Execute ();
 
 		    // These exit code should raise an exception
-		    if ( (ROBOCOPY_EXIT_CODE) base.ProgramExitCode ==
-			    ROBOCOPY_EXIT_CODE.ROBOCOPY_COPYERROR_HAPPENED ||
+		    if ( (ROBOCOPY_EXIT_CODE) base.ProgramExitCode == ROBOCOPY_EXIT_CODE.ROBOCOPY_COPYERROR_HAPPENED ||
 			    (ROBOCOPY_EXIT_CODE) base.ProgramExitCode ==
-			    ROBOCOPY_EXIT_CODE.ROBOCOPY_INSUFFIENCET_PERMISSIONS )
-		    {
+			    ROBOCOPY_EXIT_CODE.ROBOCOPY_INSUFFIENCET_PERMISSIONS ) {
 			    throw new Exception( this.ExitMessage );
 		    }
 	    }
@@ -535,10 +461,8 @@ namespace XInstall.Core.Actions
 
 	    #region protected methods
 
-	    protected override object ObjectInstance
-	    {
-		    get
-		    {
+	    protected override object ObjectInstance {
+		    get {
 			    return this;
 		    }
 	    }
@@ -563,8 +487,7 @@ namespace XInstall.Core.Actions
 	    ///     return an arguments for the robocopy program
 	    /// </summary>
 	    /// <returns></returns>
-	    protected override string GetArguments()
-	    {
+	    protected override string GetArguments() {
 
 		    string strArguments = null;
 
@@ -574,41 +497,31 @@ namespace XInstall.Core.Actions
 		    bool IncludeEmpty  = bool.Parse( this.CopyEmpty );
 		    bool TestOnly      = bool.Parse( this.TestOnly );
 
-		    if ( CreateDestDir )
-		    {
-			    try
-			    {
-				    this._strDestDir = String.Format( @"\\{0}",
-								      this._strDestDir.Trim( new char[] { '"', '\\' } ) );
-				    if ( !Directory.Exists( this._strDestDir ) )
-				    {
+		    if ( CreateDestDir ) {
+			    try {
+				    this._strDestDir = String.Format( @"\\{0}", this._strDestDir.Trim( new char[] { '"', '\\' } ) );
+				    if ( !Directory.Exists( this._strDestDir ) ) {
 					    Directory.CreateDirectory( this._strDestDir );
 				    }
 			    }
-			    catch ( Exception e )
-			    {
+			    catch ( Exception e ) {
 				    this._strExitMessage = String.Format( "{0}: unable to create directory {1} - {2}",
-									  base.Name, this._strDestDir, e.Message );
+					    base.Name, this._strDestDir, e.Message );
 				    throw new Exception( this._strExitMessage );
 			    }
 		    }
-		    this._sbProgArgs.AppendFormat(" {0} {1} ",
-						  this._strSourceDir,
-						  this._strDestDir);
+		    this._sbProgArgs.AppendFormat(" {0} {1} ", this._strSourceDir, this._strDestDir);
 
 		    // if files was supplied then we append files to our argument list
-		    if ( this._strFiles != null )
-		    {
+		    if ( this._strFiles != null ) {
 			    this._sbProgArgs.AppendFormat( " {0} ", this._strFiles);
 		    }
 
-		    if ( TestOnly )
-		    {
+		    if ( TestOnly ) {
 			    this._sbProgArgs.Append( " /L " );
 		    }
 
-		    if (_bNoProgress)
-		    {
+		    if (_bNoProgress) {
 			    this._sbProgArgs.Append(" /NP ");
 		    }
 
@@ -617,8 +530,7 @@ namespace XInstall.Core.Actions
 		    string[] Files = null;
 		    bool EmptyDir  = false;
 
-		    switch ( _strAction )
-		    {
+		    switch ( _strAction ) {
 			    // handling mirror operation
 		    case "mir":
 			    Dirs  = Directory.GetDirectories( this.SourceDirectory );
@@ -645,27 +557,23 @@ namespace XInstall.Core.Actions
     //                                this.SourceDirectory ), 1660, false );
 			    this._sbProgArgs.AppendFormat("/MOVE /R:{0} /W:{1} ",
 							  this.RetryTimes, this.WaitTime);
-			    if ( IncludeSub )
-			    {
+			    if ( IncludeSub ) {
 				    this._sbProgArgs.Append( "/S " );
 			    }
-			    if ( IncludeEmpty )
-			    {
+			    if ( IncludeEmpty ) {
 				    this._sbProgArgs.Append( "/E " );
 			    }
 			    break;
 
 			    // handling copy sub/empty directories
 		    case "copysub":
-			    this._sbProgArgs.AppendFormat("/S /E /R:{0} /W:{1} ",
-							  this.RetryTimes, this.WaitTime);
+			    this._sbProgArgs.AppendFormat("/S /E /R:{0} /W:{1} ", this.RetryTimes, this.WaitTime);
 			    break;
 
 			    // purge the files in destination that are no longer in
 			    // source directory
 		    case "purge":
-			    this._sbProgArgs.AppendFormat("/PURGE /R:{0} /W:{1} ",
-							  this.RetryTimes, this.WaitTime);
+			    this._sbProgArgs.AppendFormat("/PURGE /R:{0} /W:{1} ", this.RetryTimes, this.WaitTime);
 			    break;
 
 			    // create directory structure and zero length files in the
@@ -674,10 +582,8 @@ namespace XInstall.Core.Actions
 			    this._sbProgArgs.Append("/CREATE");
 			    break;
 		    default:
-			    this._enumRobocopyExitCode =
-				ROBOCOPY_EXIT_CODE.ROBOCOPY_UNKNOWN_ACTION_SPECIFIED;
-			    this._strExitMessage       =
-				String.Format( this._strExitMessages[ this.ExitCode ],
+			    this._enumRobocopyExitCode = ROBOCOPY_EXIT_CODE.ROBOCOPY_UNKNOWN_ACTION_SPECIFIED;
+			    this._strExitMessage       = String.Format( this._strExitMessages[ this.ExitCode ],
 					       this.Name, this._strAction, this.ExitCode );
 			    base.FatalErrorMessage( ".", this.ExitMessage, 1660, false );
 			    break;
@@ -686,14 +592,12 @@ namespace XInstall.Core.Actions
 		    // check other boolean variables:
 		    // if requires to preserve the security information then
 		    // append /SEC into our list
-		    if ( this._bPreSEC )
-		    {
+		    if ( this._bPreSEC ) {
 			    this._sbProgArgs.Append("/SEC ");
 		    }
 
 		    // if requires to copy restartable file then append /Z into it
-		    if ( this._bRestartable )
-		    {
+		    if ( this._bRestartable ) {
 			    this._sbProgArgs.Append("/Z ");
 		    }
 
@@ -709,10 +613,8 @@ namespace XInstall.Core.Actions
 	    /// property Name -
 	    ///     gets the name of constructor
 	    /// </summary>
-	    public new string Name
-	    {
-		    get
-		    {
+	    public new string Name {
+		    get {
 			    return this.GetType().Name.ToLower();
 		    }
 	    }
@@ -720,19 +622,15 @@ namespace XInstall.Core.Actions
 
 	    #region IAction Members
 
-	    public new bool IsComplete
-	    {
-		    get
-		    {
+	    public new bool IsComplete {
+		    get {
 			    return base.IsComplete;
 		    }
 	    }
 
 
-	    protected override string ObjectName
-	    {
-		    get
-		    {
+	    protected override string ObjectName {
+		    get {
 			    return this.Name;
 		    }
 	    }

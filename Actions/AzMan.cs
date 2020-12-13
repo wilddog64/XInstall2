@@ -8,13 +8,11 @@ using System.Xml;
 
 using Microsoft.Interop.Security.AzRoles;
 
-namespace XInstall.Core.Actions
-{
+namespace XInstall.Core.Actions {
     /// <summary>
     /// a class to build an Authorization Manager store
     /// </summary>
-    public class AzMan : DBAccess, IAction
-    {
+    public class AzMan : DBAccess, IAction {
 	    // the XML node contains insturctions to build AzMan
 	    // store
 	    private XmlNode _ActionNode   = null;
@@ -37,15 +35,13 @@ namespace XInstall.Core.Actions
 	    private bool   _LoadFromXmlFile = false;    // load data from xml
 
 	    // store type: can be XML or Active Directory (AD)
-	    private enum STORETYPE
-	    {
+	    private enum STORETYPE {
 		    XML = 0,
 		    AD,
 	    }
 	    STORETYPE _StoreType = STORETYPE.XML;
 
-	    private enum AZSTOREAGE_TYPE
-	    {
+	    private enum AZSTOREAGE_TYPE {
 		    AZ_ACCESS_CHECK = 0,
 		    AZ_CREATE_STORE,
 		    AZ_MANAGE_STORE_ONLY,
@@ -53,8 +49,7 @@ namespace XInstall.Core.Actions
 	    }
 	    // private AZSTOREAGE_TYPE _azStoreType = 0;
 
-	    private enum CLASS_TYPE
-	    {
+	    private enum CLASS_TYPE {
 		    OPERATION = 1,
 		    TASK,
 		    ROLE,
@@ -67,8 +62,7 @@ namespace XInstall.Core.Actions
 	    /// <param name="xn">an xml node that contains instructions to
 	    /// create AzMan store</param>
 	    [Action("azman")]
-	    public AzMan( XmlNode xn ) : base()
-	    {
+	    public AzMan( XmlNode xn ) : base() {
 		    this._ActionNode = xn;
 	    }
 
@@ -78,14 +72,11 @@ namespace XInstall.Core.Actions
 	    /// get/set a database server that AzMan object connects to
 	    /// </summary>
 	    [Action("connectto", Needed=true)]
-	    public string ConnectTo
-	    {
-		    get
-		    {
+	    public string ConnectTo {
+		    get {
 			    return this._ConnectTo;
 		    }
-		    set
-		    {
+		    set {
 			    this._ConnectTo = value;
 		    }
 	    }
@@ -94,14 +85,11 @@ namespace XInstall.Core.Actions
 	    /// get/set the database AzMan object talks to
 	    /// </summary>
 	    [Action("dbname", Needed=true)]
-	    public string DBName
-	    {
-		    get
-		    {
+	    public string DBName {
+		    get {
 			    return this._DBName;
 		    }
-		    set
-		    {
+		    set {
 			    this._DBName = value;
 		    }
 	    }
@@ -110,14 +98,11 @@ namespace XInstall.Core.Actions
 	    /// get/set the table that contains the operations information
 	    /// </summary>
 	    [Action("actiontable", Needed=false)]
-	    public string ActionTable
-	    {
-		    get
-		    {
+	    public string ActionTable {
+		    get {
 			    return String.Format(@"select ActionID, Name from {0}", this._ActionTable);
 		    }
-		    set
-		    {
+		    set {
 			    this._ActionTable = value;
 		    }
 	    }
@@ -126,14 +111,11 @@ namespace XInstall.Core.Actions
 	    /// get/set the query that run against the database table
 	    /// </summary>
 	    [Action("actionquery", Needed=false)]
-	    public string ActionSQLQuery
-	    {
-		    get
-		    {
+	    public string ActionSQLQuery {
+		    get {
 			    return this._ActionQuery;
 		    }
-		    set
-		    {
+		    set {
 			    this._ActionQuery = value;
 		    }
 	    }
@@ -142,14 +124,11 @@ namespace XInstall.Core.Actions
 	    /// get/set the AzMan store location
 	    /// </summary>
 	    [Action("storelocation", Needed=true)]
-	    public string StoreLocation
-	    {
-		    get
-		    {
+	    public string StoreLocation {
+		    get {
 			    return this._StoreLocation;
 		    }
-		    set
-		    {
+		    set {
 			    this._StoreLocation = value;
 		    }
 	    }
@@ -158,21 +137,18 @@ namespace XInstall.Core.Actions
 	    /// set the AzMan store type
 	    /// </summary>
 	    [Action("storetype", Needed=false, Default="XML")]
-	    public string StoreType
-	    {
-		    set
-		    {
-			    switch ( value.ToUpper() )
-			    {
-			    case @"XML":
-				    this._StoreType = STORETYPE.XML;
-				    break;
-			    case @"AD":
-				    this._StoreType = STORETYPE.AD;
-				    break;
-			    default:
-				    string Message = @"unknown store type: {0}";
-				    throw new ArgumentException( Message, value );
+	    public string StoreType {
+		    set {
+			    switch ( value.ToUpper() ) {
+			        case @"XML":
+				        this._StoreType = STORETYPE.XML;
+				        break;
+			        case @"AD":
+				        this._StoreType = STORETYPE.AD;
+				        break;
+			        default:
+				        string Message = @"unknown store type: {0}";
+				        throw new ArgumentException( Message, value );
 			    }
 		    }
 	    }
@@ -182,10 +158,8 @@ namespace XInstall.Core.Actions
 	    /// database.
 	    /// </summary>
 	    [Action("readfromdb", Needed=false, Default="true")]
-	    public string ReadFromDB
-	    {
-		    set
-		    {
+	    public string ReadFromDB {
+		    set {
 			    this._ReadFromDB = bool.Parse( value );
 		    }
 	    }
@@ -194,14 +168,11 @@ namespace XInstall.Core.Actions
 	    /// get/set the Application Name for the AzMan
 	    /// </summary>
 	    [Action("appname", Needed=true)]
-	    public string AppName
-	    {
-		    get
-		    {
+	    public string AppName {
+		    get {
 			    return this._AppName;
 		    }
-		    set
-		    {
+		    set {
 			    this._AppName = value;
 		    }
 	    }
@@ -212,10 +183,8 @@ namespace XInstall.Core.Actions
 	    /// before creating an AzMan store file
 	    /// </summary>
 	    [Action("delstore", Needed=false, Default="true")]
-	    public string DeleteStore
-	    {
-		    set
-		    {
+	    public string DeleteStore {
+		    set {
 			    this._DeleteStore = bool.Parse( value );
 		    }
 	    }
@@ -224,14 +193,11 @@ namespace XInstall.Core.Actions
 	    /// get/set a description for the AzMan application object
 	    /// </summary>
 	    [Action("description", Needed=false, Default="")]
-	    public string Description
-	    {
-		    get
-		    {
+	    public string Description {
+		    get {
 			    return this._Description;
 		    }
-		    set
-		    {
+		    set {
 			    this._Description = value;
 		    }
 	    }
@@ -241,10 +207,8 @@ namespace XInstall.Core.Actions
 	    /// written to database or not
 	    /// </summary>
 	    [Action("toxml", Needed=false, Default="true")]
-	    public string ToXml
-	    {
-		    set
-		    {
+	    public string ToXml {
+		    set {
 			    this._WriteToXml = bool.Parse( value );
 		    }
 	    }
@@ -253,36 +217,28 @@ namespace XInstall.Core.Actions
 	    /// get/set the xml file name to be written to
 	    /// </summary>
 	    [Action("xmlfilename", Needed=false)]
-	    public string OutputXmlFile
-	    {
-		    get
-		    {
+	    public string OutputXmlFile {
+		    get {
 			    return this._XmlOutputFile;
 		    }
-		    set
-		    {
+		    set {
 			    this._XmlOutputFile = value;
 		    }
 	    }
 
 	    [Action("loadfromxml", Needed=false, Default="false")]
-	    public string LoadFromXml
-	    {
-		    set
-		    {
+	    public string LoadFromXml {
+		    set {
 			    this._LoadFromXmlFile = bool.Parse( value );
 		    }
 	    }
 
 	    [Action("xmlfile", Needed=false, Default="")]
-	    public string XmlFile
-	    {
-		    get
-		    {
+	    public string XmlFile {
+		    get {
 			    return this._XmlFileName;
 		    }
-		    set
-		    {
+		    set {
 			    this._XmlFileName = value;
 		    }
 	    }
@@ -291,10 +247,8 @@ namespace XInstall.Core.Actions
 	    /// set a flag to indicate if the action should be run or not
 	    /// </summary>
 	    [Action("runnable", Needed=false, Default="true")]
-	    public new string Runnable
-	    {
-		    set
-		    {
+	    public new string Runnable {
+		    set {
 			    base.Runnable = bool.Parse( value );
 		    }
 	    }
@@ -305,52 +259,43 @@ namespace XInstall.Core.Actions
 	    /// <summary>
 	    ///  an override method to parse the XML node from config.xml file
 	    /// </summary>
-	    public override void ParseActionElement()
-	    {
+	    public override void ParseActionElement() {
 		    this.CreateStoreFromDB();
 	    }
 
-	    public override string ObjectName
-	    {
-		    get
-		    {
+	    public override string ObjectName {
+		    get {
 			    return this.Name;
 		    }
 	    }
 	    #endregion
 
 	    #region private methods/properties
-	    private string GetStoreLocation()
-	    {
+	    private string GetStoreLocation() {
 		    string Location = String.Empty;
-		    switch (this._StoreType)
-		    {
-		    case STORETYPE.XML:
-			    Location = String.Format( @"msxml://{0}", this.StoreLocation );
-			    break;
-		    case STORETYPE.AD:
-			    Location = String.Format( @"msldap://{0}", this.StoreLocation );
-			    break;
+		    switch (this._StoreType) {
+                case STORETYPE.XML:
+                    Location = String.Format( @"msxml://{0}", this.StoreLocation );
+                    break;
+                case STORETYPE.AD:
+                    Location = String.Format( @"msldap://{0}", this.StoreLocation );
+                    break;
 		    }
 		    return Location;
 	    }
 
 
-	    private void CreateStoreFromDB()
-	    {
+	    private void CreateStoreFromDB() {
 		    // Prepare AzMan
 		    AzAuthorizationStoreClass AzStore = new AzAuthorizationStoreClass();
 
 		    // delete the xml file if one already exist!
 		    // and create new one
 		    if ( this._DeleteStore )
-			    if ( File.Exists( this.StoreLocation ) )
-			    {
+			    if ( File.Exists( this.StoreLocation ) ) {
 				    File.Delete( this.StoreLocation );
 			    }
-		    AzStore.Initialize( (int) tagAZ_PROP_CONSTANTS.AZ_AZSTORE_FLAG_CREATE,
-					this.GetStoreLocation(),
-					null );
+		    AzStore.Initialize( (int) tagAZ_PROP_CONSTANTS.AZ_AZSTORE_FLAG_CREATE, this.GetStoreLocation(), null );
 		    AzStore.Submit( 0, null );
 
 		    // now create AzMan AzApp ...
@@ -374,42 +319,34 @@ namespace XInstall.Core.Actions
 		    string sTaskName = string.Empty;
 		    string sMemName = string.Empty;
 
-		    try
-		    {
+		    try {
 			    // obtains a content from the AzMan XML node
 			    XmlNode SQL = this._ActionNode.SelectSingleNode( @"sql" );
-			    if ( SQL != null )
-			    {
+			    if ( SQL != null ) {
 				    this.ActionSQLQuery = SQL.FirstChild.Value.ToString();
 			    }
 			    sdr = base.RunQuery( this.ActionSQLQuery );
 
 			    // first query
 			    // create operation
-			    while ( sdr.Read() )
-			    {
+			    while ( sdr.Read() ) {
 				    AzOp = AzApp.CreateOperation( sdr[@"MemName"].ToString(), null );
 				    AzApp.Submit( 0, null );
 				    AzOp.Description = sdr[@"MemDesc"].ToString();
 				    AzOp.Submit( 0, null );
 				    AzOp.OperationID = Convert.ToInt32( sdr[@"MemID"] );
 				    AzOp.Submit( 0, null );
-				    base.LogItWithTimeStamp(
-					String.Format( "Operation ID:{0} - Name: {1}",
-						       AzOp.OperationID, AzOp.Name ) );
+				    base.LogItWithTimeStamp( String.Format( "Operation ID:{0} - Name: {1}", AzOp.OperationID, AzOp.Name ) );
 			    }
 
 			    // second query
 			    // create tasks
 			    Hashtable Tasks = new Hashtable();
-			    if ( sdr.NextResult() )
-			    {
-				    while ( sdr.Read() )
-				    {
+			    if ( sdr.NextResult() ) {
+				    while ( sdr.Read() ) {
 					    string MemName = sdr["MemName"].ToString();
 					    string MemDesc = sdr["MemDesc"].ToString();
-					    string[] TaskInfo =
-					    { sdr["MemName"].ToString(), sdr["MemDesc"].ToString() };
+					    string[] TaskInfo = { sdr["MemName"].ToString(), sdr["MemDesc"].ToString() };
 					    AzTask = AzApp.CreateTask( sdr["MemName"].ToString(), null );
 					    AzApp.Submit( 0, null );
 					    AzTask.Description = sdr["MemDesc"].ToString();
@@ -429,29 +366,23 @@ namespace XInstall.Core.Actions
 			    // third query
 			    // add operations to Tasks
 			    Hashtable Trace = new Hashtable();
-			    if ( sdr.NextResult() )
-			    {
-				    while ( sdr.Read() )
-				    {
+			    if ( sdr.NextResult() ) {
+				    while ( sdr.Read() ) {
 					    int MemParID = Convert.ToInt32( sdr[@"MemParID"] );
 					    int OpID     = Convert.ToInt32( sdr[@"OpID"] );
 					    string MemName = sdr[@"MemName"].ToString();
-					    if ( Tasks.ContainsKey ( MemParID ) )
-					    {
+					    if ( Tasks.ContainsKey ( MemParID ) ) {
 						    IAzTask azTask = (IAzTask) Tasks[MemParID];
 						    sTaskName = azTask.Name;
 						    sMemName  = MemName;
-						    if ( !Trace.ContainsKey( azTask.Name ) && !Trace.ContainsValue( MemName.Trim(null) ) )
-						    {
+						    if ( !Trace.ContainsKey( azTask.Name ) && !Trace.ContainsValue( MemName.Trim(null) ) ) {
 
-							    if ( OpID > 500 )
-							    {
+							    if ( OpID > 500 ) {
 								    azTask.AddTask( MemName.Trim(null), 0 );
 								    azTask.Submit( 0, null );
 								    base.LogItWithTimeStamp( String.Format( "Task: {0} ID:{1} - Nest Task {2}", azTask.Name, MemParID, MemName ) );
 							    }
-							    else
-							    {
+							    else {
 								    azTask.AddOperation( MemName.Trim(null), null );
 								    azTask.Submit( 0, null );
 								    Trace.Add( azTask.Name, MemName.Trim(null) );
@@ -459,17 +390,14 @@ namespace XInstall.Core.Actions
 							    }
 
 						    }
-						    else
-						    {
-							    if ( OpID > 500 )
-							    {
+						    else {
+							    if ( OpID > 500 ) {
 								    azTask.AddTask( MemName.Trim(null), 0 );
 								    azTask.Submit( 0, null );
 								    base.LogItWithTimeStamp(
 									String.Format( "Task: {0} ID:{1} - Nest Task {2}", azTask.Name, MemParID, MemName ) );
 							    }
-							    else
-							    {
+							    else {
 								    Trace.Clear();
 								    azTask.AddOperation( MemName.Trim(null), null );
 								    azTask.Submit( 0, null );
@@ -486,13 +414,11 @@ namespace XInstall.Core.Actions
 			    // Create Role Task Definitions
 			    int iMemID = 0;
 			    Hashtable Roles = new Hashtable();
-			    if ( sdr.NextResult() )
-			    {
-				    while ( sdr.Read() )
-				    {
-					    iMemID      = Convert.ToInt32( sdr[@"MemID"] );
-					    sMemName    = sdr[@"MemName"].ToString();
-					    AzTask      = AzApp.CreateTask( sMemName, null );
+			    if ( sdr.NextResult() ) {
+				    while ( sdr.Read() ) {
+					    iMemID   = Convert.ToInt32( sdr[@"MemID"] );
+					    sMemName = sdr[@"MemName"].ToString();
+					    AzTask   = AzApp.CreateTask( sMemName, null );
 					    AzApp.Submit( 0, null );
 					    AzTask.IsRoleDefinition = 1;
 					    AzTask.Submit( 0, null );
@@ -510,21 +436,17 @@ namespace XInstall.Core.Actions
 			    // fifth query
 			    // Assoicate Role Tasks with Roles
 			    Trace.Clear();
-			    if ( sdr.NextResult() )
-			    {
-				    while ( sdr.Read() )
-				    {
+			    if ( sdr.NextResult() ) {
+				    while ( sdr.Read() ) {
 					    int MemParID = Convert.ToInt32( sdr[@"MemParID"] );
 					    string MemName = sdr[@"MemName"].ToString();
 					    IAzRole azRole = (IAzRole) Roles[MemParID];
-					    if ( !Trace.ContainsKey( MemName ) )
-					    {
+					    if ( !Trace.ContainsKey( MemName ) ) {
 						    azRole.AddTask( MemName, null );
 						    azRole.Submit( 0, null );
 						    Trace.Add( MemName, MemName );
 					    }
-					    else
-					    {
+					    else {
 						    Trace.Clear();
 						    azRole.AddTask( MemName, null );
 						    azRole.Submit( 0, null );
@@ -536,14 +458,11 @@ namespace XInstall.Core.Actions
 			    // sixth query
 			    // create nt group and associate it with role
 			    Trace.Clear();
-			    if ( sdr.NextResult() )
-			    {
-				    while ( sdr.Read() )
-				    {
+			    if ( sdr.NextResult() ) {
+				    while ( sdr.Read() ) {
 					    object RoleID    = sdr["RoleID"];
 					    string GroupName = sdr["GroupName"].ToString();
-					    if ( Roles.ContainsKey( RoleID ) )
-					    {
+					    if ( Roles.ContainsKey( RoleID ) ) {
 						    IAzRole azRole = (IAzRole) Roles[RoleID];
 						    azRole.AddMemberName( GroupName, null );
 						    azRole.Submit(0, null);
@@ -551,27 +470,22 @@ namespace XInstall.Core.Actions
 				    }
 			    }
 		    }
-		    catch ( Exception e )
-		    {
+		    catch ( Exception e ) {
 			    Console.WriteLine( "break at task {0} - operation {1}", sTaskName, sMemName );
 			    throw e;
 		    }
-		    finally
-		    {
+		    finally {
 			    sdr.Close();
 		    }
 	    }
 
-	    private string[] FindParentName( int ParentID )
-	    {
+	    private string[] FindParentName( int ParentID ) {
 		    string SqlQuery = String.Format( @"SELECT MemberName, MemberDescription FROM Members WHERE MemberID = {0}", ParentID.ToString() );
 		    SqlDataReader sdr = base.RunQuery( SqlQuery );
 
 		    string[] Info = { null, null };
-		    if ( sdr != null )
-		    {
-			    while ( sdr.Read() )
-			    {
+		    if ( sdr != null ) {
+			    while ( sdr.Read() ) {
 				    Info[0] = sdr[0].ToString();
 				    Info[1] = sdr[1].ToString();
 			    }
@@ -584,40 +498,31 @@ namespace XInstall.Core.Actions
 
 	    #region IAction Members
 
-	    public override void Execute()
-	    {
+	    public override void Execute() {
 		    base.Execute();
 		    base.IsComplete = true;
 	    }
 
-	    public new bool IsComplete
-	    {
-		    get
-		    {
+	    public new bool IsComplete {
+		    get {
 			    return base.IsComplete;
 		    }
 	    }
 
-	    public new string ExitMessage
-	    {
-		    get
-		    {
+	    public new string ExitMessage {
+		    get {
 			    return null;
 		    }
 	    }
 
-	    public new string Name
-	    {
-		    get
-		    {
+	    public new string Name {
+		    get {
 			    return this.GetType().Name;
 		    }
 	    }
 
-	    public new int ExitCode
-	    {
-		    get
-		    {
+	    public new int ExitCode {
+		    get {
 			    return 0;
 		    }
 	    }

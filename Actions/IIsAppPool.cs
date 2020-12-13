@@ -4,10 +4,8 @@ using System.Collections;
 using System.Reflection;
 using System.Xml;
 
-namespace XInstall.Core.Actions
-{
-    public enum AppPoolIdentityType : int
-    {
+namespace XInstall.Core.Actions {
+    public enum AppPoolIdentityType : int {
 	    LOCALSYSTEM = 0,
 	    LOCALSERVICE,
 	    NETWORKSERVICE,
@@ -15,8 +13,7 @@ namespace XInstall.Core.Actions
     }
 
 
-    public enum AppPoolActionType
-    {
+    public enum AppPoolActionType {
 	    CREATE = 0,
 	    DELETE = 1,
 	    STOP   = 2,
@@ -27,8 +24,7 @@ namespace XInstall.Core.Actions
     /// <summary>
     /// Summary description for IIsAppPool.
     /// </summary>
-    public class IIsAppPool : AdsiBase
-    {
+    public class IIsAppPool : AdsiBase {
 
 	    // enumeration type
 	    private AppPoolIdentityType _AppPoolIdentity = AppPoolIdentityType.NETWORKSERVICE;
@@ -58,40 +54,32 @@ namespace XInstall.Core.Actions
 
 
 	    [Action("applicationpool")]
-	    public IIsAppPool( XmlNode xn ) : base( xn )
-	    {
+	    public IIsAppPool( XmlNode xn ) : base( xn ) {
 		    this._ActionNode = xn;
 	    }
 
 
 	    #region protected properties
 
-	    protected override string AdsiProvider
-	    {
-		    get
-		    {
+	    protected override string AdsiProvider {
+		    get {
 			    return this._AdsiProvider;
 		    }
 	    }
 
 
-	    protected override object ObjectInstance
-	    {
-		    get
-		    {
+	    protected override object ObjectInstance {
+		    get {
 			    return this;
 		    }
 	    }
 
 
-	    protected override string SchemaClassName
-	    {
-		    get
-		    {
+	    protected override string SchemaClassName {
+		    get {
 			    return this._SchemaClassName;
 		    }
-		    set
-		    {
+		    set {
 			    this._SchemaClassName = value;
 		    }
 	    }
@@ -101,24 +89,19 @@ namespace XInstall.Core.Actions
 
 	    #region public properties
 
-	    public override string AdsiPath
-	    {
-		    get
-		    {
+	    public override string AdsiPath {
+		    get {
 			    return this._AdsiPath;
 		    }
 	    }
 
 
 	    [Action("machinename", Needed=false, Default=".")]
-	    public override string MachineName
-	    {
-		    get
-		    {
+	    public override string MachineName {
+		    get {
 			    return this._MachineName;
 		    }
-		    set
-		    {
+		    set {
 			    this._MachineName = value;
 		    }
 	    }
@@ -126,14 +109,11 @@ namespace XInstall.Core.Actions
 
 	    [Action("apppoolname", Needed=false, Default="")]
 	    [ADSI("AppPoolName")]
-	    public string AppPoolName
-	    {
-		    get
-		    {
+	    public string AppPoolName {
+		    get {
 			    return this._AppPoolName;
 		    }
-		    set
-		    {
+		    set {
 			    this._AppPoolName = value;
 		    }
 	    }
@@ -141,14 +121,11 @@ namespace XInstall.Core.Actions
 
 	    [Action("username", Needed=false, Default="")]
 	    [ADSI("WAMUserName")]
-	    public string AppPoolUserName
-	    {
-		    get
-		    {
+	    public string AppPoolUserName {
+		    get {
 			    return this._WAMUserName;
 		    }
-		    set
-		    {
+		    set {
 			    this._WAMUserName = value;
 		    }
 	    }
@@ -156,14 +133,11 @@ namespace XInstall.Core.Actions
 
 	    [Action("password", Needed=false, Default="")]
 	    [ADSI("WAMUserPass")]
-	    public string AppPoolUserPass
-	    {
-		    get
-		    {
+	    public string AppPoolUserPass {
+		    get {
 			    return this._WAMUserPass;
 		    }
-		    set
-		    {
+		    set {
 			    this._WAMUserPass = value;
 		    }
 	    }
@@ -171,16 +145,12 @@ namespace XInstall.Core.Actions
 
 	    [Action("apppoolidentity", Needed=false, Default="NETWORKSERVICE")]
 	    [ADSI("AppPoolIdentityType")]
-	    public string AppPoolIdentity
-	    {
-		    get
-		    {
+	    public string AppPoolIdentity {
+		    get {
 			    return this._AppPoolIdentity.ToString();
 		    }
-		    set
-		    {
-			    switch ( value.ToUpper() )
-			    {
+		    set {
+			    switch ( value.ToUpper() ) {
 			    case "LOCALSYSTEM":
 				    this._AppPoolIdentityType = AppPoolIdentityType.LOCALSYSTEM.ToString();
 				    break;
@@ -204,14 +174,11 @@ namespace XInstall.Core.Actions
 
 	    [Action("recyclerequest", Needed=false, Default="false")]
 	    [ADSI("AppPoolRecycleRequest")]
-	    public string AppPoolRecycleRequests
-	    {
-		    get
-		    {
+	    public string AppPoolRecycleRequests {
+		    get {
 			    return this._AppPoolRecycleRequests;
 		    }
-		    set
-		    {
+		    set {
 			    this._AppPoolRecycleRequests = value;
 		    }
 	    }
@@ -219,56 +186,44 @@ namespace XInstall.Core.Actions
 
 	    [Action("RestartRequest", Needed=false, Default="2000")]
 	    [ADSI("PeriodicRestartRequests")]
-	    public string PeriodicRestartRequests
-	    {
-		    get
-		    {
+	    public string PeriodicRestartRequests {
+		    get {
 			    return this._PeriodicRestartRequests;
 		    }
-		    set
-		    {
+		    set {
 			    this._PeriodicRestartRequests = value;
 		    }
 	    }
 
 
-	    public new string Name
-	    {
-		    get
-		    {
+	    public new string Name {
+		    get {
 			    return this.GetType().Name;
 		    }
 	    }
 
 
-	    public override string ObjectName
-	    {
-		    get
-		    {
+	    public override string ObjectName {
+		    get {
 			    return this.Name;
 		    }
 	    }
 
 
 	    [Action("runnable", Needed=false, Default="true")]
-	    public new string Runnable
-	    {
-		    set
-		    {
+	    public new string Runnable {
+		    set {
 			    base.Runnable = bool.Parse( value );
 		    }
 	    }
 
 
 	    [Action("action", Needed=false, Default="create")]
-	    public string Action
-	    {
-		    get
-		    {
+	    public string Action {
+		    get {
 			    return this._Action;
 		    }
-		    set
-		    {
+		    set {
 			    this._Action = value;
 		    }
 	    }
@@ -277,19 +232,15 @@ namespace XInstall.Core.Actions
 
 	    #region private properties
 
-	    private string IIsApplicationPools
-	    {
-		    get
-		    {
+	    private string IIsApplicationPools {
+		    get {
 			    return this._IIsApplicationPools;
 		    }
 	    }
 
 
-	    private string IIsApplicationPool
-	    {
-		    get
-		    {
+	    private string IIsApplicationPool {
+		    get {
 			    return this._IIsApplicationPool;
 		    }
 	    }
@@ -299,20 +250,17 @@ namespace XInstall.Core.Actions
 
 	    #region public methods
 
-	    public override void Execute()
-	    {
+	    public override void Execute() {
 		    base.Execute();
 	    }
 
 
-	    public override void ParseActionElement()
-	    {
+	    public override void ParseActionElement() {
 		    base.ParseActionElement();
 
 		    this.FillADSIProperties( this._ActionNode );
 		    this.ReadXmlProerties( this._ActionNode );
-		    switch ( this.GetActionType( this.Action ) )
-		    {
+		    switch ( this.GetActionType( this.Action ) ) {
 		    case AppPoolActionType.CREATE:
 			    this.CreateAppPool();
 			    break;
@@ -331,12 +279,9 @@ namespace XInstall.Core.Actions
 	    #region private methods
 
 
-	    private void ReadXmlProerties( XmlNode ActionNode )
-	    {
-		    if ( ActionNode.HasChildNodes )
-		    {
-			    foreach ( XmlNode xn in ActionNode.ChildNodes )
-			    {
+	    private void ReadXmlProerties( XmlNode ActionNode ) {
+		    if ( ActionNode.HasChildNodes ) {
+			    foreach ( XmlNode xn in ActionNode.ChildNodes ) {
 				    string PropertyName  = xn.Name;
 				    string PropertyValue = xn.InnerText;
 				    this.AppPoolProperties.Add( PropertyName, PropertyValue );
@@ -345,22 +290,18 @@ namespace XInstall.Core.Actions
 	    }
 
 
-	    private void FillADSIProperties( XmlNode xn )
-	    {
+	    private void FillADSIProperties( XmlNode xn ) {
 		    Type MyType = this.GetType();
 
 		    PropertyInfo[] PropertyInfos = MyType.GetProperties();
 
-		    foreach ( PropertyInfo pi in PropertyInfos )
-		    {
+		    foreach ( PropertyInfo pi in PropertyInfos ) {
 			    object[] AdsiAttributes = pi.GetCustomAttributes( typeof (ADSIAttribute), false );
 
-			    if ( AdsiAttributes.Length != 0 )
-			    {
+			    if ( AdsiAttributes.Length != 0 ) {
 				    string PropertyName = ( AdsiAttributes[0] as ADSIAttribute ).Name;
 				    XmlNode PropertyNameNode = xn.SelectSingleNode( PropertyName );
-				    if ( PropertyNameNode != null )
-				    {
+				    if ( PropertyNameNode != null ) {
 
 					    object Value = (string) PropertyNameNode.InnerText;
 					    object[] Params = new object[1] { Value };
@@ -372,12 +313,10 @@ namespace XInstall.Core.Actions
 	    }
 
 
-	    private AppPoolActionType GetActionType( string Action )
-	    {
+	    private AppPoolActionType GetActionType( string Action ) {
 		    AppPoolActionType ActionType = AppPoolActionType.CREATE;
 
-		    switch ( Action.ToLower() )
-		    {
+		    switch ( Action.ToLower() ) {
 		    case "create":
 			    ActionType = AppPoolActionType.CREATE;
 			    break;
@@ -393,25 +332,20 @@ namespace XInstall.Core.Actions
 		    default:
 			    base.FatalErrorMessage(
 				this.MachineName,
-				String.Format( "{0}: {1} - unknown action type {2}",
-					       this.Name, "GetActionType", Action ), 1660 );
+				String.Format( "{0}: {1} - unknown action type {2}", this.Name, "GetActionType", Action ), 1660 );
 			    break;
 		    }
 		    return ActionType;
 	    }
 
 
-	    private DirectoryEntry CreateAppPool()
-	    {
+	    private DirectoryEntry CreateAppPool() {
 
-		    if ( this.AppPoolName.Length == 0 )
-		    {
-			    if ( this.AppPoolProperties.ContainsKey( "AppPoolName".ToLower() ) )
-			    {
+		    if ( this.AppPoolName.Length == 0 ) {
+			    if ( this.AppPoolProperties.ContainsKey( "AppPoolName".ToLower() ) ) {
 				    this.AppPoolName = (string) this.AppPoolProperties[ "AppPoolName" ];
 			    }
-			    else
-			    {
+			    else {
 				    this.AppPoolName = this.AppPoolName;
 			    }
 		    }
@@ -426,10 +360,8 @@ namespace XInstall.Core.Actions
 
 	    #region private properties
 
-	    private Hashtable AppPoolProperties
-	    {
-		    get
-		    {
+	    private Hashtable AppPoolProperties {
+		    get {
 			    return this._AppPoolProperties;
 		    }
 	    }
@@ -440,8 +372,7 @@ namespace XInstall.Core.Actions
 
 	    #region static methods
 
-	    public static IIsAppPool Create( XmlNode xn, string MachineName )
-	    {
+	    public static IIsAppPool Create( XmlNode xn, string MachineName ) {
 
 		    IIsAppPool AppPool  = new IIsAppPool( xn );
 		    AppPool.MachineName = MachineName;

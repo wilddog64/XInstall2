@@ -4,13 +4,11 @@ using System.DirectoryServices;
 using System.Reflection;
 using System.Xml;
 
-namespace XInstall.Core.Actions
-{
+namespace XInstall.Core.Actions {
     /// <summary>
     /// Summary description for IIsVirtualDir.
     /// </summary>
-    public class IIsVirtualDir : AdsiBase
-    {
+    public class IIsVirtualDir : AdsiBase {
 	    private XmlNode         _ActionNode      = null;
 
 	    private string          _MachineName          = string.Empty;
@@ -26,21 +24,18 @@ namespace XInstall.Core.Actions
 	    private int             _SiteID               = 1;
 
 	    [Action("iisvdir")]
-	    public IIsVirtualDir( XmlNode ActionNode ) : base( ActionNode )
-	    {
+	    public IIsVirtualDir( XmlNode ActionNode ) : base( ActionNode ) {
 		    this._ActionNode = ActionNode;
 	    }
 
 
-	    public IIsVirtualDir( int SiteID, XmlNode ActionNode ) : base( ActionNode )
-	    {
+	    public IIsVirtualDir( int SiteID, XmlNode ActionNode ) : base( ActionNode ) {
 		    this._ActionNode = ActionNode;
 		    this._SiteID     = SiteID;
 	    }
 
 
-	    public IIsVirtualDir( string MachineName, int SiteID, XmlNode ActionNode ) : base( ActionNode )
-	    {
+	    public IIsVirtualDir( string MachineName, int SiteID, XmlNode ActionNode ) : base( ActionNode ) {
 		    this._ActionNode  = ActionNode;
 		    this._SiteID      = SiteID;
 		    this._MachineName = MachineName;
@@ -49,28 +44,22 @@ namespace XInstall.Core.Actions
 
 
 	    [Action("MachineName", Needed=false, Default="localhost")]
-	    public override string MachineName
-	    {
-		    get
-		    {
+	    public override string MachineName {
+		    get {
 			    return base.MachineName;
 		    }
-		    set
-		    {
+		    set {
 			    base.MachineName = value;
 		    }
 	    }
 
 
 	    [Action("websitename", Needed=false, Default="")]
-	    public string WebSiteName
-	    {
-		    get
-		    {
+	    public string WebSiteName {
+		    get {
 			    return this._WebSiteName;
 		    }
-		    set
-		    {
+		    set {
 			    this._WebSiteName = value;
 		    }
 	    }
@@ -87,58 +76,46 @@ namespace XInstall.Core.Actions
 	    /// pool, set this property to "false", and work thereafter.
 	    /// </remarks>
 	    [Action("assigndefaultapppool", Needed=false, Default="true")]
-	    public string AssignDefaultAppPool
-	    {
-		    get
-		    {
+	    public string AssignDefaultAppPool {
+		    get {
 			    return this._AssignDefaultAppPool;
 		    }
 	    }
 
 
 	    [Action("runnable", Needed=false, Default="true")]
-	    public new string Runnable
-	    {
-		    set
-		    {
+	    public new string Runnable {
+		    set {
 			    base.Runnable = bool.Parse( value );
 		    }
 	    }
 
 
 	    [Action("vdirname", Needed=true)]
-	    public string VirtualDirectoryName
-	    {
-		    get
-		    {
+	    public string VirtualDirectoryName {
+		    get {
 			    return this._VDirName;
 		    }
-		    set
-		    {
+		    set {
 			    this._VDirName = value;
 		    }
 	    }
 
 
 	    [Action("path", Needed=true)]
-	    public string Path
-	    {
-		    get
-		    {
+	    public string Path {
+		    get {
 			    return this._PhysicalPath;
 		    }
-		    set
-		    {
+		    set {
 			    this._PhysicalPath = value;
 		    }
 	    }
 
 
 	    [Action("action", Needed=true)]
-	    public string Action
-	    {
-		    get
-		    {
+	    public string Action {
+		    get {
 			    return this._ActionVerb;
 		    }
 		    set
@@ -148,31 +125,25 @@ namespace XInstall.Core.Actions
 	    }
 
 
-	    public new string Name
-	    {
-		    get
-		    {
+	    public new string Name {
+		    get {
 			    return this.GetType().Name;
 		    }
 	    }
 
 
-	    protected override string ObjectName
-	    {
-		    get
-		    {
+	    protected override string ObjectName {
+		    get {
 			    return this.GetType().Name;
 		    }
 	    }
 
 
-	    protected override void ParseActionElement()
-	    {
+	    protected override void ParseActionElement() {
 		    base.ParseActionElement ();
 
 		    DirectoryEntry VDir = null;
-		    switch ( this.Action.ToLower() )
-		    {
+		    switch ( this.Action.ToLower() ) {
 		    case "create":
 			    VDir = this.CreateVirutalDirectory( this.WebSiteName, this.VirtualDirectoryName );
 			    break;
@@ -183,58 +154,45 @@ namespace XInstall.Core.Actions
 		    case "pause":
 			    break;
 		    default:
-			    base.FatalErrorMessage(
-				".", String.Format( "{0}: unrecognized action verb: {1}",
-						    this.Name, this.Action ), 1660 );
+			    base.FatalErrorMessage( ".", String.Format( "{0}: unrecognized action verb: {1}", this.Name, this.Action ), 1660 );
 			    break;
 		    }
 	    }
 
 
-	    protected override string AdsiProvider
-	    {
-		    get
-		    {
+	    protected override string AdsiProvider {
+		    get {
 			    return this._AdsiProvider;
 		    }
 	    }
 
 
-	    protected override string SchemaClassName
-	    {
-		    get
-		    {
+	    protected override string SchemaClassName {
+		    get {
 			    return this._SchemaClassName;
 		    }
 	    }
 
 
-	    protected override object ObjectInstance
-	    {
-		    get
-		    {
+	    protected override object ObjectInstance {
+		    get {
 			    return this;
 		    }
 	    }
 
 
-	    public int SiteID
-	    {
-		    get
-		    {
+	    public int SiteID {
+		    get {
 			    return this._SiteID;
 		    }
-		    set
-		    {
+		    set {
 			    this._SiteID = value;
 		    }
 	    }
 
 
-	    public override string AdsiPath
-	    {
-		    get
-		    {
+	    public override string AdsiPath {
+		    get {
 			    return this._AdsiPath;
 		    }
 	    }
@@ -259,22 +217,19 @@ namespace XInstall.Core.Actions
 
 	    #region public static methods
 
-	    public static IIsVirtualDir Create( XmlNode xn )
-	    {
+	    public static IIsVirtualDir Create( XmlNode xn ) {
 		    IIsVirtualDir ThisVirtualDir = new IIsVirtualDir( xn );
 		    return ThisVirtualDir;
 	    }
 
 
-	    public static IIsVirtualDir Create( int SiteID, XmlNode xn )
-	    {
+	    public static IIsVirtualDir Create( int SiteID, XmlNode xn ) {
 		    IIsVirtualDir ThisVirtualDir = new IIsVirtualDir( SiteID, xn );
 		    return ThisVirtualDir;
 	    }
 
 
-	    public static IIsVirtualDir Create( string MachineName, int SiteID, XmlNode xn )
-	    {
+	    public static IIsVirtualDir Create( string MachineName, int SiteID, XmlNode xn ) {
 		    IIsVirtualDir ThisVirtualDir = new IIsVirtualDir( MachineName, SiteID, xn );
 		    return ThisVirtualDir;
 	    }
@@ -286,19 +241,15 @@ namespace XInstall.Core.Actions
 
 	    #region private methods
 
-	    private Hashtable GetVDirProertyValues( XmlNode xn )
-	    {
+	    private Hashtable GetVDirProertyValues( XmlNode xn ) {
 		    Hashtable PropertyCollection = new Hashtable();
 
 		    if ( xn.HasChildNodes )
-			    foreach ( XmlNode ChildNode in xn.ChildNodes )
-			    {
-				    if ( ChildNode.HasChildNodes )
-				    {
+			    foreach ( XmlNode ChildNode in xn.ChildNodes ) {
+				    if ( ChildNode.HasChildNodes ) {
 					    PropertyCollection = this.GetVDirProertyValues( ChildNode );
 				    }
-				    else
-				    {
+				    else {
 					    PropertyCollection.Add( xn.Name, xn.Value );
 				    }
 			    }
@@ -307,61 +258,51 @@ namespace XInstall.Core.Actions
 	    }
 
 
-	    private void BindingAppVirtualDirectroy( DirectoryEntry VDir, XmlNode xn )
-	    {
+	    private void BindingAppVirtualDirectroy( DirectoryEntry VDir, XmlNode xn ) {
 
-		    if ( VDir != null )
-		    {
+		    if ( VDir != null ) {
 			    Hashtable VDirProperties = this.GetVDirProertyValues( xn );
 			    VDirProperties.Add( "AppRoot", String.Format( "LM/W3SVC/{0}/Root", this.SiteID ) );
 			    base.SetAdsiObjectProperty( VDir, VDirProperties );
 		    }
 
-		    if ( this.AssignDefaultAppPool.ToLower().Equals("true") )
-		    {
+		    if ( this.AssignDefaultAppPool.ToLower().Equals("true") ) {
 			    this.SetDefaultAppPool( VDir );
 		    }
 	    }
 
 
-	    private DirectoryEntry CreateVirutalDirectory( string WebSiteName, string VirtualDirectoryName )
-	    {
+	    private DirectoryEntry CreateVirutalDirectory( string WebSiteName, string VirtualDirectoryName ) {
 		    DirectoryEntry WebSite = this.FindWebSite( WebSiteName );
 		    DirectoryEntry VDir    = null;
 
-		    if ( WebSite != null )
-		    {
+		    if ( WebSite != null ) {
 			    VDir = WebSite.Children.Add( VirtualDirectoryName, this.SchemaClassName );
 			    this.BindingAppVirtualDirectroy( VDir, this._ActionNode );
 		    }
 
 		    bool AllowCreateDefaultAppPool = bool.Parse( this.AssignDefaultAppPool );
-		    if ( AllowCreateDefaultAppPool )
-		    {
+		    if ( AllowCreateDefaultAppPool ) {
 			    this.SetDefaultAppPool( VDir );
 		    }
 		    return VDir;
 	    }
 
 
-	    private void SetDefaultAppPool( DirectoryEntry Entry )
-	    {
+	    private void SetDefaultAppPool( DirectoryEntry Entry ) {
 		    object[] Params = {2, this.DefaultAppPool, false };
 		    Entry.Invoke( "AppCreate3", Params );
 	    }
 
 
-	    private DirectoryEntry FindWebSite( string WebSiteName )
-	    {
+	    private DirectoryEntry FindWebSite( string WebSiteName ) {
 
 		    string SchemaClassName = @"IIsWebServer";
 		    DirectoryEntries Entries = this.Directories;
 		    DirectoryEntry FoundEntry = null;
-		    foreach ( DirectoryEntry Entry in Entries )
-		    {
+		    foreach ( DirectoryEntry Entry in Entries ) {
 			    if ( Entry.SchemaClassName == SchemaClassName )
-				    if ( Entry.Properties[ "ServerComment" ].Value.Equals( WebSiteName ) )
-				    {
+				    if ( Entry.Properties[ "ServerComment" ].Value.Equals( WebSiteName ) ) {
 					    FoundEntry = Entry;
 					    break;
 				    }
@@ -372,14 +313,12 @@ namespace XInstall.Core.Actions
 	    }
 
 
-	    private bool DirectoryExist()
-	    {
+	    private bool DirectoryExist() {
 		    return DirectoryEntry.Exists( this.IIsPath );
 	    }
 
 
-	    private bool DirectoryExist( string Path )
-	    {
+	    private bool DirectoryExist( string Path ) {
 		    return DirectoryEntry.Exists( Path );
 	    }
 
@@ -387,22 +326,16 @@ namespace XInstall.Core.Actions
 
 	    #region private properties
 
-	    private string IIsPath
-	    {
-		    get
-		    {
-			    string ThisPath =
-				String.Format( @"{0}:\\{1}\{2}\{3}\Root",
-					       this.AdsiProvider, this.MachineName, this.IIsPath );
+	    private string IIsPath {
+		    get {
+			    string ThisPath = String.Format( @"{0}:\\{1}\{2}\{3}\Root", this.AdsiProvider, this.MachineName, this.IIsPath );
 			    return ThisPath;
 		    }
 	    }
 
 
-	    private string DefaultAppPool
-	    {
-		    get
-		    {
+	    private string DefaultAppPool {
+		    get {
 			    return this._DefaultAppPool;
 		    }
 

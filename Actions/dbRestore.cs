@@ -9,20 +9,17 @@ using XInstall.Core;
 using XInstall.Util.Log;
 
 
-namespace XInstall.Core.Actions
-{
+namespace XInstall.Core.Actions {
     /// <summary>
     /// public class DBRestore -
     ///     a class that perform a database restoration
     ///     on a given database server.
     /// </summary>
 
-    public class DBRestore : ActionElement, ICleanUp, IAction
-    {
+    public class DBRestore : ActionElement, ICleanUp, IAction {
 	    private string _strFileName = null;
 
-	    private enum DBRESTORE_OPR_CODE
-	    {
+	    private enum DBRESTORE_OPR_CODE {
 		    DBRESTORE_OPR_SUCCESS = 0,
 		    DBRESTORE_OPR_NOACTION_SPECIFIED,
 		    DBRESTORE_OPR_INVALID_ACTION,
@@ -37,8 +34,7 @@ namespace XInstall.Core.Actions
 	    private DBRESTORE_OPR_CODE _enumDBRestoreOprCode =
 		DBRESTORE_OPR_CODE.DBRESTORE_OPR_SUCCESS;
 	    private string _strExitMessage = null;
-	    private string[] _strMessages  =
-	    {
+	    private string[] _strMessages  = {
 		    @"{0}: successfully restore database {1}, exit code {2}",
 		    @"{0}: no action specified, exit code {1}",
 		    @"{0}: invalid action {1} specified, only restore allowed, exit code {2}",
@@ -73,8 +69,7 @@ namespace XInstall.Core.Actions
 	    ///     it uses a trusted connection.
 	    /// </summary>
 	    [Action("dbrestore")]
-	    public DBRestore()
-	    {
+	    public DBRestore() {
 		    // specially for restore operation
 		    // so set base class's RequestBackup
 		    // property to true
@@ -87,23 +82,15 @@ namespace XInstall.Core.Actions
 	    ///     set database to be restored
 	    /// </summary>
 	    [Action("databasename", Needed=true)]
-	    public string DatabaseName
-	    {
-
-		    get
-		    {
+	    public string DatabaseName {
+		    get {
 			    return this._strDatabaseName;
 		    }
 
-		    set
-		    {
-			    if ( value == null || value == String.Empty )
-			    {
-				    this._enumDBRestoreOprCode =
-					DBRESTORE_OPR_CODE.DBRESTORE_OPR_DBNAME_NOTPROVIDED;
-				    this._strExitMessage       =
-					String.Format( this._strMessages[ this.ExitCode ],
-						       this.Name, this.ExitCode );
+		    set {
+			    if ( value == null || value == String.Empty ) {
+				    this._enumDBRestoreOprCode = DBRESTORE_OPR_CODE.DBRESTORE_OPR_DBNAME_NOTPROVIDED;
+				    this._strExitMessage       = String.Format( this._strMessages[ this.ExitCode ], this.Name, this.ExitCode );
 				    throw new Exception();
 			    }
 
@@ -118,16 +105,12 @@ namespace XInstall.Core.Actions
 	    ///     restore database to
 	    /// </summary>
 	    [Action("restoreto", Needed=true)]
-	    public string RestoreTo
-	    {
-
-		    get
-		    {
+	    public string RestoreTo {
+		    get {
 			    return this._strSqlServerName;
 		    }
 
-		    set
-		    {
+		    set {
 			    this._strSqlServerName = value;
 		    }
 	    }
@@ -137,11 +120,8 @@ namespace XInstall.Core.Actions
 	    ///     sets the name of file for being restored
 	    /// </summary>
 	    [Action("filename", Needed=true)]
-	    public new string FileName
-	    {
-
-		    set
-		    {
+	    public new string FileName {
+		    set {
 			    this._strFileName = value;
 		    }
 	    }
@@ -152,16 +132,12 @@ namespace XInstall.Core.Actions
 	    ///     backup database file to be restored to
 	    /// </summary>
 	    [Action("restorefrom", Needed=true)]
-	    public string RestoreFrom
-	    {
-
-		    get
-		    {
+	    public string RestoreFrom {
+		    get {
 			    return this._strRestoreFromPath;
 		    }
 
-		    set
-		    {
+		    set {
 			    string strFullFilePath =
 				value + Path.DirectorySeparatorChar + this._strFileName;
 			    this._strRestoreFromPath = strFullFilePath;
@@ -169,18 +145,11 @@ namespace XInstall.Core.Actions
 	    }
 
 	    [Action("username", Needed=false)]
-	    public string UserName
-	    {
-
-		    get
-		    {
-			    if ( !this._bTrustedConnection && this._strUserName == null )
-			    {
-				    this._enumDBRestoreOprCode =
-					DBRESTORE_OPR_CODE.DBRESTORE_OPR_USERNAME_REQUIRED;
-				    this._strExitMessage       =
-					String.Format( this._strMessages[ (int) this._enumDBRestoreOprCode ],
-						       this.Name );
+	    public string UserName {
+		    get {
+			    if ( !this._bTrustedConnection && this._strUserName == null ) {
+				    this._enumDBRestoreOprCode = DBRESTORE_OPR_CODE.DBRESTORE_OPR_USERNAME_REQUIRED;
+				    this._strExitMessage       = String.Format( this._strMessages[ (int) this._enumDBRestoreOprCode ], this.Name );
 				    base.LogItWithTimeStamp( this.ExitMessage );
 				    throw new Exception();
 
@@ -189,25 +158,17 @@ namespace XInstall.Core.Actions
 			    return this._strUserName;
 		    }
 
-		    set
-		    {
+		    set {
 			    this._strUserName = value;
 		    }
 	    }
 
 	    [Action("userpassword", Needed=false)]
-	    public string UserPassword
-	    {
-
-		    get
-		    {
-			    if ( !this._bTrustedConnection && this._strUserPassword == null )
-			    {
-				    this._enumDBRestoreOprCode =
-					DBRESTORE_OPR_CODE.DBRESTORE_OPR_USERPASS_REQUIRED;
-				    this._strExitMessage       =
-					String.Format( this._strMessages[ this.ExitCode ],
-						       this.Name );
+	    public string UserPassword {
+		    get {
+			    if ( !this._bTrustedConnection && this._strUserPassword == null ) {
+				    this._enumDBRestoreOprCode = DBRESTORE_OPR_CODE.DBRESTORE_OPR_USERPASS_REQUIRED;
+				    this._strExitMessage       = String.Format( this._strMessages[ this.ExitCode ], this.Name );
 				    base.LogItWithTimeStamp( this.ExitMessage );
 				    throw new Exception();
 			    }
@@ -215,8 +176,7 @@ namespace XInstall.Core.Actions
 			    return this._strUserPassword;
 		    }
 
-		    set
-		    {
+		    set {
 			    this._strUserPassword = value;
 		    }
 	    }
@@ -227,16 +187,12 @@ namespace XInstall.Core.Actions
 	    ///     the physical database data file
 	    /// </summary>
 	    [Action("datapath", Needed=true)]
-	    public string DataPath
-	    {
-
-		    get
-		    {
+	    public string DataPath {
+		    get {
 			    return this._strDBDataFilePath;
 		    }
 
-		    set
-		    {
+		    set {
 			    this._strDBDataFilePath = value;
 		    }
 	    }
@@ -248,16 +204,12 @@ namespace XInstall.Core.Actions
 	    ///     the physical database log file.
 	    /// </summary>
 	    [Action("logpath", Needed=true)]
-	    public string LogPath
-	    {
-
-		    get
-		    {
+	    public string LogPath {
+		    get {
 			    return this._strDBLogFilePath;
 		    }
 
-		    set
-		    {
+		    set {
 			    this._strDBLogFilePath = value;
 		    }
 	    }
@@ -268,23 +220,15 @@ namespace XInstall.Core.Actions
 	    ///     is used.
 	    /// </summary>
 	    [Action("trustedconnection", Needed=false, Default="true")]
-	    public string TrustedConnection
-	    {
-
-		    set
-		    {
-			    try
-			    {
+	    public string TrustedConnection {
+		    set {
+			    try {
 				    this._bIsComplete = bool.Parse( value.ToString() );
 
 			    }
-			    catch
-			    {
-				    this._enumDBRestoreOprCode =
-					DBRESTORE_OPR_CODE.DBRESTORE_OPR_BOOLEAN_PARSE_ERROR;
-				    this._strExitMessage       =
-					String.Format( this._strMessages[ this.ExitCode ],
-						       this.Name, this.ExitCode )
+			    catch {
+				    this._enumDBRestoreOprCode = DBRESTORE_OPR_CODE.DBRESTORE_OPR_BOOLEAN_PARSE_ERROR;
+				    this._strExitMessage       = String.Format( this._strMessages[ this.ExitCode ], this.Name, this.ExitCode )
 					;
 				    throw new Exception();
 			    }
@@ -295,11 +239,8 @@ namespace XInstall.Core.Actions
 	    /// set a flag to indicate if the action should be run or not
 	    /// </summary>
 	    [Action("runnable", Needed=false, Default="true")]
-	    public new string Runnable
-	    {
-
-		    set
-		    {
+	    public new string Runnable {
+		    set {
 			    base.Runnable = bool.Parse( value );
 		    }
 	    }
@@ -309,14 +250,11 @@ namespace XInstall.Core.Actions
 	    ///             from a given location that has backup database file
 	    ///             No parameters are needed.
 	    /// </summary>
-	    private void RestoreDB ()
-	    {
-		    base.LogItWithTimeStamp ( String.Format("start restoring database:{0}, file:{1}",
-							    this.DatabaseName, this.RestoreFrom) );
+	    private void RestoreDB () {
+		    base.LogItWithTimeStamp ( String.Format("start restoring database:{0}, file:{1}", this.DatabaseName, this.RestoreFrom) );
 		    Console.WriteLine ("\tpercentage completed so far:\n");
 
-		    if ( _rtRestoreObj != null )
-		    {
+		    if ( _rtRestoreObj != null ) {
 			    // Setup required parameters. All required ones can be
 			    // retrieve from property methods
 			    _rtRestoreObj.Database        = this.DatabaseName;
@@ -331,9 +269,7 @@ namespace XInstall.Core.Actions
 			    _rtRestoreObj.SQLRestore ( _mSQLServer );
 		    }
 
-		    base.LogItWithTimeStamp( String.Format("complete restoring database:{0}",
-
-							   this.DatabaseName) );
+		    base.LogItWithTimeStamp( String.Format("complete restoring database:{0}", this.DatabaseName) );
 
 	    }
 
@@ -341,11 +277,8 @@ namespace XInstall.Core.Actions
 	    /// set flag to indicate if object is going to skip any error
 	    /// </summary>
 	    [Action("skiperror", Needed=false, Default="false")]
-	    public new string SkipError
-	    {
-
-		    set
-		    {
+	    public new string SkipError {
+		    set {
 			    base.SkipError = bool.Parse( value );
 		    }
 	    }
@@ -360,34 +293,26 @@ namespace XInstall.Core.Actions
 	    /// </summary>
 	    private void ConnectServer ()
 	    {
-		    if ( this._mSQLServer != null )
-		    {
+		    if ( this._mSQLServer != null ) {
 			    return;
 		    }
 
-		    try
-		    {
+		    try {
 			    _mSQLServer = new SQLServer ();
 
-			    if ( this._bTrustedConnection )
-			    {
+			    if ( this._bTrustedConnection ) {
 				    _mSQLServer.LoginSecure = true;
 			    }
 
 			    _mSQLServer.Connect( this.RestoreTo, UserName, UserPassword );
 
-			    if ( _mSQLServer != null )
-			    {
+			    if ( _mSQLServer != null ) {
 				    _rtRestoreObj = new Interop.SQLDMO.RestoreClass ();
 			    }
 
 		    }
-		    catch ( Exception e )
-		    {
-			    this._strExitMessage =
-				String.Format(
-				    "Unable to connect to SQL Server {0}, reason: {1}",
-				    this.RestoreFrom, e.ToString());
+		    catch ( Exception e ) {
+			    this._strExitMessage = String.Format( "Unable to connect to SQL Server {0}, reason: {1}", this.RestoreFrom, e.ToString());
 			    base.FatalErrorMessage( ".", this.ExitMessage, 1660, false );
 
 		    }
@@ -398,8 +323,7 @@ namespace XInstall.Core.Actions
 	    /// a given server.
 	    /// </summary>
 	    /// <param name="strDBName">name of the database to be removed</param>
-	    private void RemoveDatabase(string strDBName)
-	    {
+	    private void RemoveDatabase(string strDBName) {
 		    this._mSQLServer.Databases.Item( strDBName, "dbo" ).Remove();
 	    }
 
@@ -412,14 +336,12 @@ namespace XInstall.Core.Actions
 	    /// </summary>
 	    /// <param name="strRestoreToServer"></param>
 	    /// <returns></returns>
-	    private string GetDataFileList ( string strRestoreToServer )
-	    {
+	    private string GetDataFileList ( string strRestoreToServer ) {
 		    // TODO: GetDataFileList function need to retrieve logical database names
 
 		    StringBuilder lsbRestoreList = new StringBuilder ();
 
-		    try
-		    {
+		    try {
 			    // Always connect to server's master database by using trusted
 			    // connection. The account who run this need to have sa privilege
 			    // on sql server
@@ -428,14 +350,12 @@ namespace XInstall.Core.Actions
 			    // Construct sql statement to retrieve backup set's logical
 			    // database name
 			    String lstrGetFileListStmt =
-				String.Format ("restore filelistonly from disk = '{0}'",
-					       this.RestoreFrom);
+				String.Format ("restore filelistonly from disk = '{0}'", this.RestoreFrom);
 			    ArrayList lalLogicalDBName = new ArrayList();
 			    SqlDataReader lsdrResult = dba.RunQuery(lstrGetFileListStmt);
 
 			    if ( lsdrResult != null )
-				    while ( lsdrResult.Read() )
-				    {
+				    while ( lsdrResult.Read() ) {
 					    lalLogicalDBName.Add( lsdrResult[0] );
 				    }
 
@@ -454,8 +374,7 @@ namespace XInstall.Core.Actions
 							 + this.DatabaseName +  ".ldf");
 
 		    }
-		    catch ( Exception e )
-		    {
+		    catch ( Exception e ) {
 			    throw e;
 		    }
 
@@ -468,9 +387,7 @@ namespace XInstall.Core.Actions
 	    /// </summary>
 	    /// <param name="strMsg">message comes in</param>
 	    /// <param name="iPercent">percentage completed</param>
-	    protected virtual void _rtRestoreObj_PercentComplete
-	    ( string strMsg, int iPercent )
-	    {
+	    protected virtual void _rtRestoreObj_PercentComplete( string strMsg, int iPercent ) {
 		    Console.WriteLine ("\t{0}", strMsg);
 	    }
 
@@ -480,24 +397,15 @@ namespace XInstall.Core.Actions
 	    ///     generate an exception automatically.
 	    /// </summary>
 	    [Action("generateexception", Needed=false, Default="false")]
-	    public new string AllowGenerateException
-	    {
-
-		    set
-		    {
-			    try
-			    {
-				    this._bAllowGenerateException =
-					bool.Parse( value.ToString() );
+	    public new string AllowGenerateException {
+		    set {
+			    try {
+				    this._bAllowGenerateException = bool.Parse( value.ToString() );
 
 			    }
-			    catch
-			    {
-				    this._enumDBRestoreOprCode =
-					DBRESTORE_OPR_CODE.DBRESTORE_OPR_BOOLEAN_PARSE_ERROR;
-				    this._strExitMessage       =
-					String.Format( this._strMessages[ this.ExitCode ],
-						       this.Name, this.ExitCode )
+			    catch {
+				    this._enumDBRestoreOprCode = DBRESTORE_OPR_CODE.DBRESTORE_OPR_BOOLEAN_PARSE_ERROR;
+				    this._strExitMessage       = String.Format( this._strMessages[ this.ExitCode ], this.Name, this.ExitCode )
 					;
 				    throw new Exception();
 			    }
@@ -508,11 +416,8 @@ namespace XInstall.Core.Actions
 	    /// property ExitCode -
 	    ///     gets the return code from the operation
 	    /// </summary>
-	    public new int ExitCode
-	    {
-
-		    get
-		    {
+	    public new int ExitCode {
+		    get {
 			    return (int) this._enumDBRestoreOprCode;
 		    }
 	    }
@@ -522,29 +427,22 @@ namespace XInstall.Core.Actions
 	    ///     gets the message that is coresponding to
 	    ///     the exit code.
 	    /// </summary>
-	    public new string ExitMessage
-	    {
-
-		    get
-		    {
+	    public new string ExitMessage {
+		    get {
 			    return this._strExitMessage;
 		    }
 	    }
 
 
-	    protected override void ParseActionElement()
-	    {
+	    protected override void ParseActionElement() {
 		    base.ParseActionElement();
 		    this.ConnectServer();
 		    this.RestoreDB();
 		    this._bIsComplete = true;
 	    }
 
-	    public bool IsCompelete
-	    {
-
-		    get
-		    {
+	    public bool IsCompelete {
+		    get {
 			    return base.IsComplete;
 		    }
 	    }
@@ -556,8 +454,7 @@ namespace XInstall.Core.Actions
 	    ///     drop the database it restored from the database
 	    ///     server.
 	    /// </summary>
-	    public void RemoveIt()
-	    {
+	    public void RemoveIt() {
 		    // base.ThisServer.Databases.Item(base.DatabaseName, "dbo").Remove();
 		    this.RemoveDatabase( this.DatabaseName );
 	    }
@@ -566,32 +463,17 @@ namespace XInstall.Core.Actions
 	    /// property Name -
 	    ///     gets the name of constructor
 	    /// </summary>
-	    public new string Name
-	    {
-
-		    get
-		    {
+	    public new string Name {
+		    get {
 			    return this.GetType().Name.ToLower();
 		    }
 	    }
 
-	    protected override string ObjectName
-	    {
-
-		    get
-		    {
+	    protected override string ObjectName {
+		    get {
 			    return this.Name;
 		    }
 	    }
 
     }
 }
-
-
-
-
-
-
-
-
-

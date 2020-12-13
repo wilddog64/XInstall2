@@ -5,8 +5,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Xml;
 
-namespace XInstall.Core.Actions
-{
+namespace XInstall.Core.Actions {
     /// <summary>
     /// providing an ability for XInstall to call external program
     /// </summary>
@@ -14,11 +13,9 @@ namespace XInstall.Core.Actions
     ///     CALL class inherits from ExternalPrg and IAction Interface
     ///     for general acess from the XML configuration file
     /// </remarks>
-    public class EXEC : ExternalPrg
-    {
+    public class EXEC : ExternalPrg {
 	    // an imuration for the CALL operations
-	    private enum CALL_OPR_CODE
-	    {
+	    private enum CALL_OPR_CODE {
 		    CALL_OPR_EXECUTE_SUCCESSFUL,
 		    CALL_OPR_EXECUTE_FAILED,
 		    CALL_OPR_EXTERNAL_PROGRAM_NOTEXIST,
@@ -37,8 +34,7 @@ namespace XInstall.Core.Actions
 	    // error handling variables
 	    private CALL_OPR_CODE _enumCallOprCode = CALL_OPR_CODE.CALL_OPR_EXECUTE_SUCCESSFUL;
 	    private string _strExitMessage         = null;
-	    private string[] _strMessages          =
-	    {
+	    private string[] _strMessages          = {
 		    @"{0}: executing program {1} complete successfully",
 		    @"{0}: unable to execute program {1}, output from external program, {2}",
 		    @"{0}: program {1} does not exist!",
@@ -57,8 +53,7 @@ namespace XInstall.Core.Actions
 	    ///     be redirected to console and log file.
 	    /// </remarks>
 	    [Action("exec")]
-	    public EXEC( XmlNode ActionNode ) : base( ActionNode )
-	    {
+	    public EXEC( XmlNode ActionNode ) : base( ActionNode ) {
 		    base.OutToConsole          = true;
 		    base.OutToFile             = true;
 		    base.ProgramRedirectOutput = "true";
@@ -75,26 +70,20 @@ namespace XInstall.Core.Actions
 	    ///     same location from the calling program.
 	    /// </remarks>
 	    [Action("progname", Needed=true)]
-	    public string ProgName
-	    {
-		    get
-		    {
+	    public string ProgName {
+		    get {
 			    return this._rostrProgName;
 		    }
-		    set
-		    {
+		    set {
 			    string strProgramName = Path.GetFileName( value );
 			    string strProgramPath = Path.GetDirectoryName( value );
 
 			    bool bOK = strProgramPath != null && strProgramPath != String.Empty;
-
-			    if ( bOK )
-			    {
+			    if ( bOK ) {
 				    this.BasePath = strProgramPath;
 			    }
 
-			    if ( !File.Exists( value ) )
-			    {
+			    if ( !File.Exists( value ) ) {
 				    this.SetExitMessage( CALL_OPR_CODE.CALL_OPR_EXTERNAL_PROGRAM_NOTEXIST, this.Name, value );
 				    base.FatalErrorMessage( ".", this.ExitMessage, 1660, false );
 			    }
@@ -105,10 +94,8 @@ namespace XInstall.Core.Actions
 	    }
 
 
-	    protected override object ObjectInstance
-	    {
-		    get
-		    {
+	    protected override object ObjectInstance {
+		    get {
 			    return this;
 		    }
 	    }
@@ -123,14 +110,11 @@ namespace XInstall.Core.Actions
 	    ///     responsibility to verify the accuracy of arguments.
 	    /// </remarks>
 	    [Action("arguments", Needed=false)]
-	    public string Arguments
-	    {
-		    get
-		    {
+	    public string Arguments {
+		    get {
 			    return this._arguments;
 		    }
-		    set
-		    {
+		    set {
 			    this._arguments = value;
 		    }
 	    }
@@ -140,34 +124,27 @@ namespace XInstall.Core.Actions
 	    /// set a flag to indicate if the action should be run or not
 	    /// </summary>
 	    [Action("runnable", Needed=false, Default="true")]
-	    public new string Runnable
-	    {
-		    set
-		    {
+	    public new string Runnable {
+		    set {
 			    base.Runnable = bool.Parse( value );
 		    }
 	    }
 
 
 	    [Action("skiperror", Needed=false, Default="false")]
-	    public new string SkipError
-	    {
-		    set
-		    {
+	    public new string SkipError {
+		    set {
 			    base.SkipError = bool.Parse( value );
 		    }
 	    }
 
 
 	    [Action("basepath", Needed=false, Default=".")]
-	    public override string BasePath
-	    {
-		    get
-		    {
+	    public override string BasePath {
+		    get {
 			    return this._BasePath;
 		    }
-		    set
-		    {
+		    set {
 			    this._BasePath = value;
 		    }
 	    }
@@ -175,12 +152,10 @@ namespace XInstall.Core.Actions
 
 	    #region IAction Members
 
-	    protected override void ParseActionElement()
-	    {
+	    protected override void ParseActionElement() {
 		    // base.ParseActionElement();
 		    string OldDirectory = Environment.CurrentDirectory;
-		    if ( this.BasePath != null )
-		    {
+		    if ( this.BasePath != null ) {
 			    Directory.SetCurrentDirectory( this.BasePath );
 			    base.ProgramWorkingDirectory = this.BasePath;
 		    }
@@ -188,24 +163,20 @@ namespace XInstall.Core.Actions
 		    this.SetExitMessage( CALL_OPR_CODE.CALL_OPR_START_EXECUTING, this.Name, this.ProgName );
 		    base.LogItWithTimeStamp( this.ExitMessage );
 
-		    try
-		    {
+		    try {
 			    base.ParseActionElement();
 
-			    if ( base.ProgramExitCode != 0 )
-			    {
+			    if ( base.ProgramExitCode != 0 ) {
 				    base.IsComplete = false;
 				    this.SetExitMessage( CALL_OPR_CODE.CALL_OPR_EXECUTE_FAILED, this.Name, this.ProgName, base.ProgramOutput );
 				    base.FatalErrorMessage( ".", this.ExitMessage, 1660 );
 			    }
-			    else
-			    {
+			    else {
 				    base.IsComplete = true;
 				    this.SetExitMessage( CALL_OPR_CODE.CALL_OPR_EXECUTE_SUCCESSFUL, this.Name, this.ProgName );
 			    }
 		    }
-		    finally
-		    {
+		    finally {
 			    Directory.SetCurrentDirectory( OldDirectory );
 		    }
 	    }
@@ -217,10 +188,8 @@ namespace XInstall.Core.Actions
 	    ///     this function is not called directly and it is
 	    ///     readonly.
 	    /// </remarks>
-	    public new bool IsComplete
-	    {
-		    get
-		    {
+	    public new bool IsComplete {
+		    get {
 			    return base.IsComplete;
 		    }
 	    }
@@ -230,10 +199,8 @@ namespace XInstall.Core.Actions
 	    /// gets the status code from the execution of external program
 	    /// </summary>
 	    /// <remarks></remarks>
-	    public new int ExitCode
-	    {
-		    get
-		    {
+	    public new int ExitCode {
+		    get {
 			    return (int) this._enumCallOprCode;
 		    }
 	    }
@@ -243,10 +210,8 @@ namespace XInstall.Core.Actions
 	    /// The return message corrsponding to the ExitCode
 	    /// </summary>
 	    /// <remarks></remarks>
-	    public new string ExitMessage
-	    {
-		    get
-		    {
+	    public new string ExitMessage {
+		    get {
 			    return this._strExitMessage;
 		    }
 	    }
@@ -256,18 +221,14 @@ namespace XInstall.Core.Actions
 	    /// Name of the object which is CALL.
 	    /// </summary>
 	    /// <remarks></remarks>
-	    public new string Name
-	    {
-		    get
-		    {
+	    public new string Name {
+		    get {
 			    return this.GetType().Name;
 		    }
 	    }
 
-	    protected override string ObjectName
-	    {
-		    get
-		    {
+	    protected override string ObjectName {
+		    get {
 			    return this.Name;
 		    }
 	    }
@@ -291,36 +252,28 @@ namespace XInstall.Core.Actions
 	    ///     from a message table.
 	    /// </remarks>
 	    private void
-	    SetExitMessage (
-		CALL_OPR_CODE CallOprCode,
-		params object[] objParams )
-	    {
+	    SetExitMessage ( CALL_OPR_CODE CallOprCode, params object[] objParams ) {
 		    this._enumCallOprCode = CallOprCode;
 		    this._strExitMessage  = String.Format( this._strMessages[ this.ExitCode ], objParams );
 	    }
 
-	    protected override string GetArguments()
-	    {
+	    protected override string GetArguments() {
 		    string[] strParams     = Regex.Split( this._arguments, @"[,]");
 		    // string strParam        = null;
 		    StringBuilder sbParams = new StringBuilder();
 
 		    // sbParams.Append("/c ");
-		    for ( int i = 0; i < strParams.Length; i++)
-		    {
-			    if ( strParams[i].IndexOf( Path.DirectorySeparatorChar ) > -1 )
-			    {
+		    for ( int i = 0; i < strParams.Length; i++) {
+			    if ( strParams[i].IndexOf( Path.DirectorySeparatorChar ) > -1 ) {
 				    strParams[i] = strParams[i].Trim();
-				    if ( strParams[i].StartsWith( @"." ) )
-				    {
+				    if ( strParams[i].StartsWith( @"." ) ) {
 					    strParams[i] = this.BasePath + strParams[i].Remove(0, 1);
 				    }
 				    else if ( strParams[i].StartsWith( @"/" ) ) {}
 				    // else Win32API.GetShortPathName( strParams[i], out strParam );
 				    //    sbParams.AppendFormat( @"{0} ", strParams[i] );
 			    }
-			    else
-			    {
+			    else {
 				    sbParams.AppendFormat( @"{0} ", strParams[i] );
 			    }
 		    }

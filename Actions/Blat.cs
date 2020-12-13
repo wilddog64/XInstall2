@@ -43,8 +43,7 @@ namespace XInstall.Core.Actions
     /// <summary>
     /// Summary description for Blat.
     /// </summary>
-    public class Blat : ExternalPrg
-    {
+    public class Blat : ExternalPrg {
 	    private const string BLATEXEC = @"blat.exe";
 
 	    private bool   _SendHtml      = true;
@@ -69,24 +68,19 @@ namespace XInstall.Core.Actions
 	    private Regex   _Regex        = null;
 
 	    [Action("blat")]
-	    public Blat( XmlNode ActionNode ) : base( ActionNode )
-	    {
+	    public Blat( XmlNode ActionNode ) : base( ActionNode ) {
 		    this._ActionNode = ActionNode;
 	    }
 
 
 	    [Action("blatpath", Needed=true)]
-	    public string BlatPath
-	    {
-		    get
-		    {
+	    public string BlatPath {
+		    get {
 			    return this._BlatPath;
 		    }
-		    set
-		    {
+		    set {
 			    this._BlatPath = value;
-			    if ( !Directory.Exists( this._BlatPath ) )
-			    {
+			    if ( !Directory.Exists( this._BlatPath ) ) {
 				    base.FatalErrorMessage( ".", String.Format( "path {0} does not exist", this._BlatPath ), 1660 );
 			    }
 		    }
@@ -94,70 +88,55 @@ namespace XInstall.Core.Actions
 
 
 	    [Action("sender", Needed=false, Default="")]
-	    public string Sender
-	    {
-		    get
-		    {
+	    public string Sender {
+		    get {
 			    return this._Sender;
 		    }
-		    set
-		    {
+		    set {
 			    this._Sender = value;
 		    }
 	    }
 
 
 	    [Action("from", Needed=false, Default="")]
-	    public string From
-	    {
-		    get
-		    {
+	    public string From {
+		    get {
 			    return this._From;
 		    }
-		    set
-		    {
+		    set {
 			    this._From = value;
 		    }
 	    }
 
 
 	    [Action("subject", Needed=true)]
-	    public string Subject
-	    {
-		    get
-		    {
+	    public string Subject {
+		    get {
 			    return this._Subject;
 		    }
-		    set
-		    {
+		    set {
 			    this._Subject = value;
 		    }
 	    }
 
 
 	    [Action("recipients", Needed=true)]
-	    public string Recipients
-	    {
-		    get
-		    {
+	    public string Recipients {
+		    get {
 			    return this._Recipients;
 		    }
-		    set
-		    {
+		    set {
 			    this._Recipients = value;
 		    }
 	    }
 
 
 	    [Action("message", Needed=false, Default="")]
-	    public string Message
-	    {
-		    get
-		    {
+	    public string Message {
+		    get {
 			    return string.Format( "{0}", this._Message );
 		    }
-		    set
-		    {
+		    set {
 			    this._Message = value;
 			    base.LogItWithTimeStamp( String.Format( "{0}: Message being sent, {1}", this.Name, this.Message ) );
 		    }
@@ -165,17 +144,13 @@ namespace XInstall.Core.Actions
 
 
 	    [Action("attachments", Needed=false, Default="")]
-	    public string Attachements
-	    {
-		    get
-		    {
+	    public string Attachements {
+		    get {
 			    return this._Attachment;
 		    }
-		    set
-		    {
+		    set {
 			    this._Attachment = value;
-			    if ( this._Attachment.IndexOf( @";" ) > -1  )
-			    {
+			    if ( this._Attachment.IndexOf( @";" ) > -1  ) {
 				    this._Attachments = this._Attachment.Split( ';' );
 			    }
 			    else if ( this._Attachment.Length > 0 )
@@ -185,72 +160,57 @@ namespace XInstall.Core.Actions
 
 
 	    [Action("smtpserver", Needed=false, Default="localhost")]
-	    public string SMTPServer
-	    {
-		    get
-		    {
+	    public string SMTPServer {
+		    get {
 			    return this._SmtpServer;
 		    }
-		    set
-		    {
+		    set {
 			    this._SmtpServer = value;
 		    }
 	    }
 
 
 	    [Action("runnable", Needed=false, Default="true")]
-	    public new string Runnable
-	    {
-		    set
-		    {
+	    public new string Runnable {
+		    set {
 			    base.Runnable = bool.Parse(value);
 		    }
 	    }
 
 
 	    [Action("skiperror", Needed=false, Default="false")]
-	    public new string SkipError
-	    {
-		    set
-		    {
+	    public new string SkipError {
+		    set {
 			    base.SkipError = bool.Parse( value );
 		    }
 	    }
 
 
 	    [Action("allowgenerateexception", Needed=false, Default="false")]
-	    public new string AllowGenerateException
-	    {
-		    set
-		    {
+	    public new string AllowGenerateException {
+		    set {
 			    base.AllowGenerateException = bool.Parse( value );
 		    }
 	    }
 
 
 	    [Action("priority", Needed=false, Default="0")]
-	    public string Priority
-	    {
-		    get
-		    {
+	    public string Priority {
+		    get {
 			    return this._Priority;
 		    }
-		    set
-		    {
+		    set {
 			    this._Priority = value;
 		    }
 	    }
 
 
 	    [Action("filterloginfo", Needed=false, Default="")]
-	    public string FilterLogInfo
-	    {
-		    get
-		    {
+	    public string FilterLogInfo {
+		    get {
 			    return this._FilterLogInfo;
 		    }
-		    set
-		    {
+		    set {
 			    this._FilterLogInfo = value;
 			    this._Regex         = new Regex( this._FilterLogInfo );
 		    }
@@ -258,43 +218,34 @@ namespace XInstall.Core.Actions
 
 
 	    [Action("sendashtml", Needed=false, Default="true")]
-	    public string SendAsHtml
-	    {
-		    set
-		    {
+	    public string SendAsHtml {
+		    set {
 			    this._SendHtml = bool.Parse( value );
 		    }
 	    }
 
 
 	    [Action("sendusefile", Needed=false, Default="true")]
-	    public string SendUseFile
-	    {
-		    set
-		    {
+	    public string SendUseFile {
+		    set {
 			    this._SendUseFile = bool.Parse( value );
 		    }
 	    }
 
-	    protected override string GetArguments()
-	    {
+	    protected override string GetArguments() {
 		    StringBuilder BlatCmdLine = new StringBuilder();
 		    base.EchoBlank            = false;
 
 		    string BlatExec = this.BlatPath + Path.DirectorySeparatorChar + BLATEXEC;
-		    if ( !File.Exists( BlatExec ) )
-		    {
+		    if ( !File.Exists( BlatExec ) ) {
 			    base.FatalErrorMessage( ".", String.Format("{0}: executable program: {1} does not exist!", base.ObjectName, BlatExec), 1660 );
 		    }
 
-		    if ( !this._SendUseFile )
-		    {
+		    if ( !this._SendUseFile ) {
 			    BlatCmdLine.AppendFormat( "/c echo {0} | {1} - ", this.Message.Length != 0 ?  this.Message : this.GetMessage(), BlatExec );
 		    }
-		    else
-		    {
-			    using( StreamWriter w = new StreamWriter( this._TempFile ) )
-			    {
+		    else {
+			    using( StreamWriter w = new StreamWriter( this._TempFile ) ) {
 				    w.WriteLine( this.Message );
 			    }
 			    base.ProgramName = BlatExec;
@@ -306,34 +257,27 @@ namespace XInstall.Core.Actions
 						    String.Format( "{0}: you have to specify a sender via either a from or sender attribute", base.ObjectName ),
 						    1660 );
 
-		    if ( ( this.Sender.Length > 0 || this.From.Length > 0 ) &&
-			    this.From.Length == 0 )
-		    {
+		    if ( ( this.Sender.Length > 0 || this.From.Length > 0 ) && this.From.Length == 0 ) {
 			    BlatCmdLine.AppendFormat( "-f {0} ", this.Sender );
 		    }
 
-		    if ( this._SendHtml )
-		    {
+		    if ( this._SendHtml ) {
 			    BlatCmdLine.Append( "-html " );
 		    }
 
-		    if ( this.Priority.Length > 0 )
-		    {
+		    if ( this.Priority.Length > 0 ) {
 			    BlatCmdLine.AppendFormat( "-priority {0} ", this.Priority );
 		    }
 
-		    if ( this.SMTPServer.Length != 0 )
-		    {
+		    if ( this.SMTPServer.Length != 0 ) {
 			    BlatCmdLine.AppendFormat( "-server {0} ", this.SMTPServer );
 		    }
 
-		    if ( this.Recipients.Length != 0 )
-		    {
+		    if ( this.Recipients.Length != 0 ) {
 			    BlatCmdLine.AppendFormat( "-to \"{0}\" ", this.Recipients );
 		    }
 
-		    if ( this.Subject.Length != 0 )
-		    {
+		    if ( this.Subject.Length != 0 ) {
 			    BlatCmdLine.AppendFormat( "-subject \"{0}\" ", this.Subject );
 		    }
 
@@ -341,71 +285,55 @@ namespace XInstall.Core.Actions
 	    }
 
 
-	    protected override object ObjectInstance
-	    {
-		    get
-		    {
+	    protected override object ObjectInstance {
+		    get {
 			    return this;
 		    }
 	    }
 
 
-	    protected override string ObjectName
-	    {
-		    get
-		    {
+	    protected override string ObjectName {
+		    get {
 			    return this.Name;
 		    }
 	    }
 
 
-	    public int BlatExitCode
-	    {
-		    get
-		    {
+	    public int BlatExitCode {
+		    get {
 			    return base.ProgramExitCode;
 		    }
 	    }
 
 
-	    public new string Name
-	    {
-		    get
-		    {
+	    public new string Name {
+		    get {
 			    return this.GetType().Name;
 		    }
 	    }
 
 
-	    public override void Execute()
-	    {
+	    public override void Execute() {
 		    // base.ProgramName = BlatExec;
 		    base.ProgramRedirectOutput = "true";
 
-		    if ( this.FilterLogInfo.Length > 0 )
-		    {
+		    if ( this.FilterLogInfo.Length > 0 ) {
 			    ErrorCollection Errors = base.Errors;
-			    for ( int i = 0; i < Errors.Count; i++ )
-			    {
+			    for ( int i = 0; i < Errors.Count; i++ ) {
 				    Error AnError = Errors[i];
 				    string LogMessage = AnError.ToString();
-				    if ( this._Regex != null )
-				    {
+				    if ( this._Regex != null ) {
 					    Match m = this._Regex.Match( LogMessage );
-					    if ( m.Success )
-					    {
+					    if ( m.Success ) {
 						    StringBuilder sb = new StringBuilder();
-						    for ( int j = 1; j <= m.Groups.Count; j++ )
-						    {
+						    for ( int j = 1; j <= m.Groups.Count; j++ ) {
 							    sb.AppendFormat( " {0}\r\n", m.Groups[j].Value );
 						    }
 
-						    if ( sb != null )
-						    {
+						    if ( sb != null ) {
 							    this.Message += sb.ToString();
 						    }
-						    else
-						    {
+						    else {
 							    this.Message += LogMessage;
 						    }
 					    }
@@ -415,8 +343,7 @@ namespace XInstall.Core.Actions
 		    base.Execute();
 	    }
 
-	    private string GetMessage()
-	    {
+	    private string GetMessage() {
 		    XmlNode Message = this._ActionNode.SelectSingleNode( @"./message" );
 		    return Message.Value;
 	    }

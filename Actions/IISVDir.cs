@@ -4,15 +4,13 @@ using System.IO;
 
 using XInstall.Core;
 
-namespace XInstall.Core.Actions
-{
+namespace XInstall.Core.Actions {
     /// <summary>
     /// The IISVDir class wrap the call to iisvdir.vbs
     /// visual basic script.  The class provides these
     /// functions: create/delete a virtual directory.
     /// </summary>
-    public class IISVDir : ExternalPrg, ICleanUp, IAction
-    {
+    public class IISVDir : ExternalPrg, ICleanUp, IAction {
 	    #region private constant variables;
 	    private const string _cntStrIIsVDir     = @"IIsVDir.vbs";
 	    private const string _cntDefaultWebSite = @"w3svc/1/root";
@@ -36,8 +34,7 @@ namespace XInstall.Core.Actions
 	    private bool   _bIsCompleted        = false;
 	    private bool   _bIgnoreError        = false;
 
-	    private enum IISVDIR_OPR_CODE
-	    {
+	    private enum IISVDIR_OPR_CODE {
 		    IISVDIR_OPR_SUCCESS = 0,
 		    IISVDIR_OPR_BOOLEAN_PARSING_ERROR,
 		    IISVDIR_OPR_OPERATION_FAILED,
@@ -47,8 +44,7 @@ namespace XInstall.Core.Actions
 	    }
 
 	    private IISVDIR_OPR_CODE _enumIISOprCode = IISVDIR_OPR_CODE.IISVDIR_OPR_SUCCESS;
-	    private string[] _strMessages =
-	    {
+	    private string[] _strMessages = {
 		    "{0}: successfully {1} virtual directory on {2} website {3}, return code {4}",
 		    "{0}: boolean variable parsing error, exit code {1}",
 		    "{0}: operation {1} virtual directory {2} for {3} on server {4} failed, exit code {5}",
@@ -65,8 +61,7 @@ namespace XInstall.Core.Actions
 	    ///     initialize the program to be called
 	    /// </summary>
 	    [Action("iisvdir", Needed=true)]
-	    public IISVDir() : base ()
-	    {
+	    public IISVDir() : base () {
 		    //
 		    // Initialize the object
 		    //
@@ -82,8 +77,7 @@ namespace XInstall.Core.Actions
 	    /// </summary>
 	    /// <param name="strProgArguments">the arguments for the iisvdir.vbs</param>
 	    /// <param name="strProgOutputFile">output log file for the iisvidr.vbs</param>
-	    public IISVDir( string strProgArguments, string strProgOutputFile ) : base( strProgArguments, strProgOutputFile )
-	    {
+	    public IISVDir( string strProgArguments, string strProgOutputFile ) : base( strProgArguments, strProgOutputFile ) {
 		    this.Init();
 		    base.ProgramName           = _cntStrIIsVDir;
 		    base.ProgramRedirectOutput = "true";
@@ -103,10 +97,8 @@ namespace XInstall.Core.Actions
 	    ///              existence
 	    /// </summary>
 	    [Action("action", Needed=true)]
-	    public string Action
-	    {
-		    set
-		    {
+	    public string Action {
+		    set {
 			    this._strAction = value;
 		    }
 	    }
@@ -118,14 +110,11 @@ namespace XInstall.Core.Actions
 	    ///     we are going to work on
 	    /// </summary>
 	    [Action("targetserver", Needed=true)]
-	    public string TargetServer
-	    {
-		    get
-		    {
+	    public string TargetServer {
+		    get {
 			    return this._strTargetIIsServer;
 		    }
-		    set
-		    {
+		    set {
 			    this._strTargetIIsServer = value;
 		    }
 	    }
@@ -136,17 +125,13 @@ namespace XInstall.Core.Actions
 	    ///     creating
 	    /// </summary>
 	    [Action("websitename", Needed=true)]
-	    public string WebSiteName
-	    {
-		    get
-		    {
+	    public string WebSiteName {
+		    get {
 			    return this._strWebSiteName;
 		    }
-		    set
-		    {
+		    set {
 			    this._strWebSiteName = value;
-			    if ( _strWebSiteName == null )
-			    {
+			    if ( _strWebSiteName == null ) {
 				    this._strWebSiteName = _cntDefaultWebSite;
 			    }
 		    }
@@ -158,14 +143,11 @@ namespace XInstall.Core.Actions
 	    ///     the user that used to maintain the given website
 	    /// </summary>
 	    [Action("websiteuser", Needed=false)]
-	    public string WebSiteUserName
-	    {
-		    get
-		    {
+	    public string WebSiteUserName {
+		    get {
 			    return this._strWebSiteUserName;
 		    }
-		    set
-		    {
+		    set {
 			    this._strWebSiteUserName = value;
 		    }
 
@@ -177,14 +159,11 @@ namespace XInstall.Core.Actions
 	    ///     the password associates with the WebSiteUser
 	    /// </summary>
 	    [Action("websiteuserpassword", Needed=false)]
-	    public string WebSiteUserPassword
-	    {
-		    get
-		    {
+	    public string WebSiteUserPassword {
+		    get {
 			    return this._strWebSiteUserPass;
 		    }
-		    set
-		    {
+		    set {
 			    this._strWebSiteUserPass = value;
 		    }
 	    }
@@ -196,14 +175,11 @@ namespace XInstall.Core.Actions
 	    ///     virtual directory
 	    /// </summary>
 	    [Action("mappath", Needed=true)]
-	    public string MapPath
-	    {
-		    get
-		    {
+	    public string MapPath {
+		    get {
 			    return this._strPhysicalPath;
 		    }
-		    set
-		    {
+		    set {
 			    this._strPhysicalPath = value;
 		    }
 	    }
@@ -215,14 +191,11 @@ namespace XInstall.Core.Actions
 	    ///     directory
 	    /// </summary>
 	    [Action("appfriendlyname", Needed=false)]
-	    public string WebFriendlyName
-	    {
-		    get
-		    {
+	    public string WebFriendlyName {
+		    get {
 			    return this._strAppFriendlyName;
 		    }
-		    set
-		    {
+		    set {
 			    this._strAppFriendlyName = _cntCQuote + value + _cntCQuote;
 		    }
 	    }
@@ -232,14 +205,11 @@ namespace XInstall.Core.Actions
 	    ///     get/set the virtual directory name
 	    /// </summary>
 	    [Action("virtualdirname", Needed=true)]
-	    public string WebVirtualDirectory
-	    {
-		    get
-		    {
+	    public string WebVirtualDirectory {
+		    get {
 			    return this._strVirtualDirName;
 		    }
-		    set
-		    {
+		    set {
 			    this._strVirtualDirName = _cntCQuote + value + _cntCQuote;
 		    }
 	    }
@@ -250,10 +220,8 @@ namespace XInstall.Core.Actions
 	    ///     get/set the output log file
 	    /// </summary>
 	    [Action("outputfile", Needed=false, Default="auto")]
-	    public new string OutputFile
-	    {
-		    set
-		    {
+	    public new string OutputFile {
+		    set {
 			    _strAppOutputFile      = value;
 			    if ( _strAppOutputFile.Equals( "auto" ) )
 				    _strAppOutputFile  = Directory.GetCurrentDirectory() +
@@ -270,10 +238,8 @@ namespace XInstall.Core.Actions
 	    /// property StartTime -
 	    ///     get the external program start time
 	    /// </summary>
-	    public string StartTime
-	    {
-		    get
-		    {
+	    public string StartTime {
+		    get {
 			    return base.ProgramStartTime.ToShortTimeString();
 		    }
 	    }
@@ -283,10 +249,8 @@ namespace XInstall.Core.Actions
 	    /// property EndTime -
 	    ///     get the external program end time
 	    /// </summary>
-	    public string EndTime
-	    {
-		    get
-		    {
+	    public string EndTime {
+		    get {
 			    return base.ProgramExitTime.ToShortTimeString();
 		    }
 	    }
@@ -297,10 +261,8 @@ namespace XInstall.Core.Actions
 	    ///     get the exit code of external program
 	    /// </summary>
 	    [Action("exitcode", Needed=false)]
-	    public new int ExitCode
-	    {
-		    get
-		    {
+	    public new int ExitCode {
+		    get {
 			    return (int) this._enumIISOprCode;
 		    }
 	    }
@@ -310,10 +272,8 @@ namespace XInstall.Core.Actions
 	    ///     gets a message that is coresponding to the
 	    ///     exit code.
 	    /// </summary>
-	    public new string ExitMessage
-	    {
-		    get
-		    {
+	    public new string ExitMessage {
+		    get {
 			    return this._strExitMessage;
 		    }
 	    }
@@ -323,10 +283,8 @@ namespace XInstall.Core.Actions
 	    /// property Arguments -
 	    ///     get the external program's argument list
 	    /// </summary>
-	    public string Arguments
-	    {
-		    get
-		    {
+	    public string Arguments {
+		    get {
 			    return this.GetArguments();
 		    }
 	    }
@@ -337,17 +295,13 @@ namespace XInstall.Core.Actions
 	    ///     generate an exception automatically
 	    /// </summary>
 	    [Action("generateexception", Needed=false, Default="false")]
-	    public new string AllowGenerateException
-	    {
-		    set
-		    {
-			    try
-			    {
+	    public new string AllowGenerateException {
+		    set {
+			    try {
 				    base.AllowGenerateException =
 					bool.Parse( value.ToString() );
 			    }
-			    catch ( Exception )
-			    {
+			    catch ( Exception ) {
 				    this._enumIISOprCode = IISVDIR_OPR_CODE.IISVDIR_OPR_BOOLEAN_PARSING_ERROR;
 				    this._strExitMessage = String.Format( this._strMessages[ this.ExitCode ], this.Name, this.ExitCode );
 				    throw;
@@ -360,16 +314,12 @@ namespace XInstall.Core.Actions
 	    /// </summary>
 	    /// <remarks></remarks>
 	    [Action("skiperror", Needed=false, Default="false")]
-	    public string IgnoreError
-	    {
-		    set
-		    {
-			    try
-			    {
+	    public string IgnoreError {
+		    set {
+			    try {
 				    this._bIgnoreError = bool.Parse( value );
 			    }
-			    catch ( Exception )
-			    {
+			    catch ( Exception ) {
 				    this._enumIISOprCode = IISVDIR_OPR_CODE.IISVDIR_OPR_BOOLEAN_PARSING_ERROR;
 				    this._strExitMessage = String.Format( this._strMessages[ this.ExitCode ], this.Name, this.ExitCode );
 				    base.FatalErrorMessage( ".", this.ExitMessage, 1660, this.ExitCode );
@@ -381,10 +331,8 @@ namespace XInstall.Core.Actions
 	    /// set a flag to indicate if the action should be run or not
 	    /// </summary>
 	    [Action("runnable", Needed=false, Default="true")]
-	    public new string Runnable
-	    {
-		    set
-		    {
+	    public new string Runnable {
+		    set {
 			    base.Runnable = bool.Parse( value );
 		    }
 	    }
@@ -399,8 +347,7 @@ namespace XInstall.Core.Actions
 	    ///     performing the special action required
 	    ///     by it.  It will first examine the
 	    /// </summary>
-	    public override void Execute()
-	    {
+	    public override void Execute() {
 
 		    // setup arguemnt list for external program
 		    // to execute and execute the external program
@@ -414,22 +361,19 @@ namespace XInstall.Core.Actions
 		    // we have problem to create virtual directory
 		    // on a given server's IIS webserver. Log message
 		    // on event log database and exit the XInstall programs
-		    if ( base.ProgramExitCode != 0 )
-		    {
+		    if ( base.ProgramExitCode != 0 ) {
 			    this._enumIISOprCode =
 				IISVDIR_OPR_CODE.IISVDIR_OPR_OPERATION_FAILED;
 			    this._strExitMessage =
 				String.Format( this._strMessages[ this.ExitCode ],
 					       this.Name, this._strAction, this.WebVirtualDirectory,
 					       this.WebSiteName, this.TargetServer, this.ExitCode );
-			    if ( !this._bIgnoreError )
-			    {
+			    if ( !this._bIgnoreError ) {
 				    throw new Exception( this.ExitMessage );
 			    }
 
 		    }
-		    else
-		    {
+		    else {
 			    this._bIsCompleted = true;
 		    }
 	    }
@@ -442,11 +386,9 @@ namespace XInstall.Core.Actions
 	    /// private void Init() -
 	    ///     Provide initial checking the existence of iisvidr.vbs
 	    /// </summary>
-	    private void Init()
-	    {
+	    private void Init() {
 		    FileInfo fi = new FileInfo( _strIIsVDirFullPath );
-		    if ( !fi.Exists )
-		    {
+		    if ( !fi.Exists ) {
 			    this._enumIISOprCode = IISVDIR_OPR_CODE.IISVDIR_OPR_EXTERNAL_PROGRAM_NOTFOUND;
 			    this._strExitMessage = String.Format( this._strMessages[ this.ExitCode ], this.Name, _cntStrIIsVDir, this.ExitCode );
 			    base.FatalErrorMessage( ".", this.ExitMessage, 1660, this.ExitCode);
@@ -462,8 +404,7 @@ namespace XInstall.Core.Actions
 	    /// </summary>
 	    /// <param name="strWebSiteName">virtual directory to be checked</param>
 	    /// <returns></returns>
-	    private bool QueryWebSite ( string strWebSiteName )
-	    {
+	    private bool QueryWebSite ( string strWebSiteName ) {
 		    this.Action                = "query";
 		    this.WebVirtualDirectory   = strWebSiteName;
 		    this.ProgramRedirectOutput = "true";
@@ -472,39 +413,31 @@ namespace XInstall.Core.Actions
 		    return this.ExitCode == 0 ? true : false;
 	    }
 
-	    protected override string GetArguments()
-	    {
+	    protected override string GetArguments() {
 		    string strArguments       = null;
 		    StringBuilder sbProgArgs = new StringBuilder();
 
-		    if ( base.ProgramName.IndexOf(_cntStrIIsVDir) == -1 )
-		    {
+		    if ( base.ProgramName.IndexOf(_cntStrIIsVDir) == -1 ) {
 			    base.ProgramName = _cntStrIIsVDir;
 		    }
 
-		    if ( this.TargetServer != null )
-		    {
+		    if ( this.TargetServer != null ) {
 			    sbProgArgs.AppendFormat(" /s {0}", this.TargetServer);
 		    }
-		    if ( this.WebSiteUserName != null )
-		    {
+		    if ( this.WebSiteUserName != null ) {
 			    sbProgArgs.AppendFormat(" /u {0}", this.WebSiteUserName);
 		    }
-		    if ( this.WebSiteUserPassword != null )
-		    {
+		    if ( this.WebSiteUserPassword != null ) {
 			    sbProgArgs.AppendFormat(" /p {0}", this.WebSiteUserPassword);
 		    }
 
-		    switch ( _strAction )
-		    {
+		    switch ( _strAction ) {
 		    case "create":
 			    sbProgArgs.AppendFormat(" /create {0}", this.WebSiteName);
-			    if ( this.WebFriendlyName != null )
-			    {
+			    if ( this.WebFriendlyName != null ) {
 				    sbProgArgs.AppendFormat(" {0}", this.WebFriendlyName);
 			    }
-			    if ( this.MapPath != null )
-			    {
+			    if ( this.MapPath != null ) {
 				    sbProgArgs.AppendFormat(" {0}", this.MapPath);
 			    }
 			    break;
@@ -539,8 +472,7 @@ namespace XInstall.Core.Actions
 	    ///     method to provide a way to remove created
 	    ///     virtual directory
 	    /// </summary>
-	    public override void RemoveIt()
-	    {
+	    public override void RemoveIt() {
 		    base.RemoveIt();
 		    this.Action="delete";
 		    this.Execute();
@@ -550,10 +482,8 @@ namespace XInstall.Core.Actions
 	    /// property IsComplete
 	    ///     get/set the state of Action
 	    /// </summary>
-	    public new bool IsComplete
-	    {
-		    get
-		    {
+	    public new bool IsComplete {
+		    get {
 			    return this._bIsCompleted;
 		    }
 	    }
@@ -562,18 +492,14 @@ namespace XInstall.Core.Actions
 	    /// property Name -
 	    ///     gets the name of constructor
 	    /// </summary>
-	    public new string Name
-	    {
-		    get
-		    {
+	    public new string Name {
+		    get {
 			    return this.GetType().Name.ToLower();
 		    }
 	    }
 
-	    public override string ObjectName
-	    {
-		    get
-		    {
+	    public override string ObjectName {
+		    get {
 			    return this.Name;
 		    }
 	    }

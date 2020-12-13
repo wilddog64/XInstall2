@@ -2,15 +2,13 @@ using System;
 using System.IO;
 using System.Text;
 
-namespace XInstall.Core.Actions
-{
+namespace XInstall.Core.Actions {
     /// <summary>
     /// public class IISWeb -
     ///     class that performs a website setup on a given
     ///     IIS server.
     /// </summary>
-    public class IISWeb : ExternalPrg, ICleanUp, IAction
-    {
+    public class IISWeb : ExternalPrg, ICleanUp, IAction {
 	    #region private constant variables
 	    private const string _cntIIsWebApp      = @"iisweb.vbs";
 	    private const string _cntIIsDefaultRoot = @"c:\inetpub\wwwroot";
@@ -31,8 +29,7 @@ namespace XInstall.Core.Actions
 	    private string _strWebSiteIP         = null;
 	    private bool   _bWebSiteDontStart    = true;
 
-	    private enum IISWEB_OPR_CODE
-	    {
+	    private enum IISWEB_OPR_CODE {
 		    IISWEB_OPR_SUCCESS = 0,
 		    IISWEB_OPR_BOOLEAN_PARSE_ERROR,
 		    IISWEB_OPR_AUTOEXCEPTION_GENERATED,
@@ -41,8 +38,7 @@ namespace XInstall.Core.Actions
 	    };
 
 	    private IISWEB_OPR_CODE _enumIISWebOprCode = IISWEB_OPR_CODE.IISWEB_OPR_SUCCESS;
-	    private string[] _strMessages =
-	    {
+	    private string[] _strMessages = {
 		    "{0}: operation {1} {2} on server {3} complete successfully, exit code {4}",
 		    "{0}: boolean variable parsing error, exit code {1}",
 		    "{0}: request generate an exception by user, exit code {1}",
@@ -58,8 +54,7 @@ namespace XInstall.Core.Actions
 	    /// creating IISWeb object;
 	    /// </summary>
 	    [Action("iisweb", Needed=true)]
-	    public IISWeb() : base()
-	    {
+	    public IISWeb() : base() {
 		    //
 		    // TODO: Add constructor logic here
 		    //
@@ -75,14 +70,11 @@ namespace XInstall.Core.Actions
 	    ///     we need to work on.
 	    /// </summary>
 	    [Action("targetserver", Needed=true)]
-	    public string TargetWebServer
-	    {
-		    get
-		    {
+	    public string TargetWebServer {
+		    get {
 			    return this._strTargetServer;
 		    }
-		    set
-		    {
+		    set {
 			    this._strTargetServer = value;
 		    }
 	    }
@@ -94,14 +86,11 @@ namespace XInstall.Core.Actions
 	    ///     a given website
 	    /// </summary>
 	    [Action("websiteuser", Needed=false)]
-	    public string WebSiteUserName
-	    {
-		    get
-		    {
+	    public string WebSiteUserName {
+		    get {
 			    return this._strWebSiteUserName;
 		    }
-		    set
-		    {
+		    set {
 			    this._strWebSiteUserName = value;
 		    }
 	    }
@@ -113,14 +102,11 @@ namespace XInstall.Core.Actions
 	    ///     WebSiteuserName
 	    /// </summary>
 	    [Action("websiteuserpassword", Needed=false)]
-	    public string WebSiteUserPassword
-	    {
-		    get
-		    {
+	    public string WebSiteUserPassword {
+		    get {
 			    return this._strWebSiteUserPass;
 		    }
-		    set
-		    {
+		    set {
 			    this._strWebSiteUserPass = value;
 		    }
 	    }
@@ -132,20 +118,15 @@ namespace XInstall.Core.Actions
 	    ///     website that are going to be created
 	    /// </summary>
 	    [Action("websiteroot", Needed=true)]
-	    public string WebSiteRoot
-	    {
-		    get
-		    {
+	    public string WebSiteRoot {
+		    get {
 			    return this._strWebSiteRoot;
 		    }
-		    set
-		    {
-			    if ( value == null )
-			    {
+		    set {
+			    if ( value == null ) {
 				    this._strWebSiteRoot = _cntIIsDefaultRoot;
 			    }
-			    else
-			    {
+			    else {
 				    this._strWebSiteRoot = value;
 			    }
 		    }
@@ -158,14 +139,11 @@ namespace XInstall.Core.Actions
 	    ///     the MMC (Microsoft Managment Console)
 	    /// </summary>
 	    [Action("websitename", Needed=true)]
-	    public string WebSiteName
-	    {
-		    get
-		    {
+	    public string WebSiteName {
+		    get {
 			    return this._strWebSiteName;
 		    }
-		    set
-		    {
+		    set {
 			    this._strWebSiteName = value;
 		    }
 	    }
@@ -178,14 +156,11 @@ namespace XInstall.Core.Actions
 	    ///     just created
 	    /// </summary>
 	    [Action("websitehostname", Needed=false)]
-	    public string WebSiteHostName
-	    {
-		    get
-		    {
+	    public string WebSiteHostName {
+		    get {
 			    return this._strWebSiteHostName;
 		    }
-		    set
-		    {
+		    set {
 			    this._strWebSiteHostName = value;
 		    }
 	    }
@@ -197,20 +172,15 @@ namespace XInstall.Core.Actions
 	    ///     the website being created.
 	    /// </summary>
 	    [Action("port", Needed=false)]
-	    public string WebSitePort
-	    {
-		    get
-		    {
+	    public string WebSitePort {
+		    get {
 			    return this._strWebSitePort;
 		    }
-		    set
-		    {
-			    if ( value == null )
-			    {
+		    set {
+			    if ( value == null ) {
 				    this._strWebSitePort = _cntIIsDefaultPort;
 			    }
-			    else
-			    {
+			    else {
 				    this._strWebSitePort = value;
 			    }
 		    }
@@ -224,14 +194,11 @@ namespace XInstall.Core.Actions
 	    ///     being created.
 	    /// </summary>
 	    [Action("websiteip", Needed=false)]
-	    public string WebSiteIP
-	    {
-		    get
-		    {
+	    public string WebSiteIP {
+		    get {
 			    return this._strWebSiteIP;
 		    }
-		    set
-		    {
+		    set {
 			    this._strWebSiteIP = value;
 		    }
 	    }
@@ -242,28 +209,22 @@ namespace XInstall.Core.Actions
 	    ///     a given website should start after created
 	    /// </summary>
 	    [Action("websitedontstart", Needed=false, Default="true")]
-	    public string WebSiteDontStart
-	    {
-		    get
-		    {
+	    public string WebSiteDontStart {
+		    get {
 			    string strWebSiteDontStart =
 				this._bWebSiteDontStart.ToString();
 			    return strWebSiteDontStart.ToLower();
 		    }
-		    set
-		    {
-			    try
-			    {
+		    set {
+			    try {
 				    this._bWebSiteDontStart = bool.Parse( value.ToString() );
 			    }
-			    catch ( Exception )
-			    {
+			    catch ( Exception ) {
 				    // base.FatalErrorMessage( ".", "boolean variable parsing error", 1660, 3);
 				    this._enumIISWebOprCode =
 					IISWEB_OPR_CODE.IISWEB_OPR_BOOLEAN_PARSE_ERROR;
 				    this._strExitMessage    =
-					String.Format( this._strMessages [ this.ExitCode ],
-						       this.Name, this.ExitCode );
+					String.Format( this._strMessages [ this.ExitCode ], this.Name, this.ExitCode );
 				    throw;
 			    }
 		    }
@@ -273,10 +234,8 @@ namespace XInstall.Core.Actions
 	    /// set a flag to indicate if the action should be run or not
 	    /// </summary>
 	    [Action("runnable", Needed=false, Default="true")]
-	    public new string Runnable
-	    {
-		    set
-		    {
+	    public new string Runnable {
+		    set {
 			    base.Runnable = bool.Parse( value );
 		    }
 	    }
@@ -286,10 +245,8 @@ namespace XInstall.Core.Actions
 	    ///     get the arguments that use by the iisvdir
 	    ///     external vb script program.
 	    /// </summary>
-	    public string Arguments
-	    {
-		    get
-		    {
+	    public string Arguments {
+		    get {
 			    return this.GetArguments();
 		    }
 	    }
@@ -298,10 +255,8 @@ namespace XInstall.Core.Actions
 	    /// property StartTime -
 	    ///     get the external program starting time
 	    /// </summary>
-	    public string StartTime
-	    {
-		    get
-		    {
+	    public string StartTime {
+		    get {
 			    return base.ProgramStartTime.ToShortTimeString();
 		    }
 	    }
@@ -311,10 +266,8 @@ namespace XInstall.Core.Actions
 	    /// property EndTime -
 	    ///     get the external program ending time
 	    /// </summary>
-	    public string EndTime
-	    {
-		    get
-		    {
+	    public string EndTime {
+		    get {
 			    return base.ProgramExitTime.ToShortTimeString();
 		    }
 	    }
@@ -325,10 +278,8 @@ namespace XInstall.Core.Actions
 	    ///     get the exit code return from the external program.
 	    /// </summary>
 	    [Action("exitcode", Needed=false)]
-	    public new int ExitCode
-	    {
-		    get
-		    {
+	    public new int ExitCode {
+		    get {
 			    return (int) this._enumIISWebOprCode;
 		    }
 	    }
@@ -339,10 +290,8 @@ namespace XInstall.Core.Actions
 	    ///     set the output file where the external program's
 	    ///     output should direct to.
 	    /// </summary>
-	    public new string OutputFile
-	    {
-		    set
-		    {
+	    public new string OutputFile {
+		    set {
 			    base.ProgramOutputFile = value;
 		    }
 	    }
@@ -353,23 +302,17 @@ namespace XInstall.Core.Actions
 	    ///     generate an exception automatically.
 	    /// </summary>
 	    [Action("generateexception", Needed=false, Default="false")]
-	    public new string AllowGenerateException
-	    {
-		    set
-		    {
-			    try
-			    {
+	    public new string AllowGenerateException {
+		    set {
+			    try {
 				    base.AllowGenerateException =
 					bool.Parse( value.ToString() );
 			    }
-			    catch ( Exception )
-			    {
+			    catch ( Exception ) {
 				    // base.FatalErrorMessage( ".", "boolean variable pasing error!", 1660, 4 );
 				    this._enumIISWebOprCode =
 					IISWEB_OPR_CODE.IISWEB_OPR_BOOLEAN_PARSE_ERROR;
-				    this._strExitMessage =
-					String.Format( this._strMessages[ this.ExitCode ],
-						       this.Name, this.ExitCode );
+				    this._strExitMessage = String.Format( this._strMessages[ this.ExitCode ], this.Name, this.ExitCode );
 				    base.FatalErrorMessage( ".", this.ExitMessage, 1660, this.ExitCode );
 			    }
 		    }
@@ -380,21 +323,14 @@ namespace XInstall.Core.Actions
 	    /// </summary>
 	    /// <remarks></remarks>
 	    [Action("skiperror", Needed=false, Default="false")]
-	    public new string SkipError
-	    {
-		    set
-		    {
-			    try
-			    {
+	    public new string SkipError {
+		    set {
+			    try {
 				    base.SkipError = bool.Parse( value );
 			    }
-			    catch ( Exception )
-			    {
-				    this._enumIISWebOprCode =
-					IISWEB_OPR_CODE.IISWEB_OPR_BOOLEAN_PARSE_ERROR;
-				    this._strExitMessage =
-					String.Format( this._strMessages[ this.ExitCode ],
-						       this.Name, this.ExitCode );
+			    catch ( Exception ) {
+				    this._enumIISWebOprCode = IISWEB_OPR_CODE.IISWEB_OPR_BOOLEAN_PARSE_ERROR;
+				    this._strExitMessage = String.Format( this._strMessages[ this.ExitCode ], this.Name, this.ExitCode );
 				    base.FatalErrorMessage( ".", this.ExitMessage, 1660, this.ExitCode );
 			    }
 		    }
@@ -402,31 +338,25 @@ namespace XInstall.Core.Actions
 	    #endregion
 
 	    #region public override methods
-	    public override void ParseActionElement()
-	    {
+	    public override void ParseActionElement() {
 		    base.ParseActionElement();
 		    // get iisweb.vbs's console output
 		    string ExtPrgOutput = base.ProgramOutput;
 		    string ErrorMsg     = String.Empty;
 		    bool   Error        = false;
 		    int    pos          = ExtPrgOutput.IndexOf( @"not found" );
-		    if ( pos > -1 )
-		    {
-			    ErrorMsg =
-				String.Format( @"Website {0} {1}", this.WebSiteName,
-					       ExtPrgOutput.Substring( pos, @"not found".Length ) );
+		    if ( pos > -1 ) {
+			    ErrorMsg = String.Format( @"Website {0} {1}", this.WebSiteName, ExtPrgOutput.Substring( pos, @"not found".Length ) );
 			    Error = true;
 		    }
 		    // cleanup variables.
 		    base.ProgramArguments = null;
 
-		    if ( Error )
-		    {
+		    if ( Error ) {
 			    base.IsComplete=false;
 			    throw new Exception( ErrorMsg );
 		    }
-		    else
-		    {
+		    else {
 			    base.IsComplete = true;
 		    }
 	    }
@@ -440,18 +370,14 @@ namespace XInstall.Core.Actions
 	    ///     initializes various variables and
 	    ///     performs a necessary checking.
 	    /// </summary>
-	    private void Init()
-	    {
-		    _strIIsWebAppFullPath = Path.Combine(
-						Environment.GetEnvironmentVariable(@"WINDIR"),
-						@"System32" ) + Path.DirectorySeparatorChar + _cntIIsWebApp;
+	    private void Init() {
+		    _strIIsWebAppFullPath = Path.Combine( Environment.GetEnvironmentVariable(@"WINDIR"), @"System32" ) + 
+                Path.DirectorySeparatorChar + _cntIIsWebApp;
 
 		    FileInfo fi = new FileInfo( _strIIsWebAppFullPath );
-		    if ( !fi.Exists )
-		    {
+		    if ( !fi.Exists ) {
 			    this._enumIISWebOprCode = IISWEB_OPR_CODE.IISWEB_OPR_EXTERNAL_PROGRAM_NOTFOUND;
-			    this._strExitMessage    =
-				String.Format( this._strMessages[ this.ExitCode ], this.Name, _cntIIsWebApp, this.ExitCode );
+			    this._strExitMessage    = String.Format( this._strMessages[ this.ExitCode ], this.Name, _cntIIsWebApp, this.ExitCode );
 			    base.FatalErrorMessage( ".", this.ExitMessage, 1660, this.ExitCode);
 		    }
 
@@ -466,30 +392,25 @@ namespace XInstall.Core.Actions
 	    ///     to create website.
 	    /// </summary>
 	    /// <returns></returns>
-	    protected override string GetArguments()
-	    {
+	    protected override string GetArguments() {
 		    StringBuilder sbProgArgs = new StringBuilder();
 
 		    // append server, user name, and user password
 		    // to our argument list if anyone is provided
 		    string strArguments = null;
-		    if ( base.ProgramName.IndexOf(_strIIsWebAppFullPath) == -1 )
-		    {
+		    if ( base.ProgramName.IndexOf(_strIIsWebAppFullPath) == -1 ) {
 			    base.ProgramName = _strIIsWebAppFullPath;
 		    }
 
 		    // check if any of these variables are provided and append
 		    // necessary switches.
-		    if ( this.TargetWebServer != null )
-		    {
+		    if ( this.TargetWebServer != null ) {
 			    sbProgArgs.AppendFormat(" /s {0}", this.TargetWebServer);
 		    }
-		    if ( this.WebSiteUserName != null )
-		    {
+		    if ( this.WebSiteUserName != null ) {
 			    sbProgArgs.AppendFormat(" /u {0}", this.WebSiteUserName);
 		    }
-		    if ( this.WebSiteUserPassword != null )
-		    {
+		    if ( this.WebSiteUserPassword != null ) {
 			    sbProgArgs.AppendFormat(" /p {0}", this.WebSiteUserPassword);
 		    }
 
@@ -498,22 +419,18 @@ namespace XInstall.Core.Actions
 		    // start, and stop.  Once we found the required action,
 		    // we also need to create sub-arguments for these action
 		    // if it is required.
-		    switch ( _strAction )
-		    {
+		    switch ( _strAction ) {
 		    case "create":
 			    sbProgArgs.Append(" /create");
 			    sbProgArgs.AppendFormat(" {0} {1} /b {2}", this.WebSiteRoot, this.WebSiteName, this.WebSitePort);
 
-			    if ( this.WebSiteHostName != null )
-			    {
+			    if ( this.WebSiteHostName != null ) {
 				    sbProgArgs.AppendFormat (" /d {0}", this.WebSiteHostName);
 			    }
-			    if ( this.WebSiteIP != null )
-			    {
+			    if ( this.WebSiteIP != null ) {
 				    bProgArgs.AppendFormat(" /i {0}", this.WebSiteIP);
 			    }
-			    sbProgArgs.AppendFormat(" {0}",
-						    this.WebSiteDontStart.Equals("true") ? "/dontstart " : "");
+			    sbProgArgs.AppendFormat(" {0}", this.WebSiteDontStart.Equals("true") ? "/dontstart " : "");
 			    break;
 		    case "delete":
 			    sbProgArgs.AppendFormat(" /delete {0}", this.WebSiteName);
@@ -528,11 +445,8 @@ namespace XInstall.Core.Actions
 			    sbProgArgs.AppendFormat(" /pause {0}", this.WebSiteName);
 			    break;
 		    default:
-			    this._enumIISWebOprCode =
-				IISWEB_OPR_CODE.IISWEB_OPR_INVALID_ACTION_SPECIFIED;
-			    this._strExitMessage    =
-				String.Format( this._strMessages[ this.ExitCode ],
-					       this.Name, this.ExitCode );
+			    this._enumIISWebOprCode = IISWEB_OPR_CODE.IISWEB_OPR_INVALID_ACTION_SPECIFIED;
+			    this._strExitMessage    = String.Format( this._strMessages[ this.ExitCode ], this.Name, this.ExitCode );
 			    base.FatalErrorMessage( ".", this.ExitMessage, 1660, this.ExitCode);
 			    break;
 		    }
@@ -550,8 +464,7 @@ namespace XInstall.Core.Actions
 	    ///     a method drives from ICleanUp interface
 	    ///     that performs a clean up when required.
 	    /// </summary>
-	    public override void RemoveIt()
-	    {
+	    public override void RemoveIt() {
 		    base.RemoveIt();
 		    this.Action = "delete";
 		    this.Execute();
@@ -567,14 +480,11 @@ namespace XInstall.Core.Actions
 	    ///     by IISWeb object.
 	    /// </summary>
 	    [Action("action", Needed=true)]
-	    public string Action
-	    {
-		    get
-		    {
+	    public string Action {
+		    get {
 			    return this._strAction;
 		    }
-		    set
-		    {
+		    set {
 			    this._strAction = value;
 		    }
 	    }
@@ -584,10 +494,8 @@ namespace XInstall.Core.Actions
 	    ///     gets the message that is corresponding to the exit code
 	    ///     from the operation.
 	    /// </summary>
-	    public new string ExitMessage
-	    {
-		    get
-		    {
+	    public new string ExitMessage {
+		    get {
 			    return this._strExitMessage;
 		    }
 	    }
@@ -596,10 +504,8 @@ namespace XInstall.Core.Actions
 	    /// property IsComplete
 	    ///     get/set the state of Action
 	    /// </summary>
-	    public new bool IsComplete
-	    {
-		    get
-		    {
+	    public new bool IsComplete {
+		    get {
 			    return base.IsComplete;
 		    }
 	    }
@@ -608,18 +514,14 @@ namespace XInstall.Core.Actions
 	    /// property Name -
 	    ///     gets the name of constructor
 	    /// </summary>
-	    public new string Name
-	    {
-		    get
-		    {
+	    public new string Name {
+		    get {
 			    return this.GetType().Name;
 		    }
 	    }
 
-	    public override string ObjectName
-	    {
-		    get
-		    {
+	    public override string ObjectName {
+		    get {
 			    return this.Name;
 		    }
 	    }

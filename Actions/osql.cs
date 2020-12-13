@@ -5,13 +5,11 @@ using System.Text;
 
 using Microsoft.Win32;
 
-namespace XInstall.Core.Actions
-{
+namespace XInstall.Core.Actions {
     /// <summary>
     /// Summary description for osql.
     /// </summary>
-    public class OSQL : ExternalPrg, IAction
-    {
+    public class OSQL : ExternalPrg, IAction {
 
 	    XmlNode _xnActionNode = null;
 
@@ -37,8 +35,7 @@ namespace XInstall.Core.Actions
 	    private bool _bAllowGenerateException = false;
 
 	    // error handling variables
-	    private enum OSQL_OPR_CODE
-	    {
+	    private enum OSQL_OPR_CODE {
 		    OSQL_OPR_SUCCESS,
 		    OSQL_OPR_SQLCLIENT_NOT_INSTALL,
 		    OSQL_OPR_BOOLEAN_PARSING_ERROR,
@@ -53,8 +50,7 @@ namespace XInstall.Core.Actions
 	    };
 	    private OSQL_OPR_CODE _enumOSQLOprCode = OSQL_OPR_CODE.OSQL_OPR_SUCCESS;
 	    private string _strExitMessage         = null;
-	    private string[] _strMessages          =
-	    {
+	    private string[] _strMessages          = {
 		    @"{0}: operation success",
 		    @"{0}: SQL Server client tool is not installed, can't find osql utility, message - {2}",
 		    @"{0}: {1} - boolean variable parsing error",
@@ -69,8 +65,7 @@ namespace XInstall.Core.Actions
 	    };
 
 	    [Action("osql")]
-	    public OSQL( XmlNode xnActionElement ) : base()
-	    {
+	    public OSQL( XmlNode xnActionElement ) : base() {
 		    // string strCmd = Environment.GetEnvironmentVariable("comspec");
 		    this.Init();
 		    Win32API.GetShortPathName( this._strOSQLFullPath, out this._strOSQLShortPathName );
@@ -82,16 +77,12 @@ namespace XInstall.Core.Actions
 
 	    #region public property
 	    [Action("trustedconnection", Needed=false, Default="true")]
-	    public string TrustedConnection
-	    {
-		    set
-		    {
-			    try
-			    {
+	    public string TrustedConnection {
+		    set {
+			    try {
 				    this._bTrustedConnection = bool.Parse( value );
 			    }
-			    catch ( Exception )
-			    {
+			    catch ( Exception ) {
 				    this.SetExitMessage(
 					OSQL_OPR_CODE.OSQL_OPR_BOOLEAN_PARSING_ERROR,
 					this.Name, @"TrustedConnection");
@@ -101,16 +92,12 @@ namespace XInstall.Core.Actions
 	    }
 
 	    [Action("noheader", Needed=false, Default="false")]
-	    public string NoHeader
-	    {
-		    set
-		    {
-			    try
-			    {
+	    public string NoHeader {
+		    set {
+			    try {
 				    this._bNoHeader = bool.Parse( value );
 			    }
-			    catch ( Exception )
-			    {
+			    catch ( Exception ) {
 				    this.SetExitMessage(
 					OSQL_OPR_CODE.OSQL_OPR_BOOLEAN_PARSING_ERROR,
 					this.Name, @"NoHeader");
@@ -120,25 +107,19 @@ namespace XInstall.Core.Actions
 	    }
 
 	    [Action("sqlserver", Needed=false, Default=".")]
-	    public string SQLServerName
-	    {
-		    get
-		    {
+	    public string SQLServerName {
+		    get {
 			    return this._strSQLServerName;
 		    }
-		    set
-		    {
+		    set {
 			    this._strSQLServerName = value;
 		    }
 	    }
 
 	    [Action("username", Needed=false)]
-	    public string SQLServerUser
-	    {
-		    get
-		    {
-			    if ( this._strSQLServerUser == null )
-			    {
+	    public string SQLServerUser {
+		    get {
+			    if ( this._strSQLServerUser == null ) {
 				    this.SetExitMessage(
 					OSQL_OPR_CODE.OSQL_OPR_INDENTITY_REQUIRED,
 					this.Name, @"username");
@@ -146,19 +127,15 @@ namespace XInstall.Core.Actions
 			    }
 			    return this._strSQLServerUser;
 		    }
-		    set
-		    {
+		    set {
 			    this._strSQLServerUser = value;
 		    }
 	    }
 
 	    [Action("password", Needed=false)]
-	    public string SQLServerPassword
-	    {
-		    get
-		    {
-			    if ( this._strSQLServerUserPWD == null )
-			    {
+	    public string SQLServerPassword {
+		    get {
+			    if ( this._strSQLServerUserPWD == null ) {
 				    this.SetExitMessage(
 					OSQL_OPR_CODE.OSQL_OPR_INDENTITY_REQUIRED,
 					this.Name, @"password");
@@ -166,32 +143,25 @@ namespace XInstall.Core.Actions
 			    }
 			    return this._strSQLServerUserPWD;
 		    }
-		    set
-		    {
+		    set {
 			    this._strSQLServerUserPWD = value;
 		    }
 	    }
 
 	    [Action("dbname", Needed=false)]
-	    public string DatabaseName
-	    {
-		    get
-		    {
+	    public string DatabaseName {
+		    get {
 			    return this._strDatabaseName;
 		    }
-		    set
-		    {
+		    set {
 			    this._strDatabaseName = value;
 		    }
 	    }
 
 	    [Action("sqlscriptfile", Needed=false)]
-	    public string ScriptFileName
-	    {
-		    get
-		    {
-			    if ( !File.Exists( this._strSQLScriptFile ) )
-			    {
+	    public string ScriptFileName {
+		    get {
+			    if ( !File.Exists( this._strSQLScriptFile ) ) {
 				    this.SetExitMessage(
 					OSQL_OPR_CODE.OSQL_OPR_SCRIPTFILE_NOTFOUND,
 					this.Name, this._strSQLScriptFile);
@@ -200,24 +170,19 @@ namespace XInstall.Core.Actions
 
 			    return this._strSQLScriptFile;
 		    }
-		    set
-		    {
+		    set {
 			    this._strSQLScriptFile = value;
 			    this._bInputScriptFile = true;
 		    }
 	    }
 
 	    [Action("sql", Needed=false)]
-	    public string SQLStatement
-	    {
-		    get
-		    {
+	    public string SQLStatement {
+		    get {
 			    return String.Format( @"""{0}""", this._strSQLStmt );
 		    }
-		    set
-		    {
-			    if ( this._bInputScriptFile )
-			    {
+		    set {
+			    if ( this._bInputScriptFile ) {
 				    this._bInputScriptFile = false;
 			    }
 			    this._strSQLStmt = value;
@@ -225,16 +190,12 @@ namespace XInstall.Core.Actions
 	    }
 
 	    [Action("abortonerror", Needed=false, Default="true")]
-	    public string AbortOnError
-	    {
-		    set
-		    {
-			    try
-			    {
+	    public string AbortOnError {
+		    set {
+			    try {
 				    this._bAbortOnError = bool.Parse( value );
 			    }
-			    catch ( Exception )
-			    {
+			    catch ( Exception ) {
 				    this.SetExitMessage(
 					OSQL_OPR_CODE.OSQL_OPR_BOOLEAN_PARSING_ERROR,
 					this.Name, @"AbortOnError");
@@ -244,16 +205,12 @@ namespace XInstall.Core.Actions
 	    }
 
 	    [Action("nonumber", Needed=false, Default="true")]
-	    public string NoNumbering
-	    {
-		    set
-		    {
-			    try
-			    {
+	    public string NoNumbering {
+		    set {
+			    try {
 				    this._bNoNumbering = bool.Parse( value );
 			    }
-			    catch ( Exception )
-			    {
+			    catch ( Exception ) {
 				    this.SetExitMessage(
 					OSQL_OPR_CODE.OSQL_OPR_BOOLEAN_PARSING_ERROR,
 					this.Name, @"NoNumbering" );
@@ -263,16 +220,12 @@ namespace XInstall.Core.Actions
 	    }
 
 	    [Action("generateexception", Needed=false, Default="false")]
-	    public new string AllowGenerateException
-	    {
-		    set
-		    {
-			    try
-			    {
+	    public new string AllowGenerateException {
+		    set {
+			    try {
 				    this._bAllowGenerateException = bool.Parse( value );
 			    }
-			    catch ( Exception )
-			    {
+			    catch ( Exception ) {
 				    this.SetExitMessage(
 					OSQL_OPR_CODE.OSQL_OPR_BOOLEAN_PARSING_ERROR,
 					this.Name, @"AllowGenerateException" );
@@ -282,13 +235,10 @@ namespace XInstall.Core.Actions
 	    }
 
 	    [Action("outputfile", Needed=false, Default="auto")]
-	    public new string OutputFile
-	    {
-		    set
-		    {
+	    public new string OutputFile {
+		    set {
 			    string strOutputFile = null;
-			    if ( value.ToLower().Equals("auto") )
-			    {
+			    if ( value.ToLower().Equals("auto") ) {
 				    strOutputFile = Path.ChangeExtension( Path.GetFileNameWithoutExtension(
 					    Environment.GetCommandLineArgs()[0] ), ".log" );
 			    }
@@ -296,10 +246,8 @@ namespace XInstall.Core.Actions
 		    }
 	    }
 
-	    public string Arguments
-	    {
-		    get
-		    {
+	    public string Arguments {
+		    get {
 			    return this.GetArgumentList();
 		    }
 	    }
@@ -307,43 +255,37 @@ namespace XInstall.Core.Actions
 	    #endregion
 
 	    #region private methods
-	    private void Init()
-	    {
+	    private void Init() {
 		    base.OutToConsole = true;
 		    base.OutToFile    = true;
 
 		    // open local machine's registry database and point
 		    // to local machine
-		    try
-		    {
+		    try {
 
-			    RegistryKey rk        = RegistryKey.OpenRemoteBaseKey( RegistryHive.LocalMachine, "." );
-			    RegistryKey rkSQL     = rk.OpenSubKey( _cntStrSQLServerPath );
-			    string strOSQLPath    = rkSQL.GetValue( this._rostrRegistryKey ).ToString();
+			    RegistryKey rk     = RegistryKey.OpenRemoteBaseKey( RegistryHive.LocalMachine, "." );
+			    RegistryKey rkSQL  = rk.OpenSubKey( _cntStrSQLServerPath );
+			    string strOSQLPath = rkSQL.GetValue( this._rostrRegistryKey ).ToString();
 			    rkSQL.Close();
 
 			    this._strOSQLFullPath = strOSQLPath + Path.DirectorySeparatorChar + @"binn" + Path.DirectorySeparatorChar + this._rostrOSQL;
-			    if ( !File.Exists( this._strOSQLFullPath ) )
-			    {
+			    if ( !File.Exists( this._strOSQLFullPath ) ) {
 				    this.SetExitMessage( OSQL_OPR_CODE.OSQL_OPR_OSQL_NOT_EXIST, this.Name, this._rostrOSQL, strOSQLPath );
 				    base.FatalErrorMessage( ".", this.ExitMessage, 1660, this.ExitCode );
 			    }
 		    }
-		    catch ( Exception e )
-		    {
+		    catch ( Exception e ) {
 			    this.SetExitMessage( OSQL_OPR_CODE.OSQL_OPR_SQLCLIENT_NOT_INSTALL, this.Name, e.Message );
 			    base.FatalErrorMessage( ".", this.ExitMessage, 1660, this.ExitCode );
 		    }
 	    }
 
-	    private void SetExitMessage( OSQL_OPR_CODE enumOsqlOprCode, params object[] objParams )
-	    {
+	    private void SetExitMessage( OSQL_OPR_CODE enumOsqlOprCode, params object[] objParams ) {
 		    this._enumOSQLOprCode = enumOsqlOprCode;
 		    this._strExitMessage  = String.Format( this._strMessages[ this.ExitCode ], objParams );
 	    }
 
-	    private string GetArgumentList()
-	    {
+	    private string GetArgumentList() {
 		    StringBuilder sbArgumentList = new StringBuilder();
 
 		    // setup the SQL Server to connect to
@@ -351,8 +293,7 @@ namespace XInstall.Core.Actions
 
 		    // setup how to connect to a given SQL Server
 		    // if trusted connection is not use, then SQL standard login will kick in
-		    if ( this._bTrustedConnection )
-		    {
+		    if ( this._bTrustedConnection ) {
 			    sbArgumentList.Append( "/E " );
 		    }
 		    else
@@ -362,32 +303,27 @@ namespace XInstall.Core.Actions
 
 		    // osql will abort when error is happening during the execution of
 		    // sql statement or script.
-		    if ( this._bAbortOnError )
-		    {
+		    if ( this._bAbortOnError ) {
 			    sbArgumentList.Append( "/b " );
 		    }
 
 		    // required header not to be printed
-		    if ( this._bNoHeader )
-		    {
+		    if ( this._bNoHeader ) {
 			    sbArgumentList.Append( "/h-1 " );
 		    }
 
 		    // is script input from file or it is from command line
-		    if ( this._bInputScriptFile )
-		    {
+		    if ( this._bInputScriptFile ) {
 
 			    if ( this.ScriptFileName.IndexOf( @"\" ) == -1 )
 				    sbArgumentList.AppendFormat( "/i {0} ",
 								 Environment.CurrentDirectory + Path.DirectorySeparatorChar +
 								 this.ScriptFileName );
-			    else
-			    {
+			    else {
 				    sbArgumentList.AppendFormat( "/i {0} ", this.ScriptFileName );
 			    }
 		    }
-		    else
-		    {
+		    else {
 			    this.SQLStatement = this.GetSQLStmtElement();
 			    sbArgumentList.AppendFormat( "/Q {0} ", this.SQLStatement );
 		    }
@@ -400,21 +336,17 @@ namespace XInstall.Core.Actions
 
 	    #region IAction Members
 
-	    public override void Execute()
-	    {
+	    public override void Execute() {
 		    // if user wants an exception to be generated
-		    if ( this._bAllowGenerateException )
-		    {
+		    if ( this._bAllowGenerateException ) {
 			    this.SetExitMessage(
 				OSQL_OPR_CODE.OSQL_OPR_CUSTOM_EXCEPTION_GENERATED, this.Name );
 			    this.FatalErrorMessage( ".", this.ExitMessage, 1660 );
 		    }
 
-		    base.ProgramArguments =
-			String.Format( @" ""{0} {1}""", this._strOSQLShortPathName, this.Arguments );
+		    base.ProgramArguments = String.Format( @" ""{0} {1}""", this._strOSQLShortPathName, this.Arguments );
 
-		    this.SetExitMessage(
-			OSQL_OPR_CODE.OSQL_OPR_START_EXECUTING, this.Name );
+		    this.SetExitMessage( OSQL_OPR_CODE.OSQL_OPR_START_EXECUTING, this.Name );
 		    base.LogItWithTimeStamp( this.ExitMessage );
 		    base.Execute();
 		    if ( base.ProgramExitCode > 0 )
@@ -426,34 +358,26 @@ namespace XInstall.Core.Actions
 		    base.LogItWithTimeStamp( this.ExitMessage );
 	    }
 
-	    public new bool IsComplete
-	    {
-		    get
-		    {
+	    public new bool IsComplete {
+		    get {
 			    return base.IsComplete;
 		    }
 	    }
 
-	    public new string ExitMessage
-	    {
-		    get
-		    {
+	    public new string ExitMessage {
+		    get {
 			    return this._strExitMessage;
 		    }
 	    }
 
-	    public new string Name
-	    {
-		    get
-		    {
+	    public new string Name {
+		    get {
 			    return this.GetType().Name;
 		    }
 	    }
 
-	    public new int ExitCode
-	    {
-		    get
-		    {
+	    public new int ExitCode {
+		    get {
 			    // TODO:  Add OSQL.ExitCode getter implementation
 			    return (int) this._enumOSQLOprCode;
 		    }
@@ -463,37 +387,28 @@ namespace XInstall.Core.Actions
 
 	    #region IActionElement Members
 
-	    public new string ObjectName
-	    {
-		    get
-		    {
+	    public new string ObjectName {
+		    get {
 			    // TODO:  Add OSQL.ObjectName getter implementation
 			    return null;
 		    }
 	    }
 
-	    private string GetSQLStmtElement()
-	    {
+	    private string GetSQLStmtElement() {
 		    string strSqlStmt = null;
 		    if ( this._xnActionNode.HasChildNodes )
-			    foreach ( XmlNode xnSQLNode in this._xnActionNode.ChildNodes )
-			    {
-				    if ( xnSQLNode.Name.Equals( @"sqlstatement" ) )
-				    {
-					    foreach ( XmlNode xnTextNode in xnSQLNode )
-					    {
-						    if ( xnTextNode.NodeType != XmlNodeType.Text )
-						    {
-							    this.SetExitMessage( OSQL_OPR_CODE.OSQL_OPR_ONLY_TEXTNODE_ALLOW,
-										 this.Name, xnTextNode.Name );
+			    foreach ( XmlNode xnSQLNode in this._xnActionNode.ChildNodes ) {
+				    if ( xnSQLNode.Name.Equals( @"sqlstatement" ) ) {
+					    foreach ( XmlNode xnTextNode in xnSQLNode ) {
+						    if ( xnTextNode.NodeType != XmlNodeType.Text ) {
+							    this.SetExitMessage( OSQL_OPR_CODE.OSQL_OPR_ONLY_TEXTNODE_ALLOW, this.Name, xnTextNode.Name );
 							    base.FatalErrorMessage( ".", this.ExitMessage, 1660, this.ExitCode );
 						    }
 						    strSqlStmt += xnTextNode.Value.Trim();
 					    }
 
 				    }
-				    else
-				    {
+				    else {
 					    this.SetExitMessage(
 						OSQL_OPR_CODE.OSQL_OPR_UNKNOWN_SUBELEMENT,
 						this.Name, xnSQLNode.Name );
