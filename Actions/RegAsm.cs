@@ -53,7 +53,7 @@ namespace XInstall.Core.Actions {
 				    base.FatalErrorMessage(".",
 							   String.Format("{0}: Assembly file:{1} does not exist!",
 									 this.Name, this._strAssemblyFile),
-							   1660, 1);
+							   1660);
 			    return this._strAssemblyFile;
 		    }
 
@@ -133,7 +133,7 @@ namespace XInstall.Core.Actions {
 			    catch ( Exception ) {
 				    base.FatalErrorMessage( ".",
 							    String.Format("{0}: boolean variable parsing error", this.Name),
-							    1660, 4);
+							    1660);
 			    }
 		    }
 	    }
@@ -168,7 +168,7 @@ namespace XInstall.Core.Actions {
 			    base.FatalErrorMessage( ".",
 						    String.Format(
 							"{0}: invalid action {1} specified! Valid actions are /regfile and /tlb",
-							this.Name, this._strAction), 1660, 3);
+							this.Name, this._strAction), 1660 );
 			    break;
 		    }
 

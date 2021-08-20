@@ -95,7 +95,7 @@ namespace XInstall.Core.Actions
 				    this.SetExitMessage(
 					OSQL_OPR_CODE.OSQL_OPR_BOOLEAN_PARSING_ERROR,
 					this.Name, @"TrustedConnection");
-				    base.FatalErrorMessage( ".", this.ExitMessage, 1660, this.ExitCode );
+				    base.FatalErrorMessage( ".", this.ExitMessage, 1660 );
 			    }
 		    }
 	    }
@@ -114,7 +114,7 @@ namespace XInstall.Core.Actions
 				    this.SetExitMessage(
 					OSQL_OPR_CODE.OSQL_OPR_BOOLEAN_PARSING_ERROR,
 					this.Name, @"NoHeader");
-				    base.FatalErrorMessage( ".", this.ExitMessage, 1660, this.ExitCode );
+				    base.FatalErrorMessage( ".", this.ExitMessage, 1660 );
 			    }
 		    }
 	    }
@@ -142,7 +142,7 @@ namespace XInstall.Core.Actions
 				    this.SetExitMessage(
 					OSQL_OPR_CODE.OSQL_OPR_INDENTITY_REQUIRED,
 					this.Name, @"username");
-				    base.FatalErrorMessage( ".", this.ExitMessage, 1660, this.ExitCode );
+				    base.FatalErrorMessage( ".", this.ExitMessage, 1660 );
 			    }
 			    return this._strSQLServerUser;
 		    }
@@ -162,7 +162,7 @@ namespace XInstall.Core.Actions
 				    this.SetExitMessage(
 					OSQL_OPR_CODE.OSQL_OPR_INDENTITY_REQUIRED,
 					this.Name, @"password");
-				    base.FatalErrorMessage( ".", this.ExitMessage, 1660, this.ExitCode );
+				    base.FatalErrorMessage( ".", this.ExitMessage, 1660 );
 			    }
 			    return this._strSQLServerUserPWD;
 		    }
@@ -195,7 +195,7 @@ namespace XInstall.Core.Actions
 				    this.SetExitMessage(
 					OSQL_OPR_CODE.OSQL_OPR_SCRIPTFILE_NOTFOUND,
 					this.Name, this._strSQLScriptFile);
-				    base.FatalErrorMessage( ".", this.ExitMessage, 1660, this.ExitCode );
+				    base.FatalErrorMessage( ".", this.ExitMessage, 1660 );
 			    }
 
 			    return this._strSQLScriptFile;
@@ -238,7 +238,7 @@ namespace XInstall.Core.Actions
 				    this.SetExitMessage(
 					OSQL_OPR_CODE.OSQL_OPR_BOOLEAN_PARSING_ERROR,
 					this.Name, @"AbortOnError");
-				    base.FatalErrorMessage( ".", this.ExitMessage, 1660, this.ExitCode );
+				    base.FatalErrorMessage( ".", this.ExitMessage, 1660 );
 			    }
 		    }
 	    }
@@ -257,7 +257,7 @@ namespace XInstall.Core.Actions
 				    this.SetExitMessage(
 					OSQL_OPR_CODE.OSQL_OPR_BOOLEAN_PARSING_ERROR,
 					this.Name, @"NoNumbering" );
-				    base.FatalErrorMessage( ".", this.ExitMessage, 1660, this.ExitCode );
+				    base.FatalErrorMessage( ".", this.ExitMessage, 1660 );
 			    }
 		    }
 	    }
@@ -276,7 +276,7 @@ namespace XInstall.Core.Actions
 				    this.SetExitMessage(
 					OSQL_OPR_CODE.OSQL_OPR_BOOLEAN_PARSING_ERROR,
 					this.Name, @"AllowGenerateException" );
-				    base.FatalErrorMessage( ".", this.ExitMessage, 1660, this.ExitCode );
+				    base.FatalErrorMessage( ".", this.ExitMessage, 1660 );
 			    }
 		    }
 	    }
@@ -326,13 +326,13 @@ namespace XInstall.Core.Actions
 			    if ( !File.Exists( this._strOSQLFullPath ) )
 			    {
 				    this.SetExitMessage( OSQL_OPR_CODE.OSQL_OPR_OSQL_NOT_EXIST, this.Name, this._rostrOSQL, strOSQLPath );
-				    base.FatalErrorMessage( ".", this.ExitMessage, 1660, this.ExitCode );
+				    base.FatalErrorMessage( ".", this.ExitMessage, 1660 );
 			    }
 		    }
 		    catch ( Exception e )
 		    {
 			    this.SetExitMessage( OSQL_OPR_CODE.OSQL_OPR_SQLCLIENT_NOT_INSTALL, this.Name, e.Message );
-			    base.FatalErrorMessage( ".", this.ExitMessage, 1660, this.ExitCode );
+			    base.FatalErrorMessage( ".", this.ExitMessage, 1660 );
 		    }
 	    }
 
@@ -486,7 +486,7 @@ namespace XInstall.Core.Actions
 						    {
 							    this.SetExitMessage( OSQL_OPR_CODE.OSQL_OPR_ONLY_TEXTNODE_ALLOW,
 										 this.Name, xnTextNode.Name );
-							    base.FatalErrorMessage( ".", this.ExitMessage, 1660, this.ExitCode );
+							    base.FatalErrorMessage( ".", this.ExitMessage, 1660 );
 						    }
 						    strSqlStmt += xnTextNode.Value.Trim();
 					    }
@@ -497,7 +497,7 @@ namespace XInstall.Core.Actions
 					    this.SetExitMessage(
 						OSQL_OPR_CODE.OSQL_OPR_UNKNOWN_SUBELEMENT,
 						this.Name, xnSQLNode.Name );
-					    base.FatalErrorMessage( ".", this.ExitMessage, 1660, this.ExitCode );
+					    base.FatalErrorMessage( ".", this.ExitMessage, 1660 );
 				    }
 			    }
 		    return String.Format( @"{0}", strSqlStmt);
