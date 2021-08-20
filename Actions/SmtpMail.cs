@@ -41,8 +41,7 @@ namespace XInstall.Core.Actions
     /// <summary>
     /// Summary description for SmtpMail.
     /// </summary>
-    public class SendMail : ActionElement
-    {
+    public class SendMail : ActionElement {
 	    private MailMessage  _MailMessage   = null;
 	    private Regex        _Regex         = null;
 	    private MailPriority _MailPriority = MailPriority.Normal;

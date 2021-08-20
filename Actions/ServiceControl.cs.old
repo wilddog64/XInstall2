@@ -154,7 +154,7 @@ namespace XInstall.Core.Actions
 			    this.SetExitMessage(
 				SC_OPR_CODE.SC_OPR_ACTION_NOT_DEFINED,
 				this.Name, MethodName);
-			    base.FatalErrorMessage( ".", this.ExitMessage, 1660, this.ExitCode );
+			    base.FatalErrorMessage( ".", this.ExitMessage, 1660 );
 		    }
 
 		    // retrieve type information from an object
@@ -171,7 +171,7 @@ namespace XInstall.Core.Actions
 				    this.SetExitMessage(
 					SC_OPR_CODE.SC_OPR_METHOD_INVOCATION_ERROR,
 					this.Name, MethodName, e.Message );
-				    base.FatalErrorMessage( ".", this.ExitMessage, 1660, this.ExitCode );
+				    base.FatalErrorMessage( ".", this.ExitMessage, 1660 );
 			    }
 		    }
 	    }
@@ -209,7 +209,7 @@ namespace XInstall.Core.Actions
 					    this.SetExitMessage(
 						SC_OPR_CODE.SC_OPR_UNRECONGIZED_TAG,
 						this.Name, MethodName, ChildNode.Name );
-					    base.FatalErrorMessage( ".", this.ExitMessage, 1660, this.ExitCode );
+					    base.FatalErrorMessage( ".", this.ExitMessage, 1660 );
 				    }
 				    else
 				    {
@@ -226,7 +226,7 @@ namespace XInstall.Core.Actions
 						    this.SetExitMessage(
 							SC_OPR_CODE.SC_OPR_MISSING_ATTRIBUTES,
 							this.Name, "name, servicename", MethodName );
-						    base.FatalErrorMessage( ".", this.ExitMessage, 1660, this.ExitCode );
+						    base.FatalErrorMessage( ".", this.ExitMessage, 1660 );
 					    }
 				    }
 			    }
@@ -258,7 +258,7 @@ namespace XInstall.Core.Actions
 		    base.Execute();
 	    }
 
-	    public override void ParseActionElement()
+	    protected override void ParseActionElement()
 	    {
 		    base.ParseActionElement ();
 		    foreach ( XmlNode xn in this._ActionNode.ChildNodes )
@@ -294,7 +294,7 @@ namespace XInstall.Core.Actions
 		    }
 	    }
 
-	    public override string ObjectName
+	    protected override string ObjectName
 	    {
 		    get
 		    {
