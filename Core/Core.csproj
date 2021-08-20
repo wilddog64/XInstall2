@@ -1,136 +1,20 @@
-﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <ProjectReference Include="..\Util\Util.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Interop.SQLDMO" Version="8.0.0" />
+    <PackageReference Include="Microsoft.Win32.Registry" Version="5.0.0" />
+    <PackageReference Include="System.Data.SqlClient" Version="4.8.2" />
+    <PackageReference Include="System.DirectoryServices" Version="5.0.0" />
+    <PackageReference Include="System.Management" Version="5.0.0" />
+    <PackageReference Include="System.Runtime.InteropServices" Version="4.3.0" />
+  </ItemGroup>
+
   <PropertyGroup>
-    <ProjectType>Local</ProjectType>
-    <ProductVersion>8.0.50727</ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{118DEC61-2DF2-4022-B0B4-DAB11B68947E}</ProjectGuid>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <AssemblyName>XInstall.Core</AssemblyName>
-    <DefaultClientScript>JScript</DefaultClientScript>
-    <DefaultHTMLPageLayout>Grid</DefaultHTMLPageLayout>
-    <DefaultTargetSchema>IE50</DefaultTargetSchema>
-    <DelaySign>false</DelaySign>
-    <OutputType>Library</OutputType>
-    <RootNamespace>Core</RootNamespace>
-    <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
+    <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <OutputPath>..\build\bin\debug\</OutputPath>
-    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
-    <BaseAddress>285212672</BaseAddress>
-    <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <DebugSymbols>true</DebugSymbols>
-    <FileAlignment>4096</FileAlignment>
-    <NoStdLib>false</NoStdLib>
-    <Optimize>false</Optimize>
-    <RegisterForComInterop>false</RegisterForComInterop>
-    <RemoveIntegerChecks>false</RemoveIntegerChecks>
-    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
-    <WarningLevel>4</WarningLevel>
-    <DebugType>full</DebugType>
-    <ErrorReport>prompt</ErrorReport>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <OutputPath>..\..\build\bin\release\</OutputPath>
-    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
-    <BaseAddress>285212672</BaseAddress>
-    <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
-    <DefineConstants>TRACE</DefineConstants>
-    <DebugSymbols>false</DebugSymbols>
-    <FileAlignment>4096</FileAlignment>
-    <NoStdLib>false</NoStdLib>
-    <Optimize>true</Optimize>
-    <RegisterForComInterop>false</RegisterForComInterop>
-    <RemoveIntegerChecks>false</RemoveIntegerChecks>
-    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
-    <WarningLevel>4</WarningLevel>
-    <DebugType>none</DebugType>
-    <ErrorReport>prompt</ErrorReport>
-  </PropertyGroup>
-  <ItemGroup>
-    <Reference Include="Accessibility">
-      <Name>Accessibility</Name>
-    </Reference>
-    <Reference Include="System">
-      <Name>System</Name>
-    </Reference>
-    <Reference Include="System.Data">
-      <Name>System.Data</Name>
-    </Reference>
-    <Reference Include="System.DirectoryServices">
-      <Name>System.DirectoryServices</Name>
-    </Reference>
-    <Reference Include="System.Management">
-      <Name>System.Management</Name>
-    </Reference>
-    <Reference Include="System.Web.Services">
-      <Name>System.Web.Services</Name>
-    </Reference>
-    <Reference Include="System.Xml">
-      <Name>System.Xml</Name>
-    </Reference>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="ActionAttribute.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="ActionElement.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="ActionLoader.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="ActionNodeCollection.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="ActionPackage.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="ActionPackageCollection.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="ActionVariableException.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="ActionVariables.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="AdsiBase.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="AssemblyInfo.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="DBAccess.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="ExternalPrg.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="ForEach.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Interfaces.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Win32API.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="WmiBase.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="XmlConfigMgr.cs">
-      <SubType>Code</SubType>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Util\Util.csproj">
-      <Name>Util</Name>
-      <Project>{1DBC9AF1-39D2-42B5-AE85-DEF59C003314}</Project>
-      <Package>{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</Package>
-    </ProjectReference>
-  </ItemGroup>
-  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+
 </Project>
