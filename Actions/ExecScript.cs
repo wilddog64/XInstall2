@@ -85,8 +85,7 @@ namespace XInstall.Core.Actions {
 
   internal class CodeRunner {
 
-    private static
-      CodeDomProvider CodeProvider = null;
+    private static CodeDomProvider CodeProvider = null;
 
     private CodeRunner() {}
 
@@ -113,9 +112,13 @@ namespace XInstall.Core.Actions {
     }
 
     private string CreateSkeletenCode( string Lang ) {
-      CodeProvider                     = this.GetLangProvider( Lang );
-      CodeNamespace       Namespace    = new CodeNamespace( @"RunScript" );
+      // CodeProvider                     = this.GetLangProvider( Lang );
+      CodeCompileUnit codeCompileUnit = new CodeCompileUnit();
+      CodeNamespace   Namespace    = new CodeNamespace( @"RunScript" );
       CodeTypeDeclaration CodeTypeDecl = new CodeTypeDeclaration();
+
+
+
 
       // now import necessary namespace
       CodeNamespaceImport[] NamespaceImports = {
@@ -141,8 +144,7 @@ namespace XInstall.Core.Actions {
       // now create an entry point method which is public static void Main
       CodeMemberMethod MainMethod = new CodeMemberMethod();
       MainMethod.Name = @"Main";
-      MainMethod.Attributes = MemberAttributes.Public |
-        MemberAttributes.Static;
+      MainMethod.Attributes = MemberAttributes.Public | MemberAttributes.Static;
       MainMethod.ReturnType = new CodeTypeReference( typeof(void) );
 
       // build the body of Main Method
