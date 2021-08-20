@@ -18,7 +18,7 @@ namespace XInstall.Core.Actions {
     [Action("runscript")]
     public ExecScript() { }
 
-    public override void ParseActionElement() {}
+    protected override void ParseActionElement() {}
 
     [Action("language", Needed=false, Default="C#")]
     public string Language {
@@ -44,7 +44,7 @@ namespace XInstall.Core.Actions {
             break;
 
           default :
-            base.FatalErrorMessage( ".", String.Format( @"unknown language specified: {0}", this._Language ), 1660, -99 );
+            base.FatalErrorMessage( ".", String.Format( @"unknown language specified: {0}", this._Language ), 1660 );
             break;
         }
       }
