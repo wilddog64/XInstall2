@@ -167,9 +167,7 @@ namespace XInstall.Core {
         ///     load the ActionPackage Xml node.
         /// </remarks>
         public ActionPackage ( string strDll2Load ) : base ( strDll2Load ) {
-            this.LoadAssembly = this._strCurrentActionPath  +
-                                Path.DirectorySeparatorChar +
-                                this._strActionDLL;
+            this.LoadAssembly = this._strCurrentActionPath  + Path.DirectorySeparatorChar + this._strActionDLL;
         }
 
 
@@ -236,11 +234,8 @@ namespace XInstall.Core {
 
             // if xnPackage is null, raise an exception
             if ( xnPackage == null ) {
-                this._enumPackageOprCode =
-                    PACKAGE_OPR_CODE.PKG_OPR_PACKAGE_NOT_PROVIDED;
-                this._strExitMessage     =
-                    String.Format( this._strMessages[ this.ExitCode ],
-                                   this.Name );
+                this._enumPackageOprCode = PACKAGE_OPR_CODE.PKG_OPR_PACKAGE_NOT_PROVIDED;
+                this._strExitMessage     = String.Format( this._strMessages[ this.ExitCode ], this.Name );
                 base.FatalErrorMessage( ".", this.ExitMessage, 1660, false );
             }
 
@@ -305,8 +300,7 @@ namespace XInstall.Core {
         public new ActionElement this[ int iActionIdx ]
         {
             get {
-                if ( iActionIdx < 0 ||
-                        iActionIdx > this._alActionObjectList.Count ) {
+                if ( iActionIdx < 0 || iActionIdx > this._alActionObjectList.Count ) {
                     this._enumPackageOprCode = PACKAGE_OPR_CODE.PKG_OPR_INDEX_OUTOF_RANGE;
                     this._strExitMessage     = String.Format( this._strMessages [ this.ExitCode ], this.Name );
                     base.FatalErrorMessage( ".", this.ExitMessage, 1660, false);
