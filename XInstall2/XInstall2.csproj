@@ -1,65 +1,13 @@
-﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" xmlns:Conversion="urn:Conversion">
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <ProjectReference Include="..\Util\Util.csproj" />
+    <ProjectReference Include="..\Core\Core.csproj" />
+    <ProjectReference Include="..\Actions\Actions.csproj" />
+  </ItemGroup>
+
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{FF29BF83-FFB3-42D9-8490-F9AFE684A5FC}</ProjectGuid>
-    <RootNamespace>XInstall2</RootNamespace>
-    <AssemblyName>XInstall2</AssemblyName>
-    <OutputType>Exe</OutputType>
-    <ApplicationIcon />
-    <WarningLevel>4</WarningLevel>
-    <NoWarn />
-    <StartupObject />
-    <NoStdLib>False</NoStdLib>
-    <NoConfig>False</NoConfig>
-    <PreBuildEvent />
-    <PostBuildEvent />
+    <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>True</DebugSymbols>
-    <Optimize>False</Optimize>
-    <AllowUnsafeBlocks>False</AllowUnsafeBlocks>
-    <CheckForOverflowUnderflow>False</CheckForOverflowUnderflow>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <OutputPath>..\build\bin\debug\</OutputPath>
-    <TreatWarningsAsErrors>False</TreatWarningsAsErrors>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugSymbols>False</DebugSymbols>
-    <Optimize>True</Optimize>
-    <AllowUnsafeBlocks>False</AllowUnsafeBlocks>
-    <CheckForOverflowUnderflow>False</CheckForOverflowUnderflow>
-    <DefineConstants>TRACE</DefineConstants>
-    <OutputPath>..\build\bin\release\</OutputPath>
-    <TreatWarningsAsErrors>False</TreatWarningsAsErrors>
-  </PropertyGroup>
-  <ItemGroup>
-    <Reference Include="System" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Windows.Forms" />
-    <Reference Include="System.Xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="AssemblyInfo.cs" />
-    <Compile Include="XInstall.cs" />
-    <Compile Include="XInstall2.cs" />
-  </ItemGroup>
-  <ItemGroup />
-  <ItemGroup>
-    <ProjectReference Include="..\Actions\Actions.csproj">
-      <Project>{F358D973-3795-472C-9CD8-546851079511}</Project>
-      <Name>Actions</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Core\Core.csproj">
-      <Project>{118DEC61-2DF2-4022-B0B4-DAB11B68947E}</Project>
-      <Name>Core</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Util\Util.csproj">
-      <Project>{1DBC9AF1-39D2-42B5-AE85-DEF59C003314}</Project>
-      <Name>Util</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.Targets" />
+
 </Project>
