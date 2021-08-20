@@ -149,7 +149,7 @@ namespace XInstall.Core.Actions {
 	    }
 
 	    #region private methods
-	    private string GetArguments() {
+	    private new string GetArguments() {
 		    StringBuilder sbProgArgs = new StringBuilder();
 
 		    sbProgArgs.AppendFormat(" (0}", this.AssemblyFile );
@@ -275,7 +275,7 @@ namespace XInstall.Core.Actions {
 	    ///     ability to unregister the assembly that
 	    ///     regasm has registered into COM+ manager.
 	    /// </remarks>
-	    public new void RemoveIt() {
+	    public void RemoveIt() {
 		    this.Action           = "unregister";
 		    base.ProgramArguments = this.GetArguments();
 		    base.Execute();
