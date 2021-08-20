@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.IO;
 using System.Reflection;
+using System.Runtime.InteropServices;
 using System.Security.Principal;
 using System.Xml;
 
@@ -201,6 +202,26 @@ namespace XInstall.Core {
             }
         }
 
+        /// <summary>
+        /// the following properties return platform information
+        /// </summary>
+        public bool IsWindows {
+          get {
+            return System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(OSPlatform.Windows);
+          }
+        }
+
+        public bool IsLinux {
+          get {
+            return System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(OSPlatform.Linux);
+          }
+        }
+
+        public bool IsOSX {
+          get {
+            return System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(OSPlatform.OSX);
+          }
+        }
 
         /// <summary>
         /// Private method CreateActionPackage will read
