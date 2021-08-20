@@ -20,8 +20,7 @@ namespace XInstall.Core.Actions {
         public PerfMon( XmlNode ActionNode ) : base( ActionNode ) {}
 
         [Action("machinename", Needed=false, Default=".")]
-        public string MachineName
-        {
+        public string MachineName {
             get {
                 return this._MachineName;
             }
@@ -32,11 +31,11 @@ namespace XInstall.Core.Actions {
 
 
         [Action("categoryname", Needed=false, Default="")]
-        public string CategoryName
-        {
+        public string CategoryName {
             get {
                 return this._CategoryName;
             }
+
             set {
                 this._CategoryName = value;
             }
@@ -44,23 +43,21 @@ namespace XInstall.Core.Actions {
 
 
         [Action("countername", Needed=false, Default="")]
-        public string CounterName
-        {
-            get {
-                return this._CounterName;
+        public string CounterName {
+            get { return this._CounterName;
             }
-            set {
-                this._CounterName = value;
+
+            set { this._CounterName = value;
             }
         }
 
 
         [Action("listcountercategories", Needed=false, Default="false")]
-        public string ListCounterCategory
-        {
+        public string ListCounterCategory {
             get {
                 return this._ListCategories.ToString();
             }
+
             set {
                 this._ListCategories = bool.Parse( value );
             }
@@ -68,27 +65,25 @@ namespace XInstall.Core.Actions {
 
 
         [Action("listcounterforcategory", Needed=false, Default="false")]
-        public string ListCounterForCategory
-        {
+        public string ListCounterForCategory {
             get {
                 return this._ListCountersForCategory.ToString();
             }
+
             set {
                 this._ListCountersForCategory = bool.Parse(value);
             }
         }
 
 
-        protected override string ObjectName
-        {
+        protected override string ObjectName {
             get {
                 return this.GetType().Name;
             }
         }
 
 
-        protected override object ObjectInstance
-        {
+        protected override object ObjectInstance {
             get {
                 return this;
             }
@@ -99,43 +94,34 @@ namespace XInstall.Core.Actions {
             base.ParseActionElement ();
 
             if ( this.MachineName.Length > 0 ) {
-                base.LogItWithTimeStamp(
-                    String.Format( "{0}: Get PerfMon info from {1}",
-                                   this.ObjectName, this.MachineName ) );
+                base.LogItWithTimeStamp( String.Format( "{0}: Get PerfMon info from {1}", this.ObjectName, this.MachineName ) );
 
                 if ( this._ListCategories == true ) {
-                    PerformanceCounterCategory[] PerfCountCategories =
-                        PerformanceCounterCategory.GetCategories( this.MachineName );
+                    PerformanceCounterCategory[] PerfCountCategories = PerformanceCounterCategory.GetCategories( this.MachineName );
 
-                    if ( PerfCountCategories != null &&
-                            PerfCountCategories.Length > 0 )
-                        foreach( PerformanceCounterCategory PerCountCategory in
-                                 PerfCountCategories ) {
-                        base.LogItWithTimeStamp(
-                            String.Format( "{0}: {1} - Perfmon Category {2}",
+                    if ( PerfCountCategories != null && PerfCountCategories.Length > 0 )
+                        foreach( PerformanceCounterCategory PerCountCategory in PerfCountCategories ) {
+                        base.LogItWithTimeStamp( String.Format( "{0}: {1} - Perfmon Category {2}",
                                            this.ObjectName,
                                            this.MachineName,
                                            PerCountCategory.CategoryName) );
                     }
-                } else if ( this._ListCountersForCategory == true &&
-                            this.CategoryName.Length       > 0 ) {
-                    if ( PerformanceCounterCategory.Exists(
-                                this.CategoryName,
-                                this.MachineName ) ) {
-                        PerformanceCounterCategory PerfCounterCate =
-                            new PerformanceCounterCategory( this.CategoryName, this.MachineName );
+                }
+                else if ( this._ListCountersForCategory == true && this.CategoryName.Length > 0 ) {
+                    if ( PerformanceCounterCategory.Exists( this.CategoryName, this.MachineName ) ) {
+                        PerformanceCounterCategory PerfCounterCate = new PerformanceCounterCategory( this.CategoryName, this.MachineName );
                         PerformanceCounter[] PerformanceCounters = PerfCounterCate.GetCounters();
                         string[] CounterInstanceNames = PerfCounterCate.GetInstanceNames();
                         foreach( PerformanceCounter PerformanceCounter in PerformanceCounters ) {
-                            base.LogItWithTimeStamp(
-                                String.Format( "{0}: {1} - Perfmon Counter {2}",
+                            base.LogItWithTimeStamp( String.Format( "{0}: {1} - Perfmon Counter {2}",
                                                this.ObjectName,
                                                this.MachineName,
                                                PerformanceCounter.CounterName) );
                         }
                     }
                 }
-            } else {
+            }
+            else {
                 // foreach ( XmlNode Node in base.ActionNode.
             }
         }

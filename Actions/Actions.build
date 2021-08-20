@@ -1,51 +1,51 @@
 <?xml version="1.0" encoding="Windows-1252"?>
-<project name="Actions.Path" default="actions.build">
-  <include buildfile="../Core/Core.build" />
-  <target name="actions.build" description="build XInstall.Action.dll" depends="core.build">
-    <!--csc compiling task-->
-    <csc target="library" output="./bin/XInstall.Actions.dll">
-      <!--library we need to references-->
-      <references basedir="./bin">
-        <include name="System.Data.dll" />
-        <include name="*.dll" />
-      </references>
-      <!--source files that needed to be compiled-->
-      <sources basedir=".">
-        <exclude name="ADManager.cs" />
-        <exclude name="ADSIAttributes.cs" />
-        <exclude name="dbBackup.cs" />
-        <exclude name="dbRestore.cs" />
-        <exclude name="MakeDir.cs" />
-        <exclude name="IIs*.cs" />
-        <exclude name="RExec.cs" />
-        <exclude name="ServiceControl.cs" />
-        <exclude name="MSI.cs" />
-        <exclude name="nant.cs" />
-        <exclude name="IIS*.cs" />
-        <exclude name="AzMan.cs" />
-        <exclude name="ExecScript.cs" />
-        <exclude name="FxCop.cs" />
-        <exclude name="RegAsm.cs" />
-				<exclude name="osql.cs" />
-        <include name="*.cs" /> 
-        
-      </sources>
-    </csc>
-    <!--copy required dll components-->
-    <copy todir="../XInstall2/XInstall2/bin" overwrite="true">
-      <fileset>
-        <include name="*.dll" />
-      </fileset>
-    </copy>
-  </target>
+                             <project name="Actions.Path" default="actions.build">
+                                     <include buildfile="../Core/Core.build" />
+                                             <target name="actions.build" description="build XInstall.Action.dll" depends="core.build">
+                                                     <!--csc compiling task-->
+                                                     <csc target="library" output="./bin/XInstall.Actions.dll">
+                                                             <!--library we need to references-->
+                                                             <references basedir="./bin">
+                                                                     <include name="System.Data.dll" />
+                                                                             <include name="*.dll" />
+                                                                                     </references>
+                                                                                     <!--source files that needed to be compiled-->
+                                                                                     <sources basedir=".">
+                                                                                             <exclude name="ADManager.cs" />
+                                                                                                     <exclude name="ADSIAttributes.cs" />
+                                                                                                             <exclude name="dbBackup.cs" />
+                                                                                                                     <exclude name="dbRestore.cs" />
+                                                                                                                             <exclude name="MakeDir.cs" />
+                                                                                                                                     <exclude name="IIs*.cs" />
+                                                                                                                                             <exclude name="RExec.cs" />
+                                                                                                                                                     <exclude name="ServiceControl.cs" />
+                                                                                                                                                             <exclude name="MSI.cs" />
+                                                                                                                                                                     <exclude name="nant.cs" />
+                                                                                                                                                                             <exclude name="IIS*.cs" />
+                                                                                                                                                                                     <exclude name="AzMan.cs" />
+                                                                                                                                                                                             <exclude name="ExecScript.cs" />
+                                                                                                                                                                                                     <exclude name="FxCop.cs" />
+                                                                                                                                                                                                             <exclude name="RegAsm.cs" />
+                                                                                                                                                                                                                     <exclude name="osql.cs" />
+                                                                                                                                                                                                                             <include name="*.cs" />
 
-  <target name="actions.self.build" description="touch dll and build myself" depends="actions.touchdll, actions.build" />
-      
-  <target name="actions.touchdll" description="update timestamp of all the dll files">
-    <touch>
-      <fileset basedir="./bin">
-        <include name="*.dll" />
-      </fileset>
-    </touch>
-  </target>
-</project>
+                                                                                                                                                                                                                                     </sources>
+                                                                                                                                                                                                                                     </csc>
+                                                                                                                                                                                                                                     <!--copy required dll components-->
+                                                                                                                                                                                                                                     <copy todir="../XInstall2/XInstall2/bin" overwrite="true">
+                                                                                                                                                                                                                                             <fileset>
+                                                                                                                                                                                                                                             <include name="*.dll" />
+                                                                                                                                                                                                                                                     </fileset>
+                                                                                                                                                                                                                                                     </copy>
+                                                                                                                                                                                                                                                     </target>
+
+                                                                                                                                                                                                                                                     <target name="actions.self.build" description="touch dll and build myself" depends="actions.touchdll, actions.build" />
+
+                                                                                                                                                                                                                                                             <target name="actions.touchdll" description="update timestamp of all the dll files">
+                                                                                                                                                                                                                                                                     <touch>
+                                                                                                                                                                                                                                                                     <fileset basedir="./bin">
+                                                                                                                                                                                                                                                                             <include name="*.dll" />
+                                                                                                                                                                                                                                                                                     </fileset>
+                                                                                                                                                                                                                                                                                     </touch>
+                                                                                                                                                                                                                                                                                     </target>
+                                                                                                                                                                                                                                                                                     </project>

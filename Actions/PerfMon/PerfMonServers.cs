@@ -23,9 +23,7 @@ namespace XInstall.Core.Actions {
         [Action("PerfMonCheck")]
         public PerfMonServer( XmlNode ActionNode ) : base( ActionNode ) {
             if ( ActionNode.ParentNode.Name != MY_PARENT_NODE )
-                throw new Exception(
-                    String.Format( "{0} cannot be a child of {1}",
-                                   MY_NODE_NAME, MY_PARENT_NODE ) );
+                throw new Exception( String.Format( "{0} cannot be a child of {1}", MY_NODE_NAME, MY_PARENT_NODE ) );
 
             if ( ActionNode.Name != MY_NODE_NAME )
                 throw new ArgumentException( "invalid element!", "perfmon" );
@@ -33,22 +31,22 @@ namespace XInstall.Core.Actions {
 
 #region public properties
         [Action("MachineName", Needed=true)]
-        public string MachineName
-        {
+        public string MachineName {
             get {
                 return this._MachineName;
             }
+
             set {
                 this._MachineName = value;
             }
         }
 
         [Action("Category", Needed=true)]
-        public string CounterCategory
-        {
+        public string CounterCategory {
             get {
                 return this._CounterCategory;
             }
+
             set {
                 this._CounterCategory = value;
             }
@@ -59,19 +57,18 @@ namespace XInstall.Core.Actions {
 
 #region protected properties
 
-        protected float CounterValue
-        {
+        protected float CounterValue {
             get {
                 return this._CounterValue;
             }
+
             set {
                 this._CounterValue = value;
             }
         }
 
 
-        protected bool InRange
-        {
+        protected bool InRange {
             get {
                 return this._CounterValue >= this._MinValue &&
                        this._CounterValue <= this._MaxValue;
@@ -79,8 +76,7 @@ namespace XInstall.Core.Actions {
         }
 
 
-        protected override object ObjectInstance
-        {
+        protected override object ObjectInstance {
             get {
                 return this;
             }
@@ -99,24 +95,17 @@ namespace XInstall.Core.Actions {
                 if ( CategoryNode.HasChildNodes ) {
                     XmlNode CategoryNodeName = CategoryNode.Attributes.GetNamedItem( "name" );
                     if ( CategoryNodeName != null )
-                        ProcessCategory( CategoryNodeName.Value,
-                                         this.MachineName,
-                                         CategoryNode.ChildNodes );
+                        ProcessCategory( CategoryNodeName.Value, this.MachineName, CategoryNode.ChildNodes );
                     else
                         throw
-                        new ArgumentNullException(
-                            "Name",
-                            "countercategoryname can't be null or empty" );
+                        new ArgumentNullException( "Name", "countercategoryname can't be null or empty" );
                 }
             }
         }
 #endregion
 
-        private void ProcessCategory( string      CounterCategoryName,
-                                      string      MachineName,
-                                      XmlNodeList CategoryChildNodes ) {
-            PerformanceCounterCategory PerfMonCounterCat =
-                new PerformanceCounterCategory( CounterCategoryName, MachineName );
+        private void ProcessCategory( string CounterCategoryName, string MachineName, XmlNodeList CategoryChildNodes ) {
+            PerformanceCounterCategory PerfMonCounterCat = new PerformanceCounterCategory( CounterCategoryName, MachineName );
 
             foreach( XmlNode CategoryChild in CategoryChildNodes ) {
                 if ( CategoryChild.Name == "Counter" ) {
@@ -153,9 +142,9 @@ namespace XInstall.Core.Actions {
                                     PerfMonCounter.NextValue();
                                 }
                             }
-                        } else
-                            throw new ArgumentNullException(
-                                "Name", "counter name can't be null" );
+                        } 
+                        else
+                            throw new ArgumentNullException( "Name", "counter name can't be null" );
 
                     }
                 }

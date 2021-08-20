@@ -1,173 +1,174 @@
 ﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <PropertyGroup>
-    <ProjectType>Local</ProjectType>
-    <ProductVersion>8.0.50727</ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{F358D973-3795-472C-9CD8-546851079511}</ProjectGuid>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <AssemblyName>XInstall.Core.Actions</AssemblyName>
-    <DefaultClientScript>JScript</DefaultClientScript>
-    <DefaultHTMLPageLayout>Grid</DefaultHTMLPageLayout>
-    <DefaultTargetSchema>IE50</DefaultTargetSchema>
-    <DelaySign>false</DelaySign>
-    <OutputType>Library</OutputType>
-    <RootNamespace>Actions</RootNamespace>
-    <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <OutputPath>..\build\bin\debug\</OutputPath>
-    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
-    <BaseAddress>285212672</BaseAddress>
-    <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <DebugSymbols>true</DebugSymbols>
-    <FileAlignment>4096</FileAlignment>
-    <NoStdLib>false</NoStdLib>
-    <Optimize>false</Optimize>
-    <RegisterForComInterop>false</RegisterForComInterop>
-    <RemoveIntegerChecks>false</RemoveIntegerChecks>
-    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
-    <WarningLevel>4</WarningLevel>
-    <DebugType>full</DebugType>
-    <ErrorReport>prompt</ErrorReport>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <OutputPath>..\build\bin\release\</OutputPath>
-    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
-    <BaseAddress>285212672</BaseAddress>
-    <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
-    <DefineConstants>TRACE</DefineConstants>
-    <DebugSymbols>false</DebugSymbols>
-    <FileAlignment>4096</FileAlignment>
-    <NoStdLib>false</NoStdLib>
-    <Optimize>true</Optimize>
-    <RegisterForComInterop>false</RegisterForComInterop>
-    <RemoveIntegerChecks>false</RemoveIntegerChecks>
-    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
-    <WarningLevel>4</WarningLevel>
-    <DebugType>none</DebugType>
-    <ErrorReport>prompt</ErrorReport>
-  </PropertyGroup>
-  <ItemGroup>
-    <Reference Include="Interop.SQLDMO">
-      <Name>Interop.SQLDMO</Name>
-      <HintPath>bin\Interop.SQLDMO.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Interop.Security.AzRoles">
-      <Name>Microsoft.Interop.Security.AzRoles</Name>
-      <HintPath>bin\Microsoft.Interop.Security.AzRoles.dll</HintPath>
-    </Reference>
-    <Reference Include="System">
-      <Name>System</Name>
-    </Reference>
-    <Reference Include="System.Data">
-      <Name>System.Data</Name>
-    </Reference>
-    <Reference Include="System.DirectoryServices">
-      <Name>System.DirectoryServices</Name>
-    </Reference>
-    <Reference Include="System.Management">
-      <Name>System.Management</Name>
-    </Reference>
-    <Reference Include="System.ServiceProcess">
-      <Name>System.ServiceProcess</Name>
-    </Reference>
-    <Reference Include="System.Web">
-      <Name>System.Web</Name>
-    </Reference>
-    <Reference Include="System.Web.Services">
-      <Name>System.Web.Services</Name>
-    </Reference>
-    <Reference Include="System.Xml">
-      <Name>System.XML</Name>
-    </Reference>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="ADManager.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="ADSIAttributes.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="AssemblyInfo.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Blat.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="exec.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="CopyFile.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="IIsVirtualDir.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="IIsWebSite.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="MakeDir.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Print.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Properties\Settings.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-      <DependentUpon>Settings.settings</DependentUpon>
-    </Compile>
-    <Compile Include="psexec.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="RegEx.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="RegKey.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="RExec.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Rmdir.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="RoboCopy.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Rsync.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="SmtpMail.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="xcacls.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="XmlValidator.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="XmlWriter.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <None Include="Properties\Settings.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
-      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Core\Core.csproj">
-      <Name>Core</Name>
-      <Project>{118DEC61-2DF2-4022-B0B4-DAB11B68947E}</Project>
-      <Package>{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</Package>
-    </ProjectReference>
-    <ProjectReference Include="..\Util\Util.csproj">
-      <Name>Util</Name>
-      <Project>{1DBC9AF1-39D2-42B5-AE85-DEF59C003314}</Project>
-      <Package>{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</Package>
-    </ProjectReference>
-  </ItemGroup>
-  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
-</Project>
+                           <PropertyGroup>
+                           <ProjectType>Local</ProjectType>
+                           <ProductVersion>8.0.50727</ProductVersion>
+                           <SchemaVersion>2.0</SchemaVersion>
+                           <ProjectGuid> {F358D973-3795-472C-9CD8-546851079511}</ProjectGuid>
+                           <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+                                   <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+                                           <AssemblyName>XInstall.Core.Actions</AssemblyName>
+                                           <DefaultClientScript>JScript</DefaultClientScript>
+                                           <DefaultHTMLPageLayout>Grid</DefaultHTMLPageLayout>
+                                           <DefaultTargetSchema>IE50</DefaultTargetSchema>
+                                           <DelaySign>false</DelaySign>
+                                           <OutputType>Library</OutputType>
+                                           <RootNamespace>Actions</RootNamespace>
+                                           <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
+                                           </PropertyGroup>
+                                           <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+                                                   <OutputPath>..\build\bin\debug\</OutputPath>
+                                                   <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+                                                   <BaseAddress>285212672</BaseAddress>
+                                                   <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
+                                                   <DefineConstants>DEBUG;
+TRACE</DefineConstants>
+<DebugSymbols>true</DebugSymbols>
+<FileAlignment>4096</FileAlignment>
+<NoStdLib>false</NoStdLib>
+<Optimize>false</Optimize>
+<RegisterForComInterop>false</RegisterForComInterop>
+<RemoveIntegerChecks>false</RemoveIntegerChecks>
+<TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+<WarningLevel>4</WarningLevel>
+<DebugType>full</DebugType>
+<ErrorReport>prompt</ErrorReport>
+</PropertyGroup>
+<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+                         <OutputPath>..\build\bin\release\</OutputPath>
+                         <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+                         <BaseAddress>285212672</BaseAddress>
+                         <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
+                         <DefineConstants>TRACE</DefineConstants>
+                         <DebugSymbols>false</DebugSymbols>
+                         <FileAlignment>4096</FileAlignment>
+                         <NoStdLib>false</NoStdLib>
+                         <Optimize>true</Optimize>
+                         <RegisterForComInterop>false</RegisterForComInterop>
+                         <RemoveIntegerChecks>false</RemoveIntegerChecks>
+                         <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+                         <WarningLevel>4</WarningLevel>
+                         <DebugType>none</DebugType>
+                         <ErrorReport>prompt</ErrorReport>
+                         </PropertyGroup>
+                         <ItemGroup>
+                         <Reference Include="Interop.SQLDMO">
+                                 <Name>Interop.SQLDMO</Name>
+                                 <HintPath>bin\Interop.SQLDMO.dll</HintPath>
+                                 </Reference>
+                                 <Reference Include="Microsoft.Interop.Security.AzRoles">
+                                         <Name>Microsoft.Interop.Security.AzRoles</Name>
+                                         <HintPath>bin\Microsoft.Interop.Security.AzRoles.dll</HintPath>
+                                         </Reference>
+                                         <Reference Include="System">
+                                                 <Name>System</Name>
+                                                 </Reference>
+                                                 <Reference Include="System.Data">
+                                                         <Name>System.Data</Name>
+                                                         </Reference>
+                                                         <Reference Include="System.DirectoryServices">
+                                                                 <Name>System.DirectoryServices</Name>
+                                                                 </Reference>
+                                                                 <Reference Include="System.Management">
+                                                                         <Name>System.Management</Name>
+                                                                         </Reference>
+                                                                         <Reference Include="System.ServiceProcess">
+                                                                                 <Name>System.ServiceProcess</Name>
+                                                                                 </Reference>
+                                                                                 <Reference Include="System.Web">
+                                                                                         <Name>System.Web</Name>
+                                                                                         </Reference>
+                                                                                         <Reference Include="System.Web.Services">
+                                                                                                 <Name>System.Web.Services</Name>
+                                                                                                 </Reference>
+                                                                                                 <Reference Include="System.Xml">
+                                                                                                         <Name>System.XML</Name>
+                                                                                                         </Reference>
+                                                                                                         </ItemGroup>
+                                                                                                         <ItemGroup>
+                                                                                                         <Compile Include="ADManager.cs">
+                                                                                                                 <SubType>Code</SubType>
+                                                                                                                 </Compile>
+                                                                                                                 <Compile Include="ADSIAttributes.cs">
+                                                                                                                         <SubType>Code</SubType>
+                                                                                                                         </Compile>
+                                                                                                                         <Compile Include="AssemblyInfo.cs">
+                                                                                                                                 <SubType>Code</SubType>
+                                                                                                                                 </Compile>
+                                                                                                                                 <Compile Include="Blat.cs">
+                                                                                                                                         <SubType>Code</SubType>
+                                                                                                                                         </Compile>
+                                                                                                                                         <Compile Include="exec.cs">
+                                                                                                                                                 <SubType>Code</SubType>
+                                                                                                                                                 </Compile>
+                                                                                                                                                 <Compile Include="CopyFile.cs">
+                                                                                                                                                         <SubType>Code</SubType>
+                                                                                                                                                         </Compile>
+                                                                                                                                                         <Compile Include="IIsVirtualDir.cs">
+                                                                                                                                                                 <SubType>Code</SubType>
+                                                                                                                                                                 </Compile>
+                                                                                                                                                                 <Compile Include="IIsWebSite.cs">
+                                                                                                                                                                         <SubType>Code</SubType>
+                                                                                                                                                                         </Compile>
+                                                                                                                                                                         <Compile Include="MakeDir.cs">
+                                                                                                                                                                                 <SubType>Code</SubType>
+                                                                                                                                                                                 </Compile>
+                                                                                                                                                                                 <Compile Include="Print.cs">
+                                                                                                                                                                                         <SubType>Code</SubType>
+                                                                                                                                                                                         </Compile>
+                                                                                                                                                                                         <Compile Include="Properties\Settings.Designer.cs">
+                                                                                                                                                                                                 <AutoGen>True</AutoGen>
+                                                                                                                                                                                                 <DesignTimeSharedInput>True</DesignTimeSharedInput>
+                                                                                                                                                                                                 <DependentUpon>Settings.settings</DependentUpon>
+                                                                                                                                                                                                 </Compile>
+                                                                                                                                                                                                 <Compile Include="psexec.cs">
+                                                                                                                                                                                                         <SubType>Code</SubType>
+                                                                                                                                                                                                         </Compile>
+                                                                                                                                                                                                         <Compile Include="RegEx.cs">
+                                                                                                                                                                                                                 <SubType>Code</SubType>
+                                                                                                                                                                                                                 </Compile>
+                                                                                                                                                                                                                 <Compile Include="RegKey.cs">
+                                                                                                                                                                                                                         <SubType>Code</SubType>
+                                                                                                                                                                                                                         </Compile>
+                                                                                                                                                                                                                         <Compile Include="RExec.cs">
+                                                                                                                                                                                                                                 <SubType>Code</SubType>
+                                                                                                                                                                                                                                 </Compile>
+                                                                                                                                                                                                                                 <Compile Include="Rmdir.cs">
+                                                                                                                                                                                                                                         <SubType>Code</SubType>
+                                                                                                                                                                                                                                         </Compile>
+                                                                                                                                                                                                                                         <Compile Include="RoboCopy.cs">
+                                                                                                                                                                                                                                                 <SubType>Code</SubType>
+                                                                                                                                                                                                                                                 </Compile>
+                                                                                                                                                                                                                                                 <Compile Include="Rsync.cs">
+                                                                                                                                                                                                                                                         <SubType>Code</SubType>
+                                                                                                                                                                                                                                                         </Compile>
+                                                                                                                                                                                                                                                         <Compile Include="SmtpMail.cs">
+                                                                                                                                                                                                                                                                 <SubType>Code</SubType>
+                                                                                                                                                                                                                                                                 </Compile>
+                                                                                                                                                                                                                                                                 <Compile Include="xcacls.cs">
+                                                                                                                                                                                                                                                                         <SubType>Code</SubType>
+                                                                                                                                                                                                                                                                         </Compile>
+                                                                                                                                                                                                                                                                         <Compile Include="XmlValidator.cs">
+                                                                                                                                                                                                                                                                                 <SubType>Code</SubType>
+                                                                                                                                                                                                                                                                                 </Compile>
+                                                                                                                                                                                                                                                                                 <Compile Include="XmlWriter.cs">
+                                                                                                                                                                                                                                                                                         <SubType>Code</SubType>
+                                                                                                                                                                                                                                                                                         </Compile>
+                                                                                                                                                                                                                                                                                         <None Include="Properties\Settings.settings">
+                                                                                                                                                                                                                                                                                                 <Generator>SettingsSingleFileGenerator</Generator>
+                                                                                                                                                                                                                                                                                                 <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+                                                                                                                                                                                                                                                                                                 </None>
+                                                                                                                                                                                                                                                                                                 </ItemGroup>
+                                                                                                                                                                                                                                                                                                 <ItemGroup>
+                                                                                                                                                                                                                                                                                                 <ProjectReference Include="..\Core\Core.csproj">
+                                                                                                                                                                                                                                                                                                         <Name>Core</Name>
+                                                                                                                                                                                                                                                                                                         <Project> {118DEC61-2DF2-4022-B0B4-DAB11B68947E}</Project>
+                                                                                                                                                                                                                                                                                                         <Package> {FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</Package>
+                                                                                                                                                                                                                                                                                                         </ProjectReference>
+                                                                                                                                                                                                                                                                                                         <ProjectReference Include="..\Util\Util.csproj">
+                                                                                                                                                                                                                                                                                                                 <Name>Util</Name>
+                                                                                                                                                                                                                                                                                                                 <Project> {1DBC9AF1-39D2-42B5-AE85-DEF59C003314}</Project>
+                                                                                                                                                                                                                                                                                                                 <Package> {FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</Package>
+                                                                                                                                                                                                                                                                                                                 </ProjectReference>
+                                                                                                                                                                                                                                                                                                                 </ItemGroup>
+                                                                                                                                                                                                                                                                                                                 <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+                                                                                                                                                                                                                                                                                                                         </Project>

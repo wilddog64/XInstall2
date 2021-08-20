@@ -4,16 +4,14 @@ using System.Text;
 
 using Microsoft.Win32;
 
-namespace XInstall.Core.Actions
-{
+namespace XInstall.Core.Actions {
     /// <summary>
     /// public class RegAsm -
     ///     a class to wrap the external RegAsm.exe to
     ///     provide an ability to register an assembly
     ///     as a com+ object.
     /// </summary>
-    public class RegAsm : ExternalPrg, IAction, ICleanUp
-    {
+    public class RegAsm : ExternalPrg, IAction, ICleanUp {
 	    private readonly string _rostrNetRoot;
 	    private readonly string _rostrRegAsm    = "RegAsm.exe";
 	    private string _strAction               = null;
@@ -35,14 +33,11 @@ namespace XInstall.Core.Actions
 	    ///        . setup the path point to the path of RegAsm.exe
 	    /// </remarks>
 	    [Action("regasm")]
-	    public RegAsm()
-	    {
+	    public RegAsm() {
 		    base.OutToConsole  = true;
 		    base.OutToFile     = true;
 		    this._rostrNetRoot = this.GetNetInstallRoot();
-		    base.ProgramName   = this._rostrNetRoot          +
-					 Path.DirectorySeparatorChar +
-					 this._rostrRegAsm;
+		    base.ProgramName   = this._rostrNetRoot + Path.DirectorySeparatorChar + this._rostrRegAsm;
 	    }
 
 	    /// <summary>
@@ -50,10 +45,8 @@ namespace XInstall.Core.Actions
 	    ///     get/set the name of assembly file to be registered.
 	    /// </summary>
 	    [Action("assemblyfile", Needed=true)]
-	    public string AssemblyFile
-	    {
-		    get
-		    {
+	    public string AssemblyFile {
+		    get {
 			    // check if a given file does exist;
 			    // otherwise, show an error message and abort
 			    if ( !File.Exists( this._strAssemblyFile ) )
@@ -63,8 +56,8 @@ namespace XInstall.Core.Actions
 							   1660, 1);
 			    return this._strAssemblyFile;
 		    }
-		    set
-		    {
+
+		    set {
 			    this._strAssemblyFile = value;
 		    }
 	    }
@@ -75,14 +68,11 @@ namespace XInstall.Core.Actions
 	    ///     generated for a given dll file.
 	    /// </summary>
 	    [Action("tlbname", Needed=false)]
-	    public string TypeLibrary
-	    {
-		    get
-		    {
+	    public string TypeLibrary {
+		    get {
 			    return this._strTlb;
 		    }
-		    set
-		    {
+		    set {
 			    this._strTlb = value;
 		    }
 	    }
@@ -94,14 +84,11 @@ namespace XInstall.Core.Actions
 	    ///     registered.
 	    /// </summary>
 	    [Action("regfile", Needed=false)]
-	    public string RegistryFile
-	    {
-		    get
-		    {
+	    public string RegistryFile {
+		    get {
 			    return this._strRegfile;
 		    }
-		    set
-		    {
+		    set {
 			    this._strRegfile = value;
 		    }
 	    }
@@ -112,10 +99,8 @@ namespace XInstall.Core.Actions
 	    ///     to show the logo message.
 	    /// </summary>
 	    [Action("nologo", Needed=false, Default="false")]
-	    public string NoLogo
-	    {
-		    set
-		    {
+	    public string NoLogo {
+		    set {
 			    this._bNoLogo = bool.Parse( value.ToString() );
 		    }
 	    }
@@ -126,10 +111,8 @@ namespace XInstall.Core.Actions
 	    ///     in a slient mode.
 	    /// </summary>
 	    [Action("slientmode", Needed=false)]
-	    public string Slient
-	    {
-		    set
-		    {
+	    public string Slient {
+		    set {
 			    this._bSlientMode = bool.Parse( value.ToString() );
 		    }
 	    }
@@ -140,17 +123,14 @@ namespace XInstall.Core.Actions
 	    ///     should generate an exception or not.
 	    /// </summary>
 	    [Action("generateexception", Needed=false, Default="false")]
-	    public new string AllowGenerateException
-	    {
-		    set
-		    {
+	    public new string AllowGenerateException {
+		    set {
 			    try
 			    {
 				    base.AllowGenerateException =
 					bool.Parse( value.ToString() );
 			    }
-			    catch ( Exception )
-			    {
+			    catch ( Exception ) {
 				    base.FatalErrorMessage( ".",
 							    String.Format("{0}: boolean variable parsing error", this.Name),
 							    1660, 4);
@@ -162,23 +142,19 @@ namespace XInstall.Core.Actions
 	    /// set a flag to indicate if the action should be run or not
 	    /// </summary>
 	    [Action("runnable", Needed=false, Default="true")]
-	    public new string Runnable
-	    {
-		    set
-		    {
+	    public new string Runnable {
+		    set {
 			    base.Runnable = bool.Parse( value );
 		    }
 	    }
 
 	    #region private methods
-	    private string GetArguments()
-	    {
+	    private string GetArguments() {
 		    StringBuilder sbProgArgs = new StringBuilder();
 
 		    sbProgArgs.AppendFormat(" (0}", this.AssemblyFile );
 
-		    switch ( this._strAction )
-		    {
+		    switch ( this._strAction ) {
 		    case "regfile":
 			    sbProgArgs.AppendFormat(" /regfile:{0}", this.RegistryFile);
 			    break;
@@ -195,12 +171,12 @@ namespace XInstall.Core.Actions
 							this.Name, this._strAction), 1660, 3);
 			    break;
 		    }
-		    if ( this._bNoLogo )
-		    {
+
+		    if ( this._bNoLogo ) {
 			    sbProgArgs.Append(" /nologo");
 		    }
-		    if ( this._bSlientMode )
-		    {
+
+		    if ( this._bSlientMode ) {
 			    sbProgArgs.Append(" /slient");
 		    }
 
@@ -217,8 +193,7 @@ namespace XInstall.Core.Actions
 	    ///     an override method that carries out
 	    ///     the regasm function
 	    /// </summary>
-	    public override void Execute()
-	    {
+	    public override void Execute() {
 		    base.IsComplete       = false;
 		    base.ProgramArguments = this.GetArguments();
 		    base.Execute();
@@ -229,10 +204,8 @@ namespace XInstall.Core.Actions
 	    /// property IsComplete -
 	    ///     get the state of regasm's execution
 	    /// </summary>
-	    public new bool IsComplete
-	    {
-		    get
-		    {
+	    public new bool IsComplete {
+		    get {
 			    return base.IsComplete;
 		    }
 	    }
@@ -243,10 +216,8 @@ namespace XInstall.Core.Actions
 	    ///     by regasm.
 	    /// </summary>
 	    [Action("action", Needed=false, Default="")]
-	    public string Action
-	    {
-		    set
-		    {
+	    public string Action {
+		    set {
 			    this._strAction = value;
 		    }
 	    }
@@ -261,10 +232,8 @@ namespace XInstall.Core.Actions
 	    ///     but present here for the requirement
 	    ///     by the IAction interface.
 	    /// </remarks>
-	    public new string ExitMessage
-	    {
-		    get
-		    {
+	    public new string ExitMessage {
+		    get {
 			    // TODO:  Add RegAsm.ExitMessage getter implementation
 			    return null;
 		    }
@@ -274,10 +243,8 @@ namespace XInstall.Core.Actions
 	    /// property Name -
 	    ///     gets the name of this class
 	    /// </summary>
-	    public new string Name
-	    {
-		    get
-		    {
+	    public new string Name {
+		    get {
 			    return this.GetType().Name;
 		    }
 	    }
@@ -287,10 +254,8 @@ namespace XInstall.Core.Actions
 	    ///     gets the exit code from the execution
 	    ///     of regasm.exe
 	    /// </summary>
-	    public new int ExitCode
-	    {
-		    get
-		    {
+	    public new int ExitCode {
+		    get {
 			    return base.ProgramExitCode;
 		    }
 	    }
@@ -310,8 +275,7 @@ namespace XInstall.Core.Actions
 	    ///     ability to unregister the assembly that
 	    ///     regasm has registered into COM+ manager.
 	    /// </remarks>
-	    public new void RemoveIt()
-	    {
+	    public new void RemoveIt() {
 		    this.Action           = "unregister";
 		    base.ProgramArguments = this.GetArguments();
 		    base.Execute();
@@ -325,22 +289,18 @@ namespace XInstall.Core.Actions
 	    ///     path for the DotNet framework v1.1
 	    /// </summary>
 	    /// <returns>string variable contains path to the DotNet Framework v1.1</returns>
-	    private string GetNetInstallRoot()
-	    {
+	    private string GetNetInstallRoot() {
 		    string strValue = null;
-		    try
-		    {
+		    try {
 			    RegistryKey rkLocalMachine =
 				RegistryKey.OpenRemoteBaseKey( RegistryHive.LocalMachine, Environment.MachineName );
 
 			    RegistryKey rk = rkLocalMachine.OpenSubKey(@"Software\Microsoft\.NETFramework" );
-			    if ( rk != null )
-			    {
+			    if ( rk != null ) {
 				    strValue    = (string) rk.GetValue( @"sdkInstallRootv1.1" );
 			    }
 		    }
-		    catch ( Exception e )
-		    {
+		    catch ( Exception e ) {
 			    base.FatalErrorMessage(".", e.Message, 1660);
 		    }
 

@@ -1,48 +1,48 @@
 <Project name="Actions" standardNamespace="NewProject" description="" newfilesearch="None" enableviewstate="True" version="1.1" projecttype="C#">
-  <Contents>
-    <File name=".\AssemblyInfo.cs" subtype="Code" buildaction="Compile" dependson="" data="" />
-    <File name=".\AzMan.cs" subtype="Code" buildaction="Compile" dependson="" data="" />
-    <File name=".\call.cs" subtype="Code" buildaction="Compile" dependson="" data="" />
-    <File name=".\CopyFile.cs" subtype="Code" buildaction="Compile" dependson="" data="" />
-    <File name=".\DBBackup.cs" subtype="Code" buildaction="Compile" dependson="" data="" />
-    <File name=".\DBRestore.cs" subtype="Code" buildaction="Compile" dependson="" data="" />
-    <File name=".\FxCop.cs" subtype="Code" buildaction="Compile" dependson="" data="" />
-    <File name=".\IISBack.cs" subtype="Code" buildaction="Compile" dependson="" data="" />
-    <File name=".\IISVDir.cs" subtype="Code" buildaction="Compile" dependson="" data="" />
-    <File name=".\IISWeb.cs" subtype="Code" buildaction="Compile" dependson="" data="" />
-    <File name=".\RegEx.cs" subtype="Code" buildaction="Compile" dependson="" data="" />
-    <File name=".\RegKey.cs" subtype="Code" buildaction="Compile" dependson="" data="" />
-    <File name=".\RoboCopy.cs" subtype="Code" buildaction="Compile" dependson="" data="" />
-    <File name=".\ServiceControl.cs" subtype="Code" buildaction="Compile" dependson="" data="" />
-    <File name=".\xcacls.cs" subtype="Code" buildaction="Compile" dependson="" data="" />
-    <File name=".\XmlWriter.cs" subtype="Code" buildaction="Compile" dependson="" data="" />
-  </Contents>
-  <References>
-    <Reference type="Assembly" refto=".\Microsoft.Interop.Security.AzRoles.dll" localcopy="True" />
-    <Reference type="Assembly" refto=".\Interop.SQLDMO.dll" localcopy="True" />
-    <Reference type="Assembly" refto=".\Microsoft.WindowsInstaller.Package.dll" localcopy="True" />
-    <Reference type="Assembly" refto=".\Microsoft.WindowsInstaller.Data.dll" localcopy="True" />
-    <Reference type="Assembly" refto=".\Microsoft.WindowsInstaller.dll" localcopy="True" />
-    <Reference type="Assembly" refto=".\Microsoft.WindowsInstaller.FilePatch.dll" localcopy="True" />
-    <Reference type="Project" refto="Core" localcopy="True" />
-    <Reference type="Project" refto="Util" localcopy="True" />
-  </References>
-  <DeploymentInformation target="" script="" strategy="File" />
-  <Configuration runwithwarnings="True" name="Debug">
-    <CodeGeneration runtime="MsNet" compiler="Csc" compilerversion="" warninglevel="4" nowarn="" includedebuginformation="True" optimize="False" unsafecodeallowed="False" generateoverflowchecks="False" mainclass="" target="Library" definesymbols="DEBUG;TRACE" generatexmldocumentation="False" win32Icon="" noconfig="False" nostdlib="False" />
-    <Execution commandlineparameters="" consolepause="True" />
-    <Output directory="..\build\bin\debug\" assembly="XInstall.Core.Actions" executeScript="" executeBeforeBuild="" executeAfterBuild="" executeBeforeBuildArguments="" executeAfterBuildArguments="" />
-  </Configuration>
-  <Configurations active="Debug">
-    <Configuration runwithwarnings="True" name="Debug">
-      <CodeGeneration runtime="MsNet" compiler="Csc" compilerversion="" warninglevel="4" nowarn="" includedebuginformation="True" optimize="False" unsafecodeallowed="False" generateoverflowchecks="False" mainclass="" target="Library" definesymbols="DEBUG;TRACE" generatexmldocumentation="False" win32Icon="" noconfig="False" nostdlib="False" />
-      <Execution commandlineparameters="" consolepause="True" />
-      <Output directory="..\build\bin\debug\" assembly="XInstall.Core.Actions" executeScript="" executeBeforeBuild="" executeAfterBuild="" executeBeforeBuildArguments="" executeAfterBuildArguments="" />
-    </Configuration>
-    <Configuration runwithwarnings="True" name="Release">
-      <CodeGeneration runtime="MsNet" compiler="Csc" compilerversion="" warninglevel="4" nowarn="" includedebuginformation="False" optimize="True" unsafecodeallowed="False" generateoverflowchecks="False" mainclass="" target="Library" definesymbols="TRACE" generatexmldocumentation="False" win32Icon="" noconfig="False" nostdlib="False" />
-      <Execution commandlineparameters="" consolepause="True" />
-      <Output directory="..\build\bin\release\" assembly="XInstall.Core.Actions" executeScript="" executeBeforeBuild="" executeAfterBuild="" executeBeforeBuildArguments="" executeAfterBuildArguments="" />
-    </Configuration>
-  </Configurations>
-</Project>
+              <Contents>
+              <File name=".\AssemblyInfo.cs" subtype="Code" buildaction="Compile" dependson="" data="" />
+                         <File name=".\AzMan.cs" subtype="Code" buildaction="Compile" dependson="" data="" />
+                                    <File name=".\call.cs" subtype="Code" buildaction="Compile" dependson="" data="" />
+                                            <File name=".\CopyFile.cs" subtype="Code" buildaction="Compile" dependson="" data="" />
+                                                    <File name=".\DBBackup.cs" subtype="Code" buildaction="Compile" dependson="" data="" />
+                                                            <File name=".\DBRestore.cs" subtype="Code" buildaction="Compile" dependson="" data="" />
+                                                                    <File name=".\FxCop.cs" subtype="Code" buildaction="Compile" dependson="" data="" />
+                                                                            <File name=".\IISBack.cs" subtype="Code" buildaction="Compile" dependson="" data="" />
+                                                                                    <File name=".\IISVDir.cs" subtype="Code" buildaction="Compile" dependson="" data="" />
+                                                                                            <File name=".\IISWeb.cs" subtype="Code" buildaction="Compile" dependson="" data="" />
+                                                                                                    <File name=".\RegEx.cs" subtype="Code" buildaction="Compile" dependson="" data="" />
+                                                                                                            <File name=".\RegKey.cs" subtype="Code" buildaction="Compile" dependson="" data="" />
+                                                                                                                    <File name=".\RoboCopy.cs" subtype="Code" buildaction="Compile" dependson="" data="" />
+                                                                                                                            <File name=".\ServiceControl.cs" subtype="Code" buildaction="Compile" dependson="" data="" />
+                                                                                                                                    <File name=".\xcacls.cs" subtype="Code" buildaction="Compile" dependson="" data="" />
+                                                                                                                                            <File name=".\XmlWriter.cs" subtype="Code" buildaction="Compile" dependson="" data="" />
+                                                                                                                                                    </Contents>
+                                                                                                                                                    <References>
+                                                                                                                                                    <Reference type="Assembly" refto=".\Microsoft.Interop.Security.AzRoles.dll" localcopy="True" />
+                                                                                                                                                            <Reference type="Assembly" refto=".\Interop.SQLDMO.dll" localcopy="True" />
+                                                                                                                                                                    <Reference type="Assembly" refto=".\Microsoft.WindowsInstaller.Package.dll" localcopy="True" />
+                                                                                                                                                                            <Reference type="Assembly" refto=".\Microsoft.WindowsInstaller.Data.dll" localcopy="True" />
+                                                                                                                                                                                    <Reference type="Assembly" refto=".\Microsoft.WindowsInstaller.dll" localcopy="True" />
+                                                                                                                                                                                            <Reference type="Assembly" refto=".\Microsoft.WindowsInstaller.FilePatch.dll" localcopy="True" />
+                                                                                                                                                                                                    <Reference type="Project" refto="Core" localcopy="True" />
+                                                                                                                                                                                                            <Reference type="Project" refto="Util" localcopy="True" />
+                                                                                                                                                                                                                    </References>
+                                                                                                                                                                                                                    <DeploymentInformation target="" script="" strategy="File" />
+                                                                                                                                                                                                                            <Configuration runwithwarnings="True" name="Debug">
+                                                                                                                                                                                                                                    <CodeGeneration runtime="MsNet" compiler="Csc" compilerversion="" warninglevel="4" nowarn="" includedebuginformation="True" optimize="False" unsafecodeallowed="False" generateoverflowchecks="False" mainclass="" target="Library" definesymbols="DEBUG;TRACE" generatexmldocumentation="False" win32Icon="" noconfig="False" nostdlib="False" />
+                                                                                                                                                                                                                                            <Execution commandlineparameters="" consolepause="True" />
+                                                                                                                                                                                                                                                    <Output directory="..\build\bin\debug\" assembly="XInstall.Core.Actions" executeScript="" executeBeforeBuild="" executeAfterBuild="" executeBeforeBuildArguments="" executeAfterBuildArguments="" />
+                                                                                                                                                                                                                                                            </Configuration>
+                                                                                                                                                                                                                                                            <Configurations active="Debug">
+                                                                                                                                                                                                                                                                    <Configuration runwithwarnings="True" name="Debug">
+                                                                                                                                                                                                                                                                            <CodeGeneration runtime="MsNet" compiler="Csc" compilerversion="" warninglevel="4" nowarn="" includedebuginformation="True" optimize="False" unsafecodeallowed="False" generateoverflowchecks="False" mainclass="" target="Library" definesymbols="DEBUG;TRACE" generatexmldocumentation="False" win32Icon="" noconfig="False" nostdlib="False" />
+                                                                                                                                                                                                                                                                                    <Execution commandlineparameters="" consolepause="True" />
+                                                                                                                                                                                                                                                                                            <Output directory="..\build\bin\debug\" assembly="XInstall.Core.Actions" executeScript="" executeBeforeBuild="" executeAfterBuild="" executeBeforeBuildArguments="" executeAfterBuildArguments="" />
+                                                                                                                                                                                                                                                                                                    </Configuration>
+                                                                                                                                                                                                                                                                                                    <Configuration runwithwarnings="True" name="Release">
+                                                                                                                                                                                                                                                                                                            <CodeGeneration runtime="MsNet" compiler="Csc" compilerversion="" warninglevel="4" nowarn="" includedebuginformation="False" optimize="True" unsafecodeallowed="False" generateoverflowchecks="False" mainclass="" target="Library" definesymbols="TRACE" generatexmldocumentation="False" win32Icon="" noconfig="False" nostdlib="False" />
+                                                                                                                                                                                                                                                                                                                    <Execution commandlineparameters="" consolepause="True" />
+                                                                                                                                                                                                                                                                                                                            <Output directory="..\build\bin\release\" assembly="XInstall.Core.Actions" executeScript="" executeBeforeBuild="" executeAfterBuild="" executeBeforeBuildArguments="" executeAfterBuildArguments="" />
+                                                                                                                                                                                                                                                                                                                                    </Configuration>
+                                                                                                                                                                                                                                                                                                                                    </Configurations>
+                                                                                                                                                                                                                                                                                                                                    </Project>
