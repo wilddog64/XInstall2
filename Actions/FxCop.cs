@@ -102,7 +102,7 @@ namespace XInstall.Core.Actions {
         this._Project = value;
         if (!File.Exists( this._Project ) ) {
           this.SetExitMessage( FXCOP_OPR_CODE.FXCOP_OPR_PROJECT_FILE_NOT_EXIST, this.Name, @"FxCopProject", this._Project);
-          base.FatalErrorMessage( ".", this.ExitMessage, 1660, this.ExitCode );
+          base.FatalErrorMessage( ".", this.ExitMessage, 1660 );
         }
       }
     }
@@ -124,7 +124,7 @@ namespace XInstall.Core.Actions {
       }
     }
 
-    public override void ParseActionElement() {
+    protected override void ParseActionElement() {
 
       base.ParseActionElement();
       AssemblyName assemblyName = new AssemblyName();
@@ -213,7 +213,7 @@ namespace XInstall.Core.Actions {
       }
     }
 
-    public override string ObjectName {
+    protected override string ObjectName {
       get {
         return this.Name;
       }
