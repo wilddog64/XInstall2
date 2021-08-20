@@ -10,3 +10,4 @@ build
 *.txt
 *.txt
 obj/
+bin/
