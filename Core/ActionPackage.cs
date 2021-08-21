@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.DirectoryServices.ActiveDirectory;
 using System.IO;
 using System.Reflection;
 using System.Runtime.InteropServices;
@@ -508,36 +509,44 @@ namespace XInstall.Core {
         ///     and the Execute() method of the interface was called.
         /// </remarks>
         public override void Execute() {
-            ActionElement ae = null;
+          string CurrentUser = String.Empty;
+          ActionElement ae = null;
+
+          if (this.IsWindows) {
             WindowsIdentity ThisIdentity = WindowsIdentity.GetCurrent();
-            string CurrentUser = ThisIdentity.Name;
+            CurrentUser = ThisIdentity.Name;
+          }
 
-            base.LogItWithTimeStamp( String.Format("{0}: package {1} executed by {2}", this.Name, this.PackageName, CurrentUser ) );
+          // PrincipalContext Ctx = new PrincipalContext();
+          // UserPrincipal User = UserPrincipal.Current;
+          // string DisplayName = user.DisplayName;
 
+          base.LogItWithTimeStamp( String.Format("{0}: package {1} executed by {2}", this.Name, this.PackageName, CurrentUser ) );
+
+          try {
             try {
-                try {
-                    base.Execute();
-                    this.ProcessHandler( this._OnBeforeStartHandler, 0 );
-                    for ( int iActionIdx = 0; iActionIdx < base.Count; iActionIdx++ ) {
-                        ae = base[ iActionIdx ] as ActionElement;
+              base.Execute();
+              this.ProcessHandler( this._OnBeforeStartHandler, 0 );
+              for ( int iActionIdx = 0; iActionIdx < base.Count; iActionIdx++ ) {
+                ae = base[ iActionIdx ] as ActionElement;
 
-                        if ( ae != null )
-                            ae.Execute();
-                    }
-                } 
-								catch ( Exception e ) {
-                    this.ProcessHandler( this._OnFailureHandler, 0 );
-                    base.IsComplete = false;
-
-                    throw e;
-                }
-
-                this.ProcessHandler( this._OnSuccessHandler, 0 );
+                if ( ae != null )
+                  ae.Execute();
+              }
             } 
-						finally {
-                ActionVariables.Clear();
+            catch ( Exception e ) {
+              this.ProcessHandler( this._OnFailureHandler, 0 );
+              base.IsComplete = false;
+
+              throw e;
             }
-            base.IsComplete = true;
+
+            this.ProcessHandler( this._OnSuccessHandler, 0 );
+          } 
+          finally {
+            ActionVariables.Clear();
+          }
+          base.IsComplete = true;
         }
 
 
