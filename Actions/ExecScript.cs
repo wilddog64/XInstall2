@@ -18,7 +18,7 @@ namespace XInstall.Core.Actions {
 	    [Action("runscript")]
 	    public ExecScript() { }
 
-	    public override void ParseActionElement() {}
+	    protected override void ParseActionElement() {}
 
 	    [Action("language", Needed=false, Default="C#")]
 	    public string Language {
