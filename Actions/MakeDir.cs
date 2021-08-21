@@ -89,7 +89,8 @@ namespace XInstall.Core.Actions {
               String.Format( "{0}: Directory {1} is created",
                 this.Name, this.DirectoryName ) );
         }
-      } catch ( Exception e ) {
+      }
+      catch ( Exception e ) {
         base.FatalErrorMessage(
             ".", String.Format( "{0}: unable to create directory {1}, reason {2}",
               this.Name, this.DirectoryName, e.Message ), 1660 );

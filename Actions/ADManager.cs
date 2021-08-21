@@ -23,8 +23,7 @@ namespace XInstall.Core.Actions {
 
     public ADManager() {}
 
-    protected override string AdsiProvider
-    {
+    protected override string AdsiProvider {
       get {
         return "LDAP";
       }

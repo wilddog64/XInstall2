@@ -204,13 +204,11 @@ namespace XInstall.Core.Actions {
     ///     for robocopy to copy to.
     /// </summary>
     [Action("destinationdirectory", Needed=true)]
-    public string DestinationDirectory {
-      get
+    public string DestinationDirectory { get
       {
         return this._strDestDir;
       }
-      set
-      {
+      set {
         _strDestDir = value;
         base.LogItWithTimeStamp(
             String.Format( "robocopy:copy to {0}",
@@ -281,9 +279,7 @@ namespace XInstall.Core.Actions {
             Path.DirectorySeparatorChar                        +
             @"logs"                                            +
             Path.DirectorySeparatorChar                        +
-            Path.ChangeExtension(
-                Path.GetFileName (
-                  Environment.GetCommandLineArgs()[0] ),
+            Path.ChangeExtension( Path.GetFileName ( Environment.GetCommandLineArgs()[0] ),
                 ".log" );
         base.ProgramOutputFile  = this._strOutputFile;
       }
@@ -550,8 +546,7 @@ namespace XInstall.Core.Actions {
           Files = Directory.GetFiles( this.SourceDirectory );
           EmptyDir = Dirs.Length == 0 && Files.Length == 0;
           if ( EmptyDir )
-            base.FatalErrorMessage( ".", String.Format(
-                  "source directory {0} is empty, which could destory destinate dir",
+            base.FatalErrorMessage( ".", String.Format( "source directory {0} is empty, which could destory destinate dir",
                   this.SourceDirectory ), 1660, false );
           this._sbProgArgs.AppendFormat("/MIR /R:{0} /W:{1} ",
               this.RetryTimes, this.WaitTime);
@@ -567,8 +562,7 @@ namespace XInstall.Core.Actions {
           //                                String.Format(
           //                                "source directory {0} is empty, move action abort!",
           //                                this.SourceDirectory ), 1660, false );
-          this._sbProgArgs.AppendFormat("/MOVE /R:{0} /W:{1} ",
-              this.RetryTimes, this.WaitTime);
+          this._sbProgArgs.AppendFormat("/MOVE /R:{0} /W:{1} ", this.RetryTimes, this.WaitTime);
           if ( IncludeSub ) {
             this._sbProgArgs.Append( "/S " );
           }
@@ -587,8 +581,7 @@ namespace XInstall.Core.Actions {
           // purge the files in destination that are no longer in
           // source directory
         case "purge":
-          this._sbProgArgs.AppendFormat("/PURGE /R:{0} /W:{1} ",
-              this.RetryTimes, this.WaitTime);
+          this._sbProgArgs.AppendFormat("/PURGE /R:{0} /W:{1} ", this.RetryTimes, this.WaitTime);
           break;
 
           // create directory structure and zero length files in the
@@ -597,10 +590,8 @@ namespace XInstall.Core.Actions {
           this._sbProgArgs.Append("/CREATE");
           break;
         default:
-          this._enumRobocopyExitCode =
-            ROBOCOPY_EXIT_CODE.ROBOCOPY_UNKNOWN_ACTION_SPECIFIED;
-          this._strExitMessage       =
-            String.Format( this._strExitMessages[ this.ExitCode ],
+          this._enumRobocopyExitCode = ROBOCOPY_EXIT_CODE.ROBOCOPY_UNKNOWN_ACTION_SPECIFIED;
+          this._strExitMessage       = String.Format( this._strExitMessages[ this.ExitCode ],
                 this.Name, this._strAction, this.ExitCode );
           base.FatalErrorMessage( ".", this.ExitMessage, 1660, false );
           break;

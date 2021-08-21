@@ -92,10 +92,8 @@ namespace XInstall.Core.Actions {
               RegexOptions.IgnoreCase );
         }
         catch ( ArgumentException ) {     // capture possible compilation error
-          this._enumRegExOpCode =
-            REGEX_OPERATION_CODE.REGEX_OPR_PATTERN_CANNOT_COMPILE;
-          this._strMessage =
-            String.Format( this._strMessages[ (int) this._enumRegExOpCode ],
+          this._enumRegExOpCode = REGEX_OPERATION_CODE.REGEX_OPR_PATTERN_CANNOT_COMPILE;
+          this._strMessage = String.Format( this._strMessages[ (int) this._enumRegExOpCode ],
                 this.Name, this._strRePattern );
           base.FatalErrorMessage( ".", this.ExitMessage, 1660, false );
         }
@@ -167,10 +165,8 @@ namespace XInstall.Core.Actions {
         // check if a given path does exist.
         DirectoryInfo di = new DirectoryInfo( strDirPath );
         if ( !di.Exists ) {
-          this._enumRegExOpCode =
-            REGEX_OPERATION_CODE.REGEX_OPR_DIR_NOTFOUND;
-          this._strMessage      =
-            String.Format( this._strMessages[ (int) this._enumRegExOpCode ],
+          this._enumRegExOpCode = REGEX_OPERATION_CODE.REGEX_OPR_DIR_NOTFOUND;
+          this._strMessage      = String.Format( this._strMessages[ (int) this._enumRegExOpCode ],
                 this.Name, strDirPath, this.ExitCode );
           // throw new Exception( this.ExitMessage );
           base.FatalErrorMessage( ".", this.ExitMessage, this.ExitCode );
@@ -207,10 +203,8 @@ namespace XInstall.Core.Actions {
           // base.FatalErrorMessage( ".", this.ExitMessage, 1660, this.ExitCode );
         }
         catch ( System.Security.SecurityException ) {
-          this._enumRegExOpCode =
-            REGEX_OPERATION_CODE.REGEX_OPR_FILECOPY_SECURITY_ERROR;
-          this._strMessage      =
-            String.Format( this._strMessages[ (int) this._enumRegExOpCode ],
+          this._enumRegExOpCode = REGEX_OPERATION_CODE.REGEX_OPR_FILECOPY_SECURITY_ERROR;
+          this._strMessage      = String.Format( this._strMessages[ (int) this._enumRegExOpCode ],
                 this.Name, Environment.UserDomainName, this.ExitCode);
           throw new Exception( this.ExitMessage );
           // base.FatalErrorMessage( ".", this.ExitMessage, 1660, this.ExitCode );
@@ -232,10 +226,8 @@ namespace XInstall.Core.Actions {
           // base.FatalErrorMessage( ".", this.ExitMessage, 1660, this.ExitCode );
         }
         catch ( NotSupportedException ) {
-          this._enumRegExOpCode =
-            REGEX_OPERATION_CODE.REGEX_OPR_FILENAME_INVALID;
-          this._strMessage      =
-            String.Format(
+          this._enumRegExOpCode = REGEX_OPERATION_CODE.REGEX_OPR_FILENAME_INVALID;
+          this._strMessage      = String.Format(
                 this._strMessages[ (int) this._enumRegExOpCode ],
                 this.Name, this.ExitCode);
           throw new Exception( this.ExitMessage );
@@ -268,11 +260,10 @@ namespace XInstall.Core.Actions {
         // a given file
         string strStringModified = null;
         string strFileName = ( this._alFiles[ i ] as FileInfo ).FullName;
-        string strBackupFileName =
-          Path.ChangeExtension( ( this._alFiles[ i ] as FileInfo ).FullName, ".bak" );
-        if ( !File.Exists( strBackupFileName ) ) {
-          File.Copy ( strFileName, strBackupFileName, true );
-        }
+        string strBackupFileName = Path.ChangeExtension( ( this._alFiles[ i ] as FileInfo ).FullName, ".bak" );
+        if ( !File.Exists( strBackupFileName ) )
+          File.Copy( strFileName, strBackupFileName, true );
+
         sr = new StreamReader( strBackupFileName );
         sw = new StreamWriter( strFileName );
 

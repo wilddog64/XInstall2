@@ -292,12 +292,12 @@ namespace XInstall.Core.Actions {
 	    private string GetNetInstallRoot() {
 		    string strValue = null;
 		    try {
-			    RegistryKey rkLocalMachine =
-				RegistryKey.OpenRemoteBaseKey( RegistryHive.LocalMachine, Environment.MachineName );
+			    RegistryKey rkLocalMachine = RegistryKey.OpenRemoteBaseKey( RegistryHive.LocalMachine,
+              Environment.MachineName );
 
 			    RegistryKey rk = rkLocalMachine.OpenSubKey(@"Software\Microsoft\.NETFramework" );
 			    if ( rk != null ) {
-				    strValue    = (string) rk.GetValue( @"sdkInstallRootv1.1" );
+				    strValue = (string) rk.GetValue( @"sdkInstallRootv1.1" );
 			    }
 		    }
 		    catch ( Exception e ) {

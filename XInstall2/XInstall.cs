@@ -58,15 +58,15 @@ namespace XInstall {
             string strDumpFile = this.DumpFile;
             if ( File.Exists( strDumpFile ) ) {
                 string dt         = DateTime.Today.ToString("ddMMyy");
-                string strNewFile =
-                    Path.GetFileNameWithoutExtension( strDumpFile ) + "." + dt + ".dmp";
+                string strNewFile = Path.GetFileNameWithoutExtension( strDumpFile ) + "." + dt + ".dmp";
                 File.Move( strDumpFile, strNewFile );
                 base.LogItWithTimeStamp(
                     String.Format(@"{0}: Dump file {1} exist! start working
                                   on incomplete object!",
                                   this.ObjectName, strNewFile));
                 this.ConfigFile = strNewFile;
-            } else
+            } 
+            else
                 this.ConfigFile = strXmlConfigFile;
 
             base.XPath = "//setup/*";
@@ -75,8 +75,7 @@ namespace XInstall {
         }
 
 
-        public XInstall( string strXmlConfigFile,
-                         ISendLogMessage ISendThisLogMessage ) : base( ISendThisLogMessage ) {
+        public XInstall( string strXmlConfigFile, ISendLogMessage ISendThisLogMessage ) : base( ISendThisLogMessage ) {
             // Configure the current application domain to use
             // windows-based principals
             AppDomain ThisAppDomain = AppDomain.CurrentDomain;
@@ -89,11 +88,9 @@ namespace XInstall {
             string strDumpFile = this.DumpFile;
             if ( File.Exists( strDumpFile ) ) {
                 string dt         = DateTime.Today.ToString("ddMMyy");
-                string strNewFile =
-                    Path.GetFileNameWithoutExtension( strDumpFile ) + "." + dt + ".dmp";
+                string strNewFile = Path.GetFileNameWithoutExtension( strDumpFile ) + "." + dt + ".dmp";
                 File.Move( strDumpFile, strNewFile );
-                base.LogItWithTimeStamp(
-                    String.Format(@"{0}: Dump file {1} exist! start working
+                base.LogItWithTimeStamp( String.Format(@"{0}: Dump file {1} exist! start working
                                   on incomplete object!",
                                   this.ObjectName, strNewFile));
                 this.ConfigFile = strNewFile;
@@ -122,8 +119,7 @@ namespace XInstall {
         }
 
 
-        public bool StartGUI
-        {
+        public bool StartGUI {
             get {
                 return this._bStartGUI;
             }
@@ -133,8 +129,7 @@ namespace XInstall {
         }
 
 
-        protected override string ObjectName
-        {
+        protected override string ObjectName {
             get {
                 return this.GetType().Name;
             }
@@ -169,19 +164,16 @@ namespace XInstall {
         /// private property ConfigFile -
         ///     get/set the Xml configuration file
         /// </summary>
-        private string ConfigFile
-        {
+        private string ConfigFile {
             get {
                 // check to see if input is null
                 if ( this._strConfigFile == null )
-                    throw new ArgumentNullException(
-                        this._strConfigFile,
+                    throw new ArgumentNullException( this._strConfigFile,
                         ("property ConfigFile cannot be null"));
 
                 // check file's existance
                 if ( !System.IO.File.Exists( this._strConfigFile ) )
-                    throw new System.IO.FileNotFoundException(
-                        String.Format("File {0} cannot be found",
+                    throw new System.IO.FileNotFoundException( String.Format("File {0} cannot be found",
                                       this._strConfigFile), this._strConfigFile);
 
                 // return the Configuration file
@@ -197,13 +189,10 @@ namespace XInstall {
         ///     set, return the running program name with the .dmp
         ///     extension.
         /// </summary>
-        private string DumpFile
-        {
+        private string DumpFile {
             get {
                 if ( this._strDumpFile == null )
-                    this._strDumpFile =
-                        Path.GetFileNameWithoutExtension(
-                            Environment.GetCommandLineArgs()[0]);
+                    this._strDumpFile = Path.GetFileNameWithoutExtension( Environment.GetCommandLineArgs()[0]);
                 return this._strDumpFile + ".dmp";
             }
             set {
@@ -227,8 +216,7 @@ namespace XInstall {
             // add each ActionNode object into our collection
             foreach ( XmlNode xnAction in _xnlActionNodes ) {
                 if ( xnAction.NodeType != XmlNodeType.Comment ) {
-                    object objConstructor =
-                        this._acActionNodeCollection.Add( xnAction );
+                    object objConstructor = this._acActionNodeCollection.Add( xnAction );
                     if ( objConstructor != null )
                         this._htCtorInfos.Add(xnAction, objConstructor );
                 }
@@ -253,8 +241,7 @@ namespace XInstall {
                 if ( xnActionPackage.Name.Equals( @"package") ) {
                     // skip comment
                     if ( xnActionPackage.NodeType != XmlNodeType.Comment ) {
-                        XmlNode xnRunnable =
-                            xnActionPackage.Attributes.GetNamedItem("runnable");
+                        XmlNode xnRunnable = xnActionPackage.Attributes.GetNamedItem("runnable");
                         bool bRunnable     = false;
                         if ( xnRunnable != null )
                             bRunnable = bool.Parse( xnRunnable.Value );
@@ -269,18 +256,14 @@ namespace XInstall {
 
             // now start to execute each object
             for ( int i = 0; i < ActionPackages.Count; i++ ) {
-                base.LogItWithTimeStamp(
-                    String.Format( @"{0}: start executing package - {1}", this.Name,
+                base.LogItWithTimeStamp( String.Format( @"{0}: start executing package - {1}", this.Name,
                                    (ActionPackages[i] as ActionPackage).PackageName ) );
 
                 ActionPackages[i].Execute();
 
-                base.LogItWithTimeStamp(
-                    String.Format( @"{0}: execute package {1} {2} ",
+                base.LogItWithTimeStamp( String.Format( @"{0}: execute package {1} {2} ",
                                    this.Name, (ActionPackages[i] as ActionPackage).PackageName,
-                                   ActionPackages[i].IsComplete ?
-                                   @"successfully"         :
-                                   @"failed" ) );
+                                   ActionPackages[i].IsComplete ?  @"successfully" : @"failed" ) );
 
             }
         }
@@ -321,11 +304,9 @@ namespace XInstall {
                 // oboject.
                 XmlNode xnActionNode       = (XmlNode) alDumpList[i];
                 XmlAttributeCollection xac = xnActionNode.Attributes;
-                xnNewNode                  = xdDoc.CreateNode(
-                                                 XmlNodeType.Element, xnActionNode.Name, null);
+                xnNewNode                  = xdDoc.CreateNode(XmlNodeType.Element, xnActionNode.Name, null);
                 foreach ( XmlAttribute xa in xac ) {
-                    if ( xa.Name.Equals("generateexception") &&
-                            xa.Value.Equals("true") )
+                    if ( xa.Name.Equals("generateexception") && xa.Value.Equals("true") )
                         xa.Value = "false";
                     xnNewNode.Attributes.SetNamedItem( xa );
                 }
