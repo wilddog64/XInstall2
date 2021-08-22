@@ -16,7 +16,44 @@ namespace XInstall.Core.Actions {
 	    string _Language = String.Empty;
 
 	    [Action("runscript")]
-	    public ExecScript() { }
+      public ExecScript() {
+
+      }
+
+      private CodeDomProvider GetCodeProvider() {
+        CodeDomProvider provider = null;
+        switch ( this.Language ) {
+          case "C#":
+          case "CSharp":
+            provider = new Microsoft.CSharp.CSharpCodeProvider();
+            break;
+          case "Visual Basic":
+            provider = new Microsoft.VisualBasic.VBCodeProvider();
+            break;
+          default :
+            base.FatalErrorMessage( ".", String.Format( @"unknown language specified: {0}", this._Language ), 1660 );
+            break;
+        }
+        return provider;
+      }
+
+      private string CreateCodeSkeleton() {
+        CodeDomProvider provider = GetCodeProvider();
+        CodeNamespace Namespace    = new CodeNamespace( @"RunScript" );
+        CodeTypeDeclaration CodeTypeDecl = new CodeTypeDeclaration();
+
+        CodeNamespaceImport[] NamespaceImports = {
+          new CodeNamespaceImport( @"System" ),
+          new CodeNamespaceImport( @"System.Collections" ),
+          new CodeNamespaceImport( @"System.Data" ),
+          new CodeNamespaceImport( @"System.Data.SqlClient" ),
+          new CodeNamespaceImport( @"System.IO" ),
+          new CodeNamespaceImport( @"System.Xml" ),
+        };
+        Namespace.Imports.AddRange( NamespaceImports );
+
+        return "";
+      }
 
 	    protected override void ParseActionElement() {}
 
@@ -29,23 +66,6 @@ namespace XInstall.Core.Actions {
 		    set {
 			    this._Language = value;
 
-			    switch ( this._Language ) {
-                    case "C#":
-                        break;
-
-                    case "CSharp":
-                        break;
-
-                    case "J#":
-                        break;
-
-                    case "VBNet":
-                        break;
-
-                    default :
-                        base.FatalErrorMessage( ".", String.Format( @"unknown language specified: {0}", this._Language ), 1660, -99 );
-                        break;
-			    }
 		    }
 	    }
 
