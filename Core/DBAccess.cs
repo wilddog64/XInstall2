@@ -222,8 +222,7 @@ namespace XInstall.Core {
         /// </summary>
         public bool isConnect {
             get {
-                return SqlConn.State == ConnectionState.Open
-                       ? true : false;
+                return SqlConn.State == ConnectionState.Open ? true : false;
             }
         }
 #endregion
@@ -259,12 +258,13 @@ namespace XInstall.Core {
                     SqlConn.ConnectionString = _ConnectionString.ToString ();
                     SqlConn.Open ();
                 }
-            } catch ( SqlException se ) {
+            }
+            catch ( SqlException se ) {
                 StringBuilder sbExceptionMsg = new StringBuilder ();
                 sbExceptionMsg.AppendFormat("unable connect to server: {0}, database: {1}, reason: {2}", 
-                                                               SqlConn.DataSource, 
-                                                               SqlConn.Database, 
-                                                               se.Message);
+                               SqlConn.DataSource, 
+                               SqlConn.Database, 
+                               se.Message);
                 throw new Exception (sbExceptionMsg.ToString ());
             }
         }
@@ -305,10 +305,11 @@ namespace XInstall.Core {
                     SqlConn.ConnectionString = _ConnectionString.ToString ();
                     SqlConn.Open ();
                 }
-            } catch ( SqlException se ) {
+            }
+            catch ( SqlException se ) {
                 StringBuilder sbExceptionMsg = new StringBuilder ();
                 sbExceptionMsg.AppendFormat("unable connect to server: {0}, database: {1}, reason: {2}",
-                                            SqlConn.DataSource, SqlConn.Database, se.Message);
+                              SqlConn.DataSource, SqlConn.Database, se.Message);
                 throw new Exception(sbExceptionMsg.ToString ());
             }
 
@@ -328,9 +329,9 @@ namespace XInstall.Core {
             }
 
             if ( this.UserName            != null &&
-                    this.UserPassword        != null &&
-                    this.UserName.Length     > 0     &&
-                    this.UserPassword.Length > 0 ) {
+                 this.UserPassword        != null &&
+                 this.UserName.Length     > 0     &&
+                 this.UserPassword.Length > 0 ) {
                 _IntegratedSecurity = "false";
             }
 
@@ -342,12 +343,12 @@ namespace XInstall.Core {
             _ConnectionString.AppendFormat("Connect Timeout={0};",       this._ConnectionTimeout);
 
             if ( this.UserName               != null &&
-                    this.UserPassword        != null &&
-                    this.UserName.Length     > 0     &&
-                    this.UserPassword.Length > 0     &&
-                    this.IntegratedSecurity.IndexOf("false") > -1 ) {
-                _ConnectionString.AppendFormat ("uid={0};", this.UserName);
-                _ConnectionString.AppendFormat ("pwd={0};", this.UserPassword);
+                 this.UserPassword           != null &&
+                 this.UserName.Length        > 0     &&
+                 this.UserPassword.Length    > 0     &&
+                 this.IntegratedSecurity.IndexOf("false") > -1 ) {
+                _ConnectionString.AppendFormat("uid={0};", this.UserName);
+                _ConnectionString.AppendFormat("pwd={0};", this.UserPassword);
             }
         }
 
@@ -371,9 +372,9 @@ namespace XInstall.Core {
                     foreach ( SqlParameter SqlParam in SqlParams )
                     SqlStoredProc.Parameters.Add( SqlParam );
 
-                if ( OrderByCol.Length    > 0 &&
-                        PersistentFile.Length > 0 &&
-                        SqlParams.Length == 0 ) {
+                if ( OrderByCol.Length     > 0 &&
+                     PersistentFile.Length > 0 &&
+                     SqlParams.Length      == 0 ) {
                     sda = new SqlDataAdapter( SqlStoredProc );
                     sda.Fill( ds );
                     if ( OrderByCol.Length > 0 )
@@ -422,9 +423,7 @@ namespace XInstall.Core {
                         ArrayList Fields = new ArrayList();
                         for ( int i = 0; i < sdr.FieldCount; i++ ) {
                             string FieldName = sdr.GetName(i);
-                            string Value     = String.Format( "{0}:{1}",
-                                               FieldName,
-                                               sdr.GetSqlValue(i) );
+                            string Value     = String.Format( "{0}:{1}", FieldName, sdr.GetSqlValue(i) );
                             Fields.Add( Value );
 
                         }
@@ -441,10 +440,7 @@ namespace XInstall.Core {
                             ArrayList Fields = new ArrayList();
                             for ( int i = 0; i < sdr.FieldCount; i++ ) {
                                 string FieldName = sdr.GetName(i);
-                                string Value     =
-                                    String.Format( "{0}:{1}",
-                                                   FieldName,
-                                                   sdr.GetSqlValue(i) );
+                                string Value     = String.Format( "{0}:{1}", FieldName, sdr.GetSqlValue(i) );
                                 Fields.Add( Value );
                             }
                             Results.Add( Fields );
@@ -486,9 +482,7 @@ namespace XInstall.Core {
                     while ( sdr.Read() ) {
                         ArrayList Fields = new ArrayList();
                         for ( int i = 0; i < sdr.FieldCount; i++ ) {
-                            string Value = String.Format( "{0}:{1}",
-                                                          ColName,
-                                                          sdr[ColName] );
+                            string Value = String.Format( "{0}:{1}", ColName, sdr[ColName] );
                             Fields.Add( Value );
 
                         }
@@ -569,10 +563,11 @@ namespace XInstall.Core {
                     default:
                         throw new System.Exception ("unknown command type!!");
                 }
-            } catch ( SqlException e ) {
-                throw new Exception ("CreateSqlDataAdapter: error happen" +
-                                     e.Message);
-            } finally {
+            }
+            catch ( SqlException e ) {
+                throw new Exception ("CreateSqlDataAdapter: error happen" + e.Message);
+            }
+            finally {
                 SqlConn.Close();
             }
 
@@ -596,7 +591,8 @@ namespace XInstall.Core {
                     SqlConn.ConnectionString = _ConnectionString.ToString ();
                     SqlConn.Open ();
                 }
-            } catch ( SqlException e ) {
+            }
+            catch ( SqlException e ) {
                 throw e;
             }
         }
@@ -613,7 +609,8 @@ namespace XInstall.Core {
                     SqlConn.ConnectionString = ConnectionString;
                     SqlConn.Open ();
                 }
-            } catch ( SqlException se ) {
+            }
+            catch ( SqlException se ) {
                 throw se;
             }
         }
@@ -669,9 +666,11 @@ namespace XInstall.Core {
                 if ( SqlCmd.Connection.State != ConnectionState.Open )
                     SqlCmd.Connection.Open();
                 SqlReader = SqlCmd.ExecuteReader ();
-            } catch ( SqlException e ) {
+            }
+            catch ( SqlException e ) {
                 throw e;
-            } finally {
+            }
+            finally {
                 SqlCmd.Connection.Close();
             }
             return SqlReader;
@@ -715,7 +714,8 @@ namespace XInstall.Core {
                 ds = new DataSet (DataSetName);
                 SqlDataAdapter mySqlDataAdapter = CreateSqlDataAdapter (sqlStmt, cmdType);
                 mySqlDataAdapter.Fill (ds, DataSetName);
-            } catch ( SqlException e ) {
+            }
+            catch ( SqlException e ) {
                 throw e;
             }
             return ds;

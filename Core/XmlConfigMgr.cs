@@ -88,8 +88,7 @@ namespace XInstall.Core {
         /// property NodeName -
         ///     gets a node name
         /// </summary>
-        public string NodeName
-        {
+        public string NodeName {
             get { return _strNodeName; }
         }
 
@@ -99,8 +98,7 @@ namespace XInstall.Core {
         ///     gets a boolean value that indicates if
         ///     a given node has a child nodes
         /// </summary>
-        public bool HasChildren
-        {
+        public bool HasChildren {
             get {
                 if ( _xnNode != null )
                     _hasChildren = _xnNode.HasChildNodes;
@@ -114,8 +112,7 @@ namespace XInstall.Core {
         ///     gets a boolean value that indicates if
         ///     a given node has attributes
         /// </summary>
-        public bool HasAttribute
-        {
+        public bool HasAttribute {
             get {
                 _hasAttribute = _xacNodeAttributes != null ? true : false;
                 return _hasAttribute;
@@ -127,8 +124,7 @@ namespace XInstall.Core {
         /// property Attributes -
         ///     gets attributes for a given node
         /// </summary>
-        public XmlAttributeCollection Attributes
-        {
+        public XmlAttributeCollection Attributes {
             get { return _xacNodeAttributes; }
         }
 
@@ -137,8 +133,7 @@ namespace XInstall.Core {
         /// property Node -
         ///     gets a particular Xml node
         /// </summary>
-        public XmlNode Node
-        {
+        public XmlNode Node {
             get { return _xnNode; }
         }
 
@@ -270,8 +265,8 @@ namespace XInstall.Core {
             XmlNodeList nlNodeList = _xeDocumentRoot.SelectNodes( strXPathExpr );
             for ( int iNodeIdx = 0; iNodeIdx < nlNodeList.Count; iNodeIdx++ ) {
                 XmlNode xnNode = nlNodeList[iNodeIdx];
-                XmlConfKeywordInfoEventArg XmlCFKeywordInfo = new XmlConfKeywordInfoEventArg ( xnNode );
-                OnXmlConfigKeywordChange ( XmlCFKeywordInfo );
+                XmlConfKeywordInfoEventArg XmlCFKeywordInfo = new XmlConfKeywordInfoEventArg( xnNode );
+                OnXmlConfigKeywordChange( XmlCFKeywordInfo );
             }
         }
 
@@ -333,10 +328,12 @@ namespace XInstall.Core {
             try {
                 _CXmlDoc = new XmlDocument();
                 _CXmlDoc.Load ( this._strXmlFile );
-            } catch ( XmlException xe ) {
+            }
+            catch ( XmlException xe ) {
                 base.FatalErrorMessage( ".", String.Format("{0}: {1}", this.Name, xe.Message), 1660 );
                 throw new Exception();
-            } catch ( System.IO.FileNotFoundException ) {
+            }
+            catch ( System.IO.FileNotFoundException ) {
                 base.FatalErrorMessage( ".", String.Format( "{0}: cannot find file {1}", this.Name, this._strXmlFile ), 1660 );
                 throw;
             }
@@ -356,11 +353,13 @@ namespace XInstall.Core {
             try {
                 this._CXmlDoc = new XmlDocument();
                 this._CXmlDoc.Load( this._strXmlFile );
-            } catch ( XmlException xe ) {
+            }
+            catch ( XmlException xe ) {
                 string strExceptionMessage = String.Format( @"{0}: Parsing Error with {1}, message: {2}", this.Name, strXmlFile, xe.Message);
 
                 base.FatalErrorMessage( ".", strExceptionMessage, 1660, false );
-            } catch ( System.IO.FileNotFoundException ) {
+            }
+            catch ( System.IO.FileNotFoundException ) {
                 base.FatalErrorMessage( ".", String.Format( "{0}: cannot find file {1}", this.Name, this._strXmlFile ), 1660 );
                 throw;
             }

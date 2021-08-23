@@ -132,8 +132,7 @@ namespace XInstall.Core {
 		/// property Name -
 		///     gets the class name of the object.
 		/// </summary>
-		public new string Name
-		{
+		public new string Name {
 		   get { return this.GetType().Name; }
 		}
 
@@ -142,8 +141,7 @@ namespace XInstall.Core {
 		/// property LoadAssembly -
 		///     sets the assembly file to be loaded
 		/// </summary>
-		public string LoadAssembly
-		{
+		public string LoadAssembly {
 		   set {
 			   string strAssemblyFile    = value;
 			   AssemblyName assemblyName = new AssemblyName();
@@ -179,8 +177,7 @@ namespace XInstall.Core {
 		/// property ExitCode -
 		///     gets an exitcode from the ClassLoader object
 		/// </summary>
-		public new int ExitCode
-		{
+		public new int ExitCode {
 		   get { return (int) this._cocOperationCode; }
 		}
 
@@ -189,8 +186,7 @@ namespace XInstall.Core {
 		/// property ExitMessage -
 		///     gets the error message from the object
 		/// </summary>
-		public new string ExitMessage
-		{
+		public new string ExitMessage {
 		   get { return this._strExitMessage; }
 		}
 
@@ -233,8 +229,7 @@ namespace XInstall.Core {
 		/// property ActionObjectList -
 		///     gets a list of all available action objects
 		/// </summary>
-		public Hashtable ActionObjectTable
-		{
+		public Hashtable ActionObjectTable {
 		   get { return this._htTypeLookupTable; }
 		}
 

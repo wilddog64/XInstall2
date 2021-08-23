@@ -13,9 +13,9 @@ namespace XInstall.Core {
                      AttributeTargets.Property)]
     public class ActionAttribute : Attribute {
 #region private member variables
-        private string _strName          = null;
-        private bool   _bNeeded          = true;
-        private Object _objDefault       = null;
+        private string _strName    = null;
+        private bool   _bNeeded    = true;
+        private Object _objDefault = null;
 
 #endregion
 

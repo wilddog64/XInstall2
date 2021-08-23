@@ -35,8 +35,7 @@ namespace XInstall.Core {
         /// The interface property that returns the exit code
         /// from the current object
         /// </summary>
-        int ExitCode
-        {
+        int ExitCode {
             get;
         }
 
@@ -44,8 +43,7 @@ namespace XInstall.Core {
         /// The interface property that retrieves the message
         /// from the action object.
         /// </summary>
-        string ExitMessage
-        {
+        string ExitMessage {
             get;
         }
 
@@ -53,8 +51,7 @@ namespace XInstall.Core {
         /// The interface property that gets the name of the
         /// action object.
         /// </summary>
-        string Name
-        {
+        string Name {
             get;
         }
 
@@ -62,8 +59,7 @@ namespace XInstall.Core {
         /// The interface property that gets the state of
         /// an action object.
         /// </summary>
-        bool IsComplete
-        {
+        bool IsComplete {
             get;
         }
 

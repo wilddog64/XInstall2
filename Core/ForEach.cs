@@ -9,8 +9,7 @@ using System.Xml;
 // using Ops.Proxy;
 
 namespace XInstall.Core {
-    public enum AllowTypes
-    {
+    public enum AllowTypes {
         File         = 0,
         Line,
         F5NodeGroup,
@@ -73,8 +72,7 @@ namespace XInstall.Core {
         /// class should be executed or not
         /// </summary>
         [Action("runnable", Needed=false, Default="true")]
-        public new string Runnable
-        {
+        public new string Runnable {
             set { base.Runnable = bool.Parse( value ); }
         }
 
@@ -83,8 +81,7 @@ namespace XInstall.Core {
         /// foreach node
         /// </summary>
         [Action("item", Needed=true)]
-        public string Item
-        {
+        public string Item {
             get { return ActionVariables.ScanVariable( this._Item ); }
             set {
                 this._Item = value;
@@ -106,8 +103,7 @@ namespace XInstall.Core {
         ///                   in the BigIP.
         /// </summary>
         [Action("type", Needed=true)]
-        public string Type
-        {
+        public string Type {
             get { return this._Type; }
             set { this._Type = value; }
         }
@@ -117,8 +113,7 @@ namespace XInstall.Core {
         /// a given type
         /// </summary>
         [Action("in", Needed=true)]
-        public string In
-        {
+        public string In {
             get { return this._In; }
             set { this._In = value; }
         }
@@ -129,15 +124,13 @@ namespace XInstall.Core {
         /// it to a different one.
         /// </summary>
         [Action("delim", Needed=false, Default=@",")]
-        public string Delim
-        {
+        public string Delim {
             get { return this._Delim; }
             set { this._Delim = value; }
         }
 
         [Action("bigiphost", Needed=false, Default="")]
-        public string BigIPHost
-        {
+        public string BigIPHost {
             get { return this._BigIPHost; }
             set { this._BigIPHost = value; }
         }
@@ -145,14 +138,12 @@ namespace XInstall.Core {
         /// <summary>
         ///  returns the name of an object
         /// </summary>
-        public new string Name
-        {
+        public new string Name {
             get { return this.GetType().Name; }
         }
 
         [Action("usethread", Needed=false, Default="false")]
-        public string UseThread
-        {
+        public string UseThread {
             get { return this._UseThread.ToString(); }
             set { this._UseThread = bool.Parse( value ); }
         }
@@ -162,8 +153,7 @@ namespace XInstall.Core {
         /// a hostname/machine name.
         /// </summary>
         [Action("resolvehostname", Needed=false, Default="true")]
-        public string ResolveHostName
-        {
+        public string ResolveHostName {
             get { return this._ResolveHostName; }
             set {
                 this._ResolveHostName = value;
@@ -177,8 +167,7 @@ namespace XInstall.Core {
         /// <summary>
         /// returns the name of a object
         /// </summary>
-        protected override string ObjectName
-        {
+        protected override string ObjectName {
             get { return this.Name; }
         }
 
@@ -186,8 +175,7 @@ namespace XInstall.Core {
         /// an override property that returns the foreach class
         /// instance
         /// </summary>
-        protected override object ObjectInstance
-        {
+        protected override object ObjectInstance {
             get { return this; }
         }
 

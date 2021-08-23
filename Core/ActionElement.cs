@@ -186,8 +186,7 @@ namespace XInstall.Core {
         /// <summary>
         /// get/set an output file for logging purpose.
         /// </summary>
-        protected string OutputFile
-        {
+        protected string OutputFile {
             set { base.FileName = value; }
         }
 
@@ -196,8 +195,7 @@ namespace XInstall.Core {
         /// get/set a flag to indicate a given object
         /// has completed or not
         /// </summary>
-        public virtual bool IsComplete
-        {
+        public virtual bool IsComplete {
             get { return this._bIsCompleted; }
             set { this._bIsCompleted = value; }
         }
@@ -208,8 +206,7 @@ namespace XInstall.Core {
         /// is allowed to generated an exception
         /// </summary>
         [Action("allowgenerateexception", Needed=false, Default="false")]
-        protected bool AllowGenerateException
-        {
+        protected bool AllowGenerateException {
             get { return this._bAllowException; }
             set { this._bAllowException = value; }
         }
@@ -220,8 +217,7 @@ namespace XInstall.Core {
         /// an object is to be executed or not
         /// </summary>
         [Action("runnable", Needed=false, Default="false")]
-        protected bool Runnable
-        {
+        protected bool Runnable {
             get { return this._bRunnable; }
             set { this._bRunnable = value; }
         }
@@ -232,8 +228,7 @@ namespace XInstall.Core {
         /// is going to ignore an error or not
         /// </summary>
         [Action("skiperror", Needed=false, Default="false")]
-        protected bool SkipError
-        {
+        protected bool SkipError {
             get { return this._bSkipError; }
             set { this._bSkipError = value; }
         }
@@ -356,7 +351,8 @@ namespace XInstall.Core {
                 if ( !this.SkipError ) {
                     base.FatalErrorMessage( ".", this.ExitMessage, 1660 );
                     throw;
-                } else
+                }
+                else
                     base.LogItWithTimeStamp( LEVEL.ERROR, this.ExitMessage );
             } 
             catch ( ArgumentException ae ) {
@@ -366,7 +362,8 @@ namespace XInstall.Core {
                 if ( !this.SkipError ) {
                     base.FatalErrorMessage( ".", this.ExitMessage, 1660 );
                     throw;
-                } else
+                }
+                else
                     base.LogItWithTimeStamp( LEVEL.ERROR, this.ExitMessage );
             } 
             catch ( System.Reflection.TargetInvocationException tie ) {
@@ -376,7 +373,8 @@ namespace XInstall.Core {
                 if ( !this.SkipError ) {
                     base.FatalErrorMessage( ".", this.ExitMessage, 1660 );
                     throw;
-                } else
+                }
+                else
                     base.LogItWithTimeStamp( LEVEL.ERROR, this.ExitMessage );
 
             } 
@@ -400,7 +398,8 @@ namespace XInstall.Core {
                 if ( !this.SkipError ) {
                     base.FatalErrorMessage( ".", this.ExitMessage, 1660 );
                     throw;
-                } else
+                }
+                else
                     base.LogItWithTimeStamp( LEVEL.ERROR, this.ExitMessage );
             } 
             catch ( System.Xml.XmlException xe ) {
@@ -409,7 +408,8 @@ namespace XInstall.Core {
                 if ( !this.SkipError ) {
                     base.FatalErrorMessage( ".", this.ExitMessage, 1660 );
                     throw;
-                } else
+                }
+                else
                     base.LogItWithTimeStamp( LEVEL.ERROR, this.ExitMessage );
             } 
             catch ( System.Security.SecurityException se ) {
@@ -418,7 +418,8 @@ namespace XInstall.Core {
                 if ( !this.SkipError ) {
                     base.FatalErrorMessage( ".", this.ExitMessage, 1660 );
                     throw;
-                } else
+                }
+                else
                     base.LogItWithTimeStamp( LEVEL.ERROR, this.ExitMessage );
             } 
             catch ( Exception e ) {
@@ -613,7 +614,8 @@ namespace XInstall.Core {
                     if ( AttributeNode == null && aa.Needed ) {
                         this.SetExitMessage( "{0}: {1} is a required attribute", this.ObjectName, aa.Name );
                         base.FatalErrorMessage( ".", this.ExitMessage, 1660 );
-                    } else if ( AttributeNode == null && !aa.Needed && aa.Default != null )
+                    }
+                    else if ( AttributeNode == null && !aa.Needed && aa.Default != null )
                         Params[0] = aa.Default;
                     else if ( xn == null && !aa.Needed )
                         continue;
@@ -622,7 +624,8 @@ namespace XInstall.Core {
                         if ( Value.Length == 0 && aa.Default == null ) {
                             this.SetExitMessage( "{0}: {1} cannot be empty!", this.ObjectName, aa.Name );
                             base.FatalErrorMessage( ".", this.ExitMessage, 1660 );
-                        } else if ( Value.Length == 0 && aa.Default != null )
+                        }
+                        else if ( Value.Length == 0 && aa.Default != null )
                             Params[0] = aa.Default;
                         else
                             Params[0] = ActionVariables.ScanVariable(Value);
@@ -705,9 +708,7 @@ namespace XInstall.Core {
                 if ( VariableNameNode != null ) {
                     string VariableName = VariableNameNode.Value;
                     if ( !ActionVariables.IsVariableExist( VariableName ) ) {
-                        string VariableValue = VariableValueNode != null ?
-                                               VariableValueNode.Value   :
-                                               "";
+                        string VariableValue = VariableValueNode != null ?  VariableValueNode.Value : "";
                         ActionVariables.Add( VariableName, VariableValue );
                     }
 
