@@ -15,7 +15,7 @@
   <defvar name="mailserver"     value="smtp.180prod.com" />
   <defvar name="recipients"     value="${logon_user}@180Solutions.com, tlehmann@180Solutions.com" />
   <defvar name="subject"        value="website: ${rel_sitename} ${PackageName} start" />
-  <defvar name="msg"            
+  <defvar name="msg"
     value="${current_date} - ${PackageName}: from ${release_server} to ${staging_server}: is this what you want? " />
   <defvar name="RoboCopyPath"   value="c:\tools\bin" />
   <defvar name="Sender"         value="${logon_user}@180Solutions.com" />
@@ -52,13 +52,13 @@
       createdestdir="true"
       runnable="false" />
 
-    <blat blatpath="${blatpath}" 
+    <blat blatpath="${blatpath}"
       sender="${sender}"
       subject="${subject}"
       recipients="${recipients}"
       smtpserver="${mailserver}"
       runnable="false"
-      message="${msg}" />             
+      message="${msg}" />
 
   </ActionSuccess>
 
