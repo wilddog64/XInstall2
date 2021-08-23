@@ -1,8 +1,0 @@
-bin\debug\XInstall.Util.dll
-bin\debug\XInstall.Util.pdb
-obj\Debug\ResolveAssemblyReference.cache
-obj\Debug\XInstall.Util.dll
-obj\Debug\XInstall.Util.pdb
-..\build\bin\release\XInstall.Util.dll
-obj\Release\ResolveAssemblyReference.cache
-obj\Release\XInstall.Util.dll
