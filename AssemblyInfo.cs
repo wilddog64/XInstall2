@@ -12,7 +12,7 @@ using System.Runtime.CompilerServices;
 [assembly: AssemblyCompany("HomeBoxOffice")]
 [assembly: AssemblyProduct("Console App")]
 [assembly: AssemblyCopyright("MIT")]
-[assembly: AssemblyTrademark("")]
+[assembly: AssemblyTrademark("C")]
 [assembly: AssemblyCulture("")]
 
 //
