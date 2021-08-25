@@ -10,7 +10,7 @@ using System.Runtime.CompilerServices;
 [assembly: AssemblyDescription("A C# XML Installer")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("HomeBoxOffice")]
-[assembly: AssemblyProduct("")]
+[assembly: AssemblyProduct("Console App")]
 [assembly: AssemblyCopyright("")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
