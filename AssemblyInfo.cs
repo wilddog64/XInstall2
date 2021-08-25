@@ -13,7 +13,7 @@ using System.Runtime.CompilerServices;
 [assembly: AssemblyProduct("Console App")]
 [assembly: AssemblyCopyright("MIT")]
 [assembly: AssemblyTrademark("C")]
-[assembly: AssemblyCulture("")]
+[assembly: AssemblyCulture("English")]
 
 //
 // Version information for an assembly consists of the following four values:
