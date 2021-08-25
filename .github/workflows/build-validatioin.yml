@@ -24,7 +24,7 @@ jobs:
           - macOS-latest
 
     steps:
-    - uses: actions/checkouts@v2
+    - uses: actions/checkout@v2
       with:
         token: ${{ secrets.BUILD_ACCESS_TOKEN }}
     - name: uses dotnet core
