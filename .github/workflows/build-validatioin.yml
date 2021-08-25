@@ -25,11 +25,12 @@ jobs:
 
     steps:
     - uses: actions/checkouts@v2
+      with:
+        token: ${{ secrets.BUILD_ACCESS_TOKEN }}
     - name: uses dotnet core
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: ${{ env.DOTNET_VERSION }}
-        token: ${{ secrets.BUILD_ACCESS_TOKEN }}
 
     - name: install dependencies
       run: dotnet restore
