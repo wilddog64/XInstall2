@@ -26,8 +26,6 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-      with:
-        token: ${{ github.token }}
     - name: uses dotnet core
       uses: actions/setup-dotnet@v1
       with:
