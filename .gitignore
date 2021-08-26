@@ -11,5 +11,4 @@ build
 *.txt
 obj/
 bin/
-.vscode/
 tags
