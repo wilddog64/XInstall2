@@ -204,7 +204,7 @@ namespace XInstall.Core {
                           _psiProcessInfo.FileName = Environment.GetEnvironmentVariable("comspec");
                 }
                 else {
-                      _psiProcessInfo.FileName  = "sh";
+                      _psiProcessInfo.FileName  = "bash";
                       _psiProcessInfo.Arguments = " -c " + String.Format("{0}", _strExtProgName);
                 }
             }
