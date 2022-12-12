@@ -38,8 +38,7 @@ namespace XInstall.CustomTestActions {
 
 
         [SQL("DBServer", Required=true)]
-        public string DBServer
-        {
+        public string DBServer {
             get {
                 return this._DB.DataSource;
             }
@@ -50,8 +49,7 @@ namespace XInstall.CustomTestActions {
 
 
         [SQL("Database", Required=true)]
-        public string DBCategory
-        {
+        public string DBCategory {
             get {
                 return this._DB.InitCatlog;
             }
@@ -62,8 +60,7 @@ namespace XInstall.CustomTestActions {
 
 
         [SQL("UserName", Required=false, Default="")]
-        public string DBUserName
-        {
+        public string DBUserName {
             get {
                 return this._DB.UserName;
             }
@@ -73,8 +70,7 @@ namespace XInstall.CustomTestActions {
         }
 
         [SQL("TrustedConnection", Required=false, Default="true")]
-        public string TrustedConnection
-        {
+        public string TrustedConnection {
             set {
                 bool Trusted = Convert.ToBoolean( value );
 
@@ -86,16 +82,14 @@ namespace XInstall.CustomTestActions {
         }
 
 
-        public bool AboveThreshold
-        {
+        public bool AboveThreshold {
             get {
                 return this._AboveThreshold;
             }
         }
 
 
-        public bool UnderThreshold
-        {
+        public bool UnderThreshold {
             get {
                 return this._UnderThreshold;
             }
@@ -103,8 +97,7 @@ namespace XInstall.CustomTestActions {
 
 
         [SQL("UserPass", Required=false, Default="")]
-        public string DBUserPass
-        {
+        public string DBUserPass {
             get {
                 return this._DB.UserPassword;
             }
@@ -115,23 +108,20 @@ namespace XInstall.CustomTestActions {
 
 
         [SQL("Enable", Required=false, Default="true")]
-        public string Enable
-        {
+        public string Enable {
             set {
                 this._Enable = bool.Parse(value);
             }
         }
 
 
-        public StoredProcCollection StoredProcs
-        {
+        public StoredProcCollection StoredProcs {
             get {
                 return this._StoredProcs;
             }
         }
 
-        protected string ObjectName
-        {
+        protected string ObjectName {
             get {
                 return this.GetType().Name;
             }
@@ -166,16 +156,14 @@ namespace XInstall.CustomTestActions {
 
 #region ISqlInfo Members
 
-        public XmlNodeList SqlParams
-        {
+        public XmlNodeList SqlParams {
             get {
                 return this._ActionNode.SelectNodes( "Params" );
             }
         }
 
 
-        public XmlNode SqlExpectedResult
-        {
+        public XmlNode SqlExpectedResult {
             get {
                 return this._ActionNode.SelectSingleNode( "ExpectedResults" );
             }

@@ -343,7 +343,7 @@ namespace XInstall.Core {
                     this.SetExitMessage( @"{0}: attribute runnable is set to false, stop running!", this.ObjectName);
                     base.LogItWithTimeStamp( this.ExitMessage );
                 }
-            } 
+            }
             catch ( System.Reflection.TargetException te ) {
                 if ( this.ExitMessage.Length == 0 )
                     this.SetExitMessage( "{0}: {1} - {2}", this.ObjectName, te.Message );
@@ -354,7 +354,7 @@ namespace XInstall.Core {
                 }
                 else
                     base.LogItWithTimeStamp( LEVEL.ERROR, this.ExitMessage );
-            } 
+            }
             catch ( ArgumentException ae ) {
                 // if ( this.ExitMessage.Length == 0 )
                 this.SetExitMessage( "{0}: {1} - exception happened: {0} ", this.ObjectName, ae.ParamName, ae.Message  );
@@ -365,7 +365,7 @@ namespace XInstall.Core {
                 }
                 else
                     base.LogItWithTimeStamp( LEVEL.ERROR, this.ExitMessage );
-            } 
+            }
             catch ( System.Reflection.TargetInvocationException tie ) {
                 if ( this.ExitMessage.Length == 0 )
                     this.SetExitMessage( "{0}: {1} - exeption happened: {2|", this.ObjectName, "Execute()", tie.InnerException.Message );
@@ -377,7 +377,7 @@ namespace XInstall.Core {
                 else
                     base.LogItWithTimeStamp( LEVEL.ERROR, this.ExitMessage );
 
-            } 
+            }
             catch ( System.ComponentModel.Win32Exception w32e ) {
                 if ( this.ExitMessage.Length == 0 ) {
                     this.SetExitMessage( "{0}: {1} - Win32 error: {2}",
@@ -387,10 +387,10 @@ namespace XInstall.Core {
                 if ( !this.SkipError ) {
                     base.FatalErrorMessage( ".", this.ExitMessage, 1660 );
                     throw;
-                } 
+                }
                 else
                     base.LogItWithTimeStamp( LEVEL.ERROR, this.ExitMessage );
-            } 
+            }
             catch ( System.Runtime.InteropServices.COMException ee ) {
                 if ( this.ExitMessage != null && this.ExitMessage.Length == 0 ) {
                     this.SetExitMessage( "{0}: {1} COM component error: {2}", this.ObjectName, ee.ErrorCode, ee.Message );
@@ -401,7 +401,7 @@ namespace XInstall.Core {
                 }
                 else
                     base.LogItWithTimeStamp( LEVEL.ERROR, this.ExitMessage );
-            } 
+            }
             catch ( System.Xml.XmlException xe ) {
                 this.SetExitMessage( "{0}: XML error: line number {1}, postion {2}, message {3}", this.ObjectName, xe.LineNumber, xe.LinePosition, xe.Message );
 
@@ -411,7 +411,7 @@ namespace XInstall.Core {
                 }
                 else
                     base.LogItWithTimeStamp( LEVEL.ERROR, this.ExitMessage );
-            } 
+            }
             catch ( System.Security.SecurityException se ) {
                 this.SetExitMessage( "{0} - insufficient permission {1}", this.ObjectName, se.Message );
 
@@ -421,7 +421,7 @@ namespace XInstall.Core {
                 }
                 else
                     base.LogItWithTimeStamp( LEVEL.ERROR, this.ExitMessage );
-            } 
+            }
             catch ( Exception e ) {
                 if ( this.ExitMessage != null && this.ExitMessage.Length == 0 ) {
                     this.SetExitMessage( "{0}: exception happened, message - {1}", this.ObjectName, e.Message);
@@ -491,7 +491,7 @@ namespace XInstall.Core {
                     throw new VariableExistedException( Name, "variable already existed!" );
                 else
                     this._Variables[ Name ] = Value;
-            } 
+            }
             else
                 throw new InvalidVariableNameException( Name, "variable name is not valid!" );
         }
@@ -516,7 +516,7 @@ namespace XInstall.Core {
                         string ReplaceString = "${" + VariableName + "}";
                         InputString          = InputString.Replace( ReplaceString, Value );
                         m                    = this._ValueExtractor.Match( InputString );
-                    } 
+                    }
                     else
                         throw new VariableNotDefinedException( VariableName, String.Format("variable {0} is not defined", VariableName) );
 
@@ -668,10 +668,10 @@ namespace XInstall.Core {
                         continue;
                     if ( Node.HasChildNodes ) {
                         this.ScanVariablesInNodes( Node );
-                    } 
+                    }
                     else if ( Node.NodeType == XmlNodeType.Text ) {
                         Node.Value = this.ScanVariable( Node.Value );
-                    } 
+                    }
                     else if ( Node.Attributes != null ) {
                         XmlAttributeCollection xac = Node.Attributes;
                         foreach ( XmlAttribute xa in xac ) {
@@ -679,7 +679,7 @@ namespace XInstall.Core {
                             XmlNode AttribNode = xac.GetNamedItem( xa.Name );
                             AttribNode.Value   = AttribValue;
                         }
-                    } 
+                    }
                     else {
                         if ( Node.Value.Length != 0 )
                             Node.Value = ActionVariables.ScanVariable( Node.Value );
@@ -687,7 +687,7 @@ namespace XInstall.Core {
                             Node.InnerText = ActionVariables.ScanVariable( Node.InnerText );
                     }
                 }
-            } 
+            }
             else {
                 XmlAttributeCollection xac = xn.Attributes;
                 foreach ( XmlAttribute xa in xac ) {
