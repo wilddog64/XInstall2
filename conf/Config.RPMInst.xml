@@ -7,20 +7,20 @@
 
        <!-- start building RPMDev -->
 
-       <!-- 
+       <!--
           for iisweb tag:
 
-             1. change action to create if the website is not there yet 
+             1. change action to create if the website is not there yet
              2. target server should be the one that you want to hit
              3. websiteroot is the root directory of the of the webiste. The directory
                 will be created automatically if a given one does not exist.
              4. websitehostname is the Header value property in the advanced web site
                 identity for a gvien web site.
-             5. if donstart is set to true, then after a given web site is created, it 
+             5. if donstart is set to true, then after a given web site is created, it
                 remains stop.
              6. port when not set, will use stardard http port:80.  For RPM application,
-                the following ports are used: 
-                 
+                the following ports are used:
+
                     RPMDev        - port 80
                     RPMWebService - port 82
                     RequestDAL    - port 83
@@ -28,7 +28,7 @@
 
           for robocopy tag:
 
-             1. When action is set to mir, it will mirrow the source directory to 
+             1. When action is set to mir, it will mirrow the source directory to
                 destination.  Any thing not exist in the source directory will be
                 removed from the destination directory.
 
@@ -43,7 +43,7 @@
 
          keys in web.config needed to be changed:
 
-             1. 
+             1.
 
         -->
 
@@ -53,12 +53,12 @@
                websiteroot="e:\inetpub\RPMDev"
                websitehostname="RPMDev"
                dontstart="false"
-               port="80" 
+               port="80"
                runnable="false" />
 
        <robocopy action="mir"
                  sourcedirectory="\\redmond\files\fsitqa\rpm\dev builds\pre v1.0\12192003\RPMDev"
-                 destinationdirectory="\\tkfsani01\e$\inetpub\RPMDEV" 
+                 destinationdirectory="\\tkfsani01\e$\inetpub\RPMDEV"
                  runnable="false" />
 
 <!--
@@ -74,7 +74,7 @@
    	       skiperror="false"
                websitename="RPMDEV"
                websiteroot="e:\inetpub\RPMDEV"
-               websitehostname="tkfsdevi01" 
+               websitehostname="tkfsdevi01"
                runnable="false" />
 
        <!-- end building RPMDev -->
@@ -88,19 +88,19 @@
                websiteroot="e:\inetpub\RPMWebService"
                websitehostname="RPMWebService"
                dontstart="false"
-               port="82" 
+               port="82"
                runnable="false" />
 
        <robocopy action="mir"
                 sourcedirectory="\\redmond\files\fsitqa\rpm\dev builds\pre v1.0\12192003\RPMWebService"
-                destinationdirectory="\\tkfsani01\e$\inetpub\RPMWebService" 
+                destinationdirectory="\\tkfsani01\e$\inetpub\RPMWebService"
                 runnable="false" />
 
 <!--
        <regex action="replace"
               searchpattern="rpmdevi01"
               replacewith="tkfsani01"
-              file="\\tkfsani01\e$\inetpub\RPMWebService\web.config" 
+              file="\\tkfsani01\e$\inetpub\RPMWebService\web.config"
               runnable="false" />
 -->
 
@@ -109,7 +109,7 @@
    	       skiperror="false"
                websitename="RPMWebService"
                websiteroot="e:\inetpub\RPMWebService"
-               websitehostname="tkfsdevi01" 
+               websitehostname="tkfsdevi01"
                runnable="false" />
 
        <!-- end building RPMWebService -->
@@ -123,19 +123,19 @@
                websiteroot="e:\inetpub\RequestDAL"
                websitehostname="RequestDAL"
                dontstart="false"
-               port="83" 
+               port="83"
                runnable="false" />
 
        <robocopy action="mir"
                 sourcedirectory="\\redmond\files\fsitqa\rpm\dev builds\pre v1.0\12192003\RequestDAL"
-                destinationdirectory="\\tkfsani01\e$\inetpub\RequestDAL" 
+                destinationdirectory="\\tkfsani01\e$\inetpub\RequestDAL"
                 runnable="false" />
 
 <!--
        <regex action="replace"
               searchpattern="rpmdevi01"
               replacewith="tkfsani01"
-              file="\\tkfsani01\e$\inetpub\RequestDAL\web.config" 
+              file="\\tkfsani01\e$\inetpub\RequestDAL\web.config"
               runnable="false" />
 -->
 
@@ -144,18 +144,18 @@
    	       skiperror="false"
                websitename="RequestdAL"
                websiteroot="e:\inetpub\RequestDAL"
-               websitehostname="tkfsdevi01" 
+               websitehostname="tkfsdevi01"
                runnable="false" />
 
        <!-- end building RPMWebService -->
 
        <!-- backup and restore database -->
 
-       <!-- 
+       <!--
             for dbbackup tag:
 
                1. backupdbname is the name of database to be backup.
-               2. backupfrom is the database sever that perform the backup 
+               2. backupfrom is the database sever that perform the backup
                   operation.
                3. filename is the name of the backup file.
                4. backupto is the path points to where backup to be stored.
@@ -171,10 +171,10 @@
        -->
 
 <!--
-       <dbbackup backupdbname="RPM" 
+       <dbbackup backupdbname="RPM"
                  backupfrom="rpmdevs01"
                  filename="rpm.bak"
-                 backupto="\\chengkai-01\public\" 
+                 backupto="\\chengkai-01\public\"
                  runnable="false" />
 
        <dbrestore databasename="RPM"
@@ -182,8 +182,8 @@
                   filename="rpm.bak"
                   restorefrom="c:\public\"
                   datapath="c:\mssql\data\"
-                  logpath="c:\mssql\data\" 
-                  runnable="false" /> 
+                  logpath="c:\mssql\data\"
+                  runnable="false" />
 -->
 
        <!-- end backup and restore database -->

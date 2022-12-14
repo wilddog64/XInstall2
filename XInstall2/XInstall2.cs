@@ -76,9 +76,7 @@ namespace XInstall {
                                 break;
                             case "D:":
                                 string Argument = Arg.Substring( Arg.IndexOf( ":" ) + 1 );
-                                string[] Items = Argument.Split( new char[] { '='
-                                                                        }
-                                                               );
+                                string[] Items = Argument.Split( new char[] { '=' } );
                                 UpdateVars.Add( Items[0], Items[1] );
                                 break;
                             case "Trace:":

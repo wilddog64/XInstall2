@@ -65,7 +65,7 @@ namespace XInstall {
                                   on incomplete object!",
                                   this.ObjectName, strNewFile));
                 this.ConfigFile = strNewFile;
-            } 
+            }
             else
                 this.ConfigFile = strXmlConfigFile;
 

@@ -15,8 +15,7 @@ namespace XInstall.CustomTestActions {
             this._SQLTestArray.Add( MySQLTest );
         }
 
-        public SQLTest this[ String DBServerName ]
-        {
+        public SQLTest this[ String DBServerName ] {
             get {
                 SQLTest ThisSQLTest = null;
                 for ( int i = 0; i < this._SQLTestArray.Count - 1; i++ ) {
@@ -32,16 +31,14 @@ namespace XInstall.CustomTestActions {
 
 #region ICollection Members
 
-        public bool IsSynchronized
-        {
+        public bool IsSynchronized {
             get {
                 return this._SQLTestArray.IsSynchronized;
             }
         }
 
 
-        public int Count
-        {
+        public int Count {
             get {
                 return this._SQLTestArray.Count;
             }
@@ -53,8 +50,7 @@ namespace XInstall.CustomTestActions {
         }
 
 
-        public object SyncRoot
-        {
+        public object SyncRoot {
             get {
                 return this._SQLTestArray.SyncRoot;
             }
